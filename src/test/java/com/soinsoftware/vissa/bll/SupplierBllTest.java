@@ -2,6 +2,7 @@ package com.soinsoftware.vissa.bll;
 
 import java.util.List;
 
+import com.soinsoftware.vissa.exception.ModelValidationException;
 import com.soinsoftware.vissa.manager.VissaManagerFactory;
 import com.soinsoftware.vissa.model.DocumentType;
 import com.soinsoftware.vissa.model.PaymentType;
@@ -77,12 +78,21 @@ public class SupplierBllTest extends TestCase {
 		assertEquals("Updated", entity.getPerson().getName());
 	}
 
+	public void testSaveInvalid() {
+		try {
+			bll.save(Supplier.builder().build());
+		} catch (Exception ex) {
+			assertTrue(ex instanceof ModelValidationException);
+		}
+	}
+
 	private void saveSupplierTestData() {
 		Supplier supplier = bll.select("09876");
 		if (supplier == null) {
 			supplier = buildSupplier();
 		} else {
-			supplier = Supplier.builder(supplier).paymentTerm("30 Dias").build();
+			final Person person = Person.builder(supplier.getPerson()).name("Test").build();
+			supplier = Supplier.builder(supplier).paymentTerm("30 Dias").person(person).build();
 		}
 		bll.save(supplier);
 	}
