@@ -87,7 +87,7 @@ public class Person extends CommonData {
 		}
 		if (type == null) {
 			throw new ModelValidationException("El tipo de la persona es obligatorio.");
-		} else if (type.equals(PersonType.COMMON) && (lastName == null || lastName.trim().equals(""))) {
+		} else if (type.equals(PersonType.CUSTOMER) && (lastName == null || lastName.trim().equals(""))) {
 			throw new ModelValidationException("El apellido de la persona natural es obligatorio.");
 		}
 	}

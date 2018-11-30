@@ -39,6 +39,8 @@ public class Supplier extends CommonData {
 	private PaymentType paymentType;
 	@Column(name = "payment_term")
 	private String paymentTerm;
+	@Column(name = "payment_method")
+	private String paymentMethod;
 
 	public Supplier() {
 		super();
@@ -62,6 +64,10 @@ public class Supplier extends CommonData {
 	public String getPaymentTerm() {
 		return paymentTerm;
 	}
+	
+	public String getPaymentMethod() {
+		return paymentMethod;
+	}
 
 	@Override
 	public void validate() {
@@ -70,9 +76,10 @@ public class Supplier extends CommonData {
 		} else {
 			person.validate();
 		}
-		if (paymentType == null) {
+	/*	if (paymentType == null) {
 			throw new ModelValidationException("El tipo de pago es obligatorio.");
 		}
+		*/
 	}
 
 	public static Builder builder() {
@@ -92,6 +99,7 @@ public class Supplier extends CommonData {
 		private Person person;
 		private PaymentType paymentType;
 		private String paymentTerm;
+		private String paymentMethod;
 
 		private Builder() {
 		}
@@ -134,6 +142,11 @@ public class Supplier extends CommonData {
 
 		public Builder paymentTerm(String paymentTerm) {
 			this.paymentTerm = paymentTerm;
+			return this;
+		}
+		
+		public Builder paymentMethod(String paymentMethod) {
+			this.paymentMethod = paymentMethod;
 			return this;
 		}
 

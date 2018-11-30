@@ -100,7 +100,7 @@ public class SupplierBllTest extends TestCase {
 
 	private Supplier buildSupplier() {
 		Person person = Person.builder().documentType(DocumentType.CC).documentNumber("09876").name("Test")
-				.lastName("Test").type(PersonType.COMMON).build();
+				.lastName("Test").type(PersonType.SUPPLIER).build();
 		return Supplier.builder().person(person).paymentType(PaymentType.PAID).paymentTerm("30 Dias").build();
 	}
 }
