@@ -13,21 +13,21 @@ import org.hibernate.annotations.SelectBeforeUpdate;
 
 /**
  * @author Carlos Rodriguez
- * @since 28/11/2018
+ * @since 29/11/2018
  */
-@Entity(name = "bank")
+@Entity(name = "country")
 @OptimisticLocking(type = OptimisticLockType.DIRTY)
 @DynamicUpdate
 @SelectBeforeUpdate
-public class Bank extends AbstractNameModel {
+public class Country extends AbstractNameModel {
 
-	private static final long serialVersionUID = 5807717858270495166L;
+	private static final long serialVersionUID = -3934490987205731259L;
 
-	public Bank() {
+	public Country() {
 		super();
 	}
 
-	public Bank(Builder builder) {
+	public Country(Builder builder) {
 		super(builder.id, builder.creationDate, builder.modifyDate, builder.archived, builder.name);
 	}
 
@@ -35,8 +35,8 @@ public class Bank extends AbstractNameModel {
 		return new Builder();
 	}
 
-	public static Builder builder(Bank person) {
-		return new Builder(person);
+	public static Builder builder(Country country) {
+		return new Builder(country);
 	}
 
 	public static class Builder {
@@ -50,9 +50,9 @@ public class Bank extends AbstractNameModel {
 		private Builder() {
 		}
 
-		private Builder(Bank person) {
-			id(person.getId()).creationDate(person.getCreationDate()).modifyDate(person.getModifyDate())
-					.archived(person.isArchived()).name(person.getName());
+		private Builder(Country country) {
+			id(country.getId()).creationDate(country.getCreationDate()).modifyDate(country.getModifyDate())
+					.archived(country.isArchived()).name(country.getName());
 		}
 
 		public Builder id(BigInteger id) {
@@ -80,8 +80,8 @@ public class Bank extends AbstractNameModel {
 			return this;
 		}
 
-		public Bank build() {
-			return new Bank(this);
+		public Country build() {
+			return new Country(this);
 		}
 	}
 }
