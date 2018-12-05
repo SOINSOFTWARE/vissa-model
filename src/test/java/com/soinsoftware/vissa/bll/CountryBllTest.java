@@ -5,66 +5,66 @@ import java.util.List;
 
 import com.soinsoftware.vissa.exception.ModelValidationException;
 import com.soinsoftware.vissa.manager.VissaManagerFactory;
-import com.soinsoftware.vissa.model.Bank;
+import com.soinsoftware.vissa.model.Country;
 
 import junit.framework.TestCase;
 
 /**
  * 
  * @author Carlos Rodriguez
- * @since 28/11/2018
+ * @since 04/12/2018
  */
-public class BankBllTest extends TestCase {
+public class CountryBllTest extends TestCase {
 
-	private BankBll bll;
+	private CountryBll bll;
 
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
 		VissaManagerFactory.getInstance();
-		bll = BankBll.getInstance();
+		bll = CountryBll.getInstance();
 		saveTestData();
 	}
 
 	public void testSelectAll() {
-		final List<Bank> entities = bll.selectAll();
+		final List<Country> entities = bll.selectAll();
 		assertNotNull(entities);
 		assertNotSame(entities.size(), 0);
 	}
 
 	public void testSelectEnabled() {
-		final List<Bank> entities = bll.selectAll(false);
+		final List<Country> entities = bll.selectAll(false);
 		assertNotNull(entities);
 		assertNotSame(entities.size(), 0);
 	}
 
 	public void testSelectByNameNotExists() {
-		final Bank entity = bll.select("test-non-exists");
+		final Country entity = bll.select("test-non-exists");
 		assertNull(entity);
 	}
 
 	public void testSelectByNameExists() {
-		final Bank entity = bll.select("test");
+		final Country entity = bll.select("Colombia");
 		assertNotNull(entity);
 	}
 
 	public void testSaveInvalid() {
 		try {
-			bll.save(Bank.builder().build());
+			bll.save(Country.builder().build());
 		} catch (Exception ex) {
 			assertTrue(ex instanceof ModelValidationException);
 		}
 	}
 
 	private void saveTestData() {
-		Bank bank = bll.select("test");
-		if (bank == null) {
-			bank = buildTestData();
+		Country country = bll.select("Colombia");
+		if (country == null) {
+			country = buildTestData();
 		}
-		bll.save(bank);
+		bll.save(country);
 	}
 
-	private Bank buildTestData() {
-		return Bank.builder().name("test").build();
+	private Country buildTestData() {
+		return Country.builder().name("Colombia").build();
 	}
 }

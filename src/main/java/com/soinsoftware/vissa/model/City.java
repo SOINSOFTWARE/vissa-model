@@ -5,9 +5,10 @@ import java.math.BigInteger;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
 import org.hibernate.annotations.SelectBeforeUpdate;
@@ -16,30 +17,37 @@ import com.soinsoftware.vissa.exception.ModelValidationException;
 
 /**
  * @author Carlos Rodriguez
- * @since 28/11/2018
+ * @since 04/12/2018
  */
-@Entity(name = "bank")
+@Entity(name = "city")
 @OptimisticLocking(type = OptimisticLockType.DIRTY)
 @DynamicUpdate
 @SelectBeforeUpdate
-public class Bank extends CommonData {
+public class City extends CommonData {
 
-	private static final long serialVersionUID = 5807717858270495166L;
+	private static final long serialVersionUID = 7247768338497639839L;
 
-	@NaturalId
 	private String name;
+	@ManyToOne
+	@JoinColumn(name = "state_id")
+	private State state;
 
-	public Bank() {
+	public City() {
 		super();
 	}
 
-	public Bank(Builder builder) {
+	public City(Builder builder) {
 		super(builder.id, builder.creationDate, builder.modifyDate, builder.archived);
 		name = builder.name;
+		state = builder.state;
 	}
 
 	public String getName() {
 		return name;
+	}
+
+	public State getState() {
+		return state;
 	}
 
 	@Override
@@ -47,14 +55,19 @@ public class Bank extends CommonData {
 		if (name == null || name.trim().equals("")) {
 			throw new ModelValidationException("El nombre es obligatorio.");
 		}
+		if (state == null) {
+			throw new ModelValidationException("El departamento es obligatorio.");
+		} else {
+			state.validate();
+		}
 	}
 
 	public static Builder builder() {
 		return new Builder();
 	}
 
-	public static Builder builder(Bank person) {
-		return new Builder(person);
+	public static Builder builder(City city) {
+		return new Builder(city);
 	}
 
 	public static class Builder {
@@ -64,13 +77,14 @@ public class Bank extends CommonData {
 		private Date modifyDate;
 		private boolean archived;
 		private String name;
+		private State state;
 
 		private Builder() {
 		}
 
-		private Builder(Bank person) {
-			id(person.getId()).creationDate(person.getCreationDate()).modifyDate(person.getModifyDate())
-					.archived(person.isArchived()).name(person.getName());
+		private Builder(City city) {
+			id(city.getId()).creationDate(city.getCreationDate()).modifyDate(city.getModifyDate())
+					.archived(city.isArchived()).name(city.getName()).state(city.state);
 		}
 
 		public Builder id(BigInteger id) {
@@ -98,8 +112,13 @@ public class Bank extends CommonData {
 			return this;
 		}
 
-		public Bank build() {
-			return new Bank(this);
+		public Builder state(State state) {
+			this.state = state;
+			return this;
+		}
+
+		public City build() {
+			return new City(this);
 		}
 	}
 }

@@ -42,12 +42,12 @@ public class BankAccountBllTest extends TestCase {
 		assertNotSame(entities.size(), 0);
 	}
 
-	public void testSelectByDocumentNotExists() {
+	public void testSelectByAccountNotExists() {
 		final BankAccount entity = bll.select("test-non-exists");
 		assertNull(entity);
 	}
 
-	public void testSelectByDocumentExists() {
+	public void testSelectByAccountExists() {
 		final BankAccount entity = bll.select("1234-5678-9012");
 		assertNotNull(entity);
 	}
