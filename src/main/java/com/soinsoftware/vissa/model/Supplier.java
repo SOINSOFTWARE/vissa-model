@@ -51,6 +51,7 @@ public class Supplier extends CommonData {
 		person = builder.person;
 		paymentType = builder.paymentType;
 		paymentTerm = builder.paymentTerm;
+		paymentMethod = builder.paymentMethod;
 	}
 
 	public Person getPerson() {
@@ -64,7 +65,7 @@ public class Supplier extends CommonData {
 	public String getPaymentTerm() {
 		return paymentTerm;
 	}
-	
+
 	public String getPaymentMethod() {
 		return paymentMethod;
 	}
@@ -76,10 +77,6 @@ public class Supplier extends CommonData {
 		} else {
 			person.validate();
 		}
-	/*	if (paymentType == null) {
-			throw new ModelValidationException("El tipo de pago es obligatorio.");
-		}
-		*/
 	}
 
 	public static Builder builder() {
@@ -107,7 +104,7 @@ public class Supplier extends CommonData {
 		private Builder(Supplier supplier) {
 			id(supplier.getId()).creationDate(supplier.getCreationDate()).modifyDate(supplier.getModifyDate())
 					.archived(supplier.isArchived()).person(supplier.person).paymentType(supplier.paymentType)
-					.paymentTerm(supplier.paymentTerm);
+					.paymentTerm(supplier.paymentTerm).paymentMethod(supplier.paymentMethod);
 		}
 
 		public Builder id(BigInteger id) {
@@ -144,7 +141,7 @@ public class Supplier extends CommonData {
 			this.paymentTerm = paymentTerm;
 			return this;
 		}
-		
+
 		public Builder paymentMethod(String paymentMethod) {
 			this.paymentMethod = paymentMethod;
 			return this;

@@ -1,16 +1,106 @@
+// Soin Software, 2018
 package com.soinsoftware.vissa.model;
 
-public class MeasurementUnit extends CommonData{
+import java.math.BigInteger;
+import java.util.Date;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 6920509472314051950L;
+import javax.persistence.Entity;
+
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.NaturalId;
+import org.hibernate.annotations.OptimisticLockType;
+import org.hibernate.annotations.OptimisticLocking;
+import org.hibernate.annotations.SelectBeforeUpdate;
+
+import com.soinsoftware.vissa.exception.ModelValidationException;
+
+/**
+ * @author Carlos Rodriguez
+ * @since 04/12/2018
+ */
+@Entity(name = "measurement_unit")
+@OptimisticLocking(type = OptimisticLockType.DIRTY)
+@DynamicUpdate
+@SelectBeforeUpdate
+public class MeasurementUnit extends CommonData {
+
+	private static final long serialVersionUID = -3934490987205731259L;
+
+	@NaturalId
+	private String name;
+
+	public MeasurementUnit() {
+		super();
+	}
+
+	public MeasurementUnit(Builder builder) {
+		super(builder.id, builder.creationDate, builder.modifyDate, builder.archived);
+		name = builder.name;
+	}
+
+	public String getName() {
+		return name;
+	}
 
 	@Override
 	public void validate() {
-		// TODO Auto-generated method stub
-		
+		if (name == null || name.trim().equals("")) {
+			throw new ModelValidationException("El nombre es obligatorio.");
+		}
 	}
 
+	public static Builder builder() {
+		return new Builder();
+	}
+
+	public static Builder builder(MeasurementUnit measurementUnit) {
+		return new Builder(measurementUnit);
+	}
+
+	public static class Builder {
+
+		private BigInteger id;
+		private Date creationDate;
+		private Date modifyDate;
+		private boolean archived;
+		private String name;
+
+		private Builder() {
+		}
+
+		private Builder(MeasurementUnit measurementUnit) {
+			id(measurementUnit.getId()).creationDate(measurementUnit.getCreationDate())
+					.modifyDate(measurementUnit.getModifyDate()).archived(measurementUnit.isArchived())
+					.name(measurementUnit.getName());
+		}
+
+		public Builder id(BigInteger id) {
+			this.id = id;
+			return this;
+		}
+
+		public Builder creationDate(Date creationDate) {
+			this.creationDate = creationDate;
+			return this;
+		}
+
+		public Builder modifyDate(Date modifyDate) {
+			this.modifyDate = modifyDate;
+			return this;
+		}
+
+		public Builder archived(boolean archived) {
+			this.archived = archived;
+			return this;
+		}
+
+		public Builder name(String name) {
+			this.name = name;
+			return this;
+		}
+
+		public MeasurementUnit build() {
+			return new MeasurementUnit(this);
+		}
+	}
 }

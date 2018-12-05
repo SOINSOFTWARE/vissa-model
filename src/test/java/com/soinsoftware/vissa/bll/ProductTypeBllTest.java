@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.soinsoftware.vissa.exception.ModelValidationException;
 import com.soinsoftware.vissa.manager.VissaManagerFactory;
-import com.soinsoftware.vissa.model.Country;
+import com.soinsoftware.vissa.model.ProductType;
 
 import junit.framework.TestCase;
 
@@ -14,57 +14,57 @@ import junit.framework.TestCase;
  * @author Carlos Rodriguez
  * @since 04/12/2018
  */
-public class CountryBllTest extends TestCase {
+public class ProductTypeBllTest extends TestCase {
 
-	private CountryBll bll;
+	private ProductTypeBll bll;
 
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
 		VissaManagerFactory.getInstance();
-		bll = CountryBll.getInstance();
+		bll = ProductTypeBll.getInstance();
 		saveTestData();
 	}
 
 	public void testSelectAll() {
-		final List<Country> entities = bll.selectAll();
+		final List<ProductType> entities = bll.selectAll();
 		assertNotNull(entities);
 		assertNotSame(entities.size(), 0);
 	}
 
 	public void testSelectEnabled() {
-		final List<Country> entities = bll.selectAll(false);
+		final List<ProductType> entities = bll.selectAll(false);
 		assertNotNull(entities);
 		assertNotSame(entities.size(), 0);
 	}
 
 	public void testSelectByNameNotExists() {
-		final Country entity = bll.select("test-non-exists");
+		final ProductType entity = bll.select("test-non-exists");
 		assertNull(entity);
 	}
 
 	public void testSelectByNameExists() {
-		final Country entity = bll.select("Colombia");
+		final ProductType entity = bll.select("Type Test");
 		assertNotNull(entity);
 	}
 
 	public void testSaveInvalid() {
 		try {
-			bll.save(Country.builder().build());
+			bll.save(ProductType.builder().build());
 		} catch (Exception ex) {
 			assertTrue(ex instanceof ModelValidationException);
 		}
 	}
 
 	private void saveTestData() {
-		Country country = bll.select("Colombia");
-		if (country == null) {
-			country = buildTestData();
-			bll.save(country);
+		ProductType productType = bll.select("Type Test");
+		if (productType == null) {
+			productType = buildTestData();
+			bll.save(productType);
 		}
 	}
 
-	private Country buildTestData() {
-		return Country.builder().name("Colombia").build();
+	private ProductType buildTestData() {
+		return ProductType.builder().name("Type Test").build();
 	}
 }

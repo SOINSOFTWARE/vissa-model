@@ -1,3 +1,4 @@
+// Soin Software, 2018
 package com.soinsoftware.vissa.model;
 
 import java.math.BigInteger;
@@ -6,38 +7,39 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;	
+import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
 import org.hibernate.annotations.SelectBeforeUpdate;
 
 import com.soinsoftware.vissa.exception.ModelValidationException;
 
+/**
+ * @author Lina Florez
+ * @since 04/12/2018
+ */
 @Entity(name = "product")
 @OptimisticLocking(type = OptimisticLockType.DIRTY)
 @DynamicUpdate
 @SelectBeforeUpdate
 public class Product extends CommonData {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 2130298664438036929L;
-	@Column(name = "code")
+
+	@NaturalId
 	private String code;
-	@Column(name = "name")
 	private String name;
-	@Column(name = "description")
 	private String description;
-	@OneToMany
+	@ManyToOne
 	@JoinColumn(name = "category_id")
 	private ProductCategory category;
-	@OneToMany
+	@ManyToOne
 	@JoinColumn(name = "type_id")
 	private ProductType type;
-	@OneToMany
+	@ManyToOne
 	@JoinColumn(name = "measurement_unit_id")
 	private MeasurementUnit measurementUnit;
 	@Column(name = "ean_code")
@@ -51,11 +53,10 @@ public class Product extends CommonData {
 	@Column(name = "purchase_tax")
 	private Double purchaseTax;
 
-	
 	public Product() {
 		super();
 	}
-	
+
 	public Product(Builder builder) {
 		super(builder.id, builder.creationDate, builder.modifyDate, builder.archived);
 		code = builder.code;
@@ -69,17 +70,62 @@ public class Product extends CommonData {
 		purchasePrice = builder.purchasePrice;
 		saleTax = builder.saleTax;
 		purchaseTax = builder.purchaseTax;
-		
-		
 	}
-	
+
+	public String getCode() {
+		return code;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public ProductCategory getCategory() {
+		return category;
+	}
+
+	public ProductType getType() {
+		return type;
+	}
+
+	public MeasurementUnit getMeasurementUnit() {
+		return measurementUnit;
+	}
+
+	public String getEanCode() {
+		return eanCode;
+	}
+
+	public Double getSalePrice() {
+		return salePrice;
+	}
+
+	public Double getPurchasePrice() {
+		return purchasePrice;
+	}
+
+	public Double getSaleTax() {
+		return saleTax;
+	}
+
+	public Double getPurchaseTax() {
+		return purchaseTax;
+	}
+
 	@Override
 	public void validate() {
 		if (code == null || code.trim().equals("")) {
-			throw new ModelValidationException("El código del producto es obligatorio");
+			throw new ModelValidationException("El código es obligatorio");
 		}
-
+		if (name == null || name.trim().equals("")) {
+			throw new ModelValidationException("El nombre es obligatorio.");
+		}
 	}
+
 	public static Builder builder() {
 		return new Builder();
 	}
@@ -87,17 +133,17 @@ public class Product extends CommonData {
 	public static Builder builder(Product product) {
 		return new Builder(product);
 	}
-	
+
 	public static class Builder {
 
 		private BigInteger id;
 		private Date creationDate;
 		private Date modifyDate;
 		private boolean archived;
-		private String code;		
-		private String name;		
-		private String description;		
-		private ProductCategory category;		
+		private String code;
+		private String name;
+		private String description;
+		private ProductCategory category;
 		private ProductType type;
 		private MeasurementUnit measurementUnit;
 		private String eanCode;
@@ -112,9 +158,9 @@ public class Product extends CommonData {
 		private Builder(Product product) {
 			id(product.getId()).creationDate(product.getCreationDate()).modifyDate(product.getModifyDate())
 					.archived(product.isArchived()).code(product.code).name(product.name)
-					.description(product.description).category(product.category).type(product.type).
-					measurementUnit(product.measurementUnit).eanCode(product.eanCode).salePrice(product.salePrice).
-					purchasePrice(product.purchasePrice).saleTax(product.saleTax).purchaseTax(product.purchaseTax);
+					.description(product.description).category(product.category).type(product.type)
+					.measurementUnit(product.measurementUnit).eanCode(product.eanCode).salePrice(product.salePrice)
+					.purchasePrice(product.purchasePrice).saleTax(product.saleTax).purchaseTax(product.purchaseTax);
 		}
 
 		public Builder id(BigInteger id) {
@@ -141,17 +187,17 @@ public class Product extends CommonData {
 			this.code = code;
 			return this;
 		}
-		
+
 		public Builder name(String name) {
 			this.name = name;
 			return this;
 		}
-		
+
 		public Builder description(String description) {
 			this.description = description;
 			return this;
 		}
-		
+
 		public Builder category(ProductCategory category) {
 			this.category = category;
 			return this;
@@ -166,27 +212,27 @@ public class Product extends CommonData {
 			this.measurementUnit = measurementUnit;
 			return this;
 		}
-		
+
 		public Builder eanCode(String eanCode) {
 			this.eanCode = eanCode;
 			return this;
 		}
-		
+
 		public Builder salePrice(Double salePrice) {
 			this.salePrice = salePrice;
 			return this;
 		}
-		
+
 		public Builder purchasePrice(Double purchasePrice) {
 			this.purchasePrice = purchasePrice;
 			return this;
 		}
-		
+
 		public Builder saleTax(Double saleTax) {
 			this.saleTax = saleTax;
 			return this;
 		}
-		
+
 		public Builder purchaseTax(Double purchaseTax) {
 			this.purchaseTax = purchaseTax;
 			return this;
@@ -196,7 +242,4 @@ public class Product extends CommonData {
 			return new Product(this);
 		}
 	}
-	
-	
-
 }

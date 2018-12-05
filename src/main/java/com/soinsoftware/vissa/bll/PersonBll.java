@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.math.BigInteger;
 
 import com.soinsoftware.vissa.dao.PersonDao;
-import com.soinsoftware.vissa.dao.SupplierDao;
 import com.soinsoftware.vissa.model.Person;
 import com.soinsoftware.vissa.model.Supplier;
 
