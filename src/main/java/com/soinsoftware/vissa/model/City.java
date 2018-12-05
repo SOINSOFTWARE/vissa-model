@@ -23,10 +23,11 @@ import com.soinsoftware.vissa.exception.ModelValidationException;
 @OptimisticLocking(type = OptimisticLockType.DIRTY)
 @DynamicUpdate
 @SelectBeforeUpdate
-public class City extends AbstractNameModel {
+public class City extends CommonData {
 
 	private static final long serialVersionUID = 7247768338497639839L;
-	
+
+	private String name;
 	@ManyToOne
 	@JoinColumn(name = "state_id")
 	private State state;
@@ -36,17 +37,24 @@ public class City extends AbstractNameModel {
 	}
 
 	public City(Builder builder) {
-		super(builder.id, builder.creationDate, builder.modifyDate, builder.archived, builder.name);
+		super(builder.id, builder.creationDate, builder.modifyDate, builder.archived);
+		name = builder.name;
 		state = builder.state;
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	public State getState() {
 		return state;
 	}
-	
+
 	@Override
 	public void validate() {
-		super.validate();
+		if (name == null || name.trim().equals("")) {
+			throw new ModelValidationException("El nombre es obligatorio.");
+		}
 		if (state == null) {
 			throw new ModelValidationException("El departamento es obligatorio.");
 		} else {

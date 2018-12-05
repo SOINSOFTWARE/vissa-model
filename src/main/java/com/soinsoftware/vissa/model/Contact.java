@@ -26,10 +26,11 @@ import com.soinsoftware.vissa.exception.ModelValidationException;
 @OptimisticLocking(type = OptimisticLockType.DIRTY)
 @DynamicUpdate
 @SelectBeforeUpdate
-public class Contact extends AbstractNameModel {
+public class Contact extends CommonData {
 
 	private static final long serialVersionUID = 7247768338497639839L;
 
+	private String name;
 	private String address;
 	@ManyToOne
 	@JoinColumn(name = "city_id")
@@ -50,7 +51,8 @@ public class Contact extends AbstractNameModel {
 	}
 
 	public Contact(Builder builder) {
-		super(builder.id, builder.creationDate, builder.modifyDate, builder.archived, builder.name);
+		super(builder.id, builder.creationDate, builder.modifyDate, builder.archived);
+		name = builder.name;
 		address = builder.address;
 		city = builder.city;
 		mobile = builder.mobile;
@@ -59,6 +61,10 @@ public class Contact extends AbstractNameModel {
 		webSite = builder.webSite;
 		type = builder.type;
 		person = builder.person;
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	public String getAddress() {
@@ -95,7 +101,9 @@ public class Contact extends AbstractNameModel {
 
 	@Override
 	public void validate() {
-		super.validate();
+		if (name == null || name.trim().equals("")) {
+			throw new ModelValidationException("El nombre es obligatorio.");
+		}
 		if (address == null || address.trim().equals("")) {
 			throw new ModelValidationException("La dirección es obligatoria.");
 		}

@@ -7,9 +7,12 @@ import java.util.Date;
 import javax.persistence.Entity;
 
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
 import org.hibernate.annotations.SelectBeforeUpdate;
+
+import com.soinsoftware.vissa.exception.ModelValidationException;
 
 /**
  * @author Carlos Rodriguez
@@ -19,16 +22,31 @@ import org.hibernate.annotations.SelectBeforeUpdate;
 @OptimisticLocking(type = OptimisticLockType.DIRTY)
 @DynamicUpdate
 @SelectBeforeUpdate
-public class Country extends AbstractNameModel {
+public class Country extends CommonData {
 
 	private static final long serialVersionUID = -3934490987205731259L;
+
+	@NaturalId
+	private String name;
 
 	public Country() {
 		super();
 	}
 
 	public Country(Builder builder) {
-		super(builder.id, builder.creationDate, builder.modifyDate, builder.archived, builder.name);
+		super(builder.id, builder.creationDate, builder.modifyDate, builder.archived);
+		name = builder.name;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	@Override
+	public void validate() {
+		if (name == null || name.trim().equals("")) {
+			throw new ModelValidationException("El nombre es obligatorio.");
+		}
 	}
 
 	public static Builder builder() {
