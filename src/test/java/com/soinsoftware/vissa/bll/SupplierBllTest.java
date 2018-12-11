@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.soinsoftware.vissa.exception.ModelValidationException;
 import com.soinsoftware.vissa.manager.VissaManagerFactory;
-import com.soinsoftware.vissa.model.DocumentType;
+import com.soinsoftware.vissa.model.DocumentIdType;
 import com.soinsoftware.vissa.model.PaymentType;
 import com.soinsoftware.vissa.model.Person;
 import com.soinsoftware.vissa.model.PersonType;
@@ -99,7 +99,7 @@ public class SupplierBllTest extends TestCase {
 	}
 
 	private Supplier buildSupplier() {
-		Person person = Person.builder().documentType(DocumentType.CC).documentNumber("09876").name("Test")
+		Person person = Person.builder().documentType(DocumentIdType.CC).documentNumber("09876").name("Test")
 				.lastName("Test").type(PersonType.SUPPLIER).build();
 		return Supplier.builder().person(person).paymentType(PaymentType.PAID).paymentTerm("30 Dias").build();
 	}

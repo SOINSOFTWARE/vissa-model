@@ -31,7 +31,7 @@ public class Person extends CommonData {
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "document_type")
-	private DocumentType documentType;
+	private DocumentIdType documentType;
 	@NaturalId
 	@Column(name = "document_number")
 	private String documentNumber;
@@ -54,7 +54,7 @@ public class Person extends CommonData {
 		type = builder.type;
 	}
 
-	public DocumentType getDocumentType() {
+	public DocumentIdType getDocumentType() {
 		return documentType;
 	}
 
@@ -106,7 +106,7 @@ public class Person extends CommonData {
 		private Date creationDate;
 		private Date modifyDate;
 		private boolean archived;
-		private DocumentType documentType;
+		private DocumentIdType documentType;
 		private String documentNumber;
 		private String name;
 		private String lastName;
@@ -142,7 +142,7 @@ public class Person extends CommonData {
 			return this;
 		}
 
-		public Builder documentType(DocumentType documentType) {
+		public Builder documentType(DocumentIdType documentType) {
 			this.documentType = documentType;
 			return this;
 		}
