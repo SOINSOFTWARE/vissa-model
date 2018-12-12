@@ -42,6 +42,10 @@ public abstract class AbstractBll<T, P> {
 	public void delete(final T entity) {
 		dao.delete(entity);
 	}
+	
+	public void rollback() {
+		dao.rollbackTransaction();
+	}
 
 	public void closeDbConnection() {
 		dao.close();

@@ -88,11 +88,8 @@ public interface DataAccessibleObject<T, P> {
 	/**
 	 * When using transaction to store data, use this method to roll back
 	 * transaction if anything goes wrong before finish it
-	 * 
-	 * @param transaction
-	 *            {@link EntityTransaction} used.
 	 */
-	void rollbackTransaction(EntityTransaction transaction);
+	void rollbackTransaction();
 
 	/**
 	 * Called when record must be deleted from database
