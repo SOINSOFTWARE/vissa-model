@@ -1,169 +1,275 @@
+// Soin Software, 2018
 package com.soinsoftware.vissa.model;
 
+import java.math.BigInteger;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.OptimisticLockType;
+import org.hibernate.annotations.OptimisticLocking;
+import org.hibernate.annotations.SelectBeforeUpdate;
+
+import com.soinsoftware.vissa.exception.ModelValidationException;
+
+/**
+ * @author Carlos Rodriguez
+ * @since 11/12/2018
+ */
+@Entity(name = "document")
+@OptimisticLocking(type = OptimisticLockType.DIRTY)
+@DynamicUpdate
+@SelectBeforeUpdate
 public class Document extends CommonData {
-	/*
-	 * 
-	 */
-	private static final long serialVersionUID = -3912660464232727268L; 
-	
-	private String number;
+
+	private static final long serialVersionUID = -3704226411029215206L;
+
+	private String code;
 	@ManyToOne
 	@JoinColumn(name = "type_id")
 	private DocumentType documentType;
 	@ManyToOne
 	@JoinColumn(name = "person_id")
-	private Person person;	
-	@JoinColumn(name = "document_date")
+	private Person person;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "document_date")
 	private Date documentDate;
-	@ManyToOne
+	/*@ManyToOne
 	@JoinColumn(name = "payment_type_id")
 	private PaymentType paymentType;
 	@ManyToOne
 	@JoinColumn(name = "payment_method_id")
-	private PaymentType paymentMethod;
-	@JoinColumn(name = "payment_term")
+	private PaymentType paymentMethod;*/
+	@Column(name = "payment_term")
 	private String paymentTerm;
-	@JoinColumn(name = "expiration_date")
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "expiration_date")
 	private Date expirationDate;
 	@ManyToOne
 	@JoinColumn(name = "currency_id")
 	private Currency currency;
-	@JoinColumn(name = "total_value_no_tax")
-	private Currency totalValueNoTax;
-	@JoinColumn(name = "total_value")
-	private Currency totalValue;
-	
+	@Column(name = "total_value_no_tax")
+	private double totalValueNoTax;
+	@Column(name = "total_value")
+	private double totalValue;
+	private String reference;
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "document_id")
+	private Set<DocumentDetail> details = new HashSet<>();
+
 	public Document() {
 		super();
 	}
 
-	
-	@Override
-	public void validate() {
-		// TODO Auto-generated method stub
-
+	public Document(Builder builder) {
+		super(builder.id, builder.creationDate, builder.modifyDate, builder.archived);
+		code = builder.code;
+		documentType = builder.documentType;
+		person = builder.person;
+		documentDate = builder.documentDate;
+		//paymentType = builder.paymentType;
+		//
+		paymentTerm = builder.paymentTerm;
+		expirationDate = builder.expirationDate;
+		currency = builder.currency;
+		totalValueNoTax = builder.totalValueNoTax;
+		totalValue = builder.totalValue;
+		reference = builder.reference;
+		details = builder.details;
 	}
 
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public String getCode() {
+		return code;
 	}
-
-
-	public String getNumber() {
-		return number;
-	}
-
 
 	public DocumentType getDocumentType() {
 		return documentType;
 	}
 
-
 	public Person getPerson() {
 		return person;
 	}
-
 
 	public Date getDocumentDate() {
 		return documentDate;
 	}
 
-
-	public PaymentType getPaymentType() {
+	/*public PaymentType getPaymentType() {
 		return paymentType;
 	}
 
-
 	public PaymentType getPaymentMethod() {
 		return paymentMethod;
-	}
-
+	}*/
 
 	public String getPaymentTerm() {
 		return paymentTerm;
 	}
 
-
 	public Date getExpirationDate() {
 		return expirationDate;
 	}
-
 
 	public Currency getCurrency() {
 		return currency;
 	}
 
-
-	public Currency getTotalValueNoTax() {
+	public double getTotalValueNoTax() {
 		return totalValueNoTax;
 	}
 
-
-	public Currency getTotalValue() {
+	public double getTotalValue() {
 		return totalValue;
 	}
 
-
-	public void setNumber(String number) {
-		this.number = number;
+	public String getReference() {
+		return reference;
 	}
 
-
-	public void setDocumentType(DocumentType documentType) {
-		this.documentType = documentType;
+	@Override
+	public void validate() {
+		if (code == null || code.trim().equals("")) {
+			throw new ModelValidationException("El código es obligatorio.");
+		}
+		if (documentType == null) {
+			throw new ModelValidationException("El tipo es obligatorio.");
+		} else {
+			documentType.validate();
+		}
 	}
 
-
-	public void setPerson(Person person) {
-		this.person = person;
+	public static Builder builder() {
+		return new Builder();
 	}
 
-
-	public void setDocumentDate(Date documentDate) {
-		this.documentDate = documentDate;
+	public static Builder builder(Document document) {
+		return new Builder(document);
 	}
 
+	public static class Builder {
 
-	public void setPaymentType(PaymentType paymentType) {
-		this.paymentType = paymentType;
+		private BigInteger id;
+		private Date creationDate;
+		private Date modifyDate;
+		private boolean archived;
+		private String code;
+		private DocumentType documentType;
+		private Person person;
+		private Date documentDate;
+		private PaymentType paymentType;
+		private PaymentType paymentMethod;
+		private String paymentTerm;
+		private Date expirationDate;
+		private Currency currency;
+		private double totalValueNoTax;
+		private double totalValue;
+		private String reference;
+		private Set<DocumentDetail> details = new HashSet<>();
+
+		private Builder() {
+		}
+
+		private Builder(Document document) {
+			id(document.getId()).creationDate(document.getCreationDate()).modifyDate(document.getModifyDate())
+					.archived(document.isArchived()).code(document.code).documentType(document.documentType)
+					.person(document.person).documentDate(document.documentDate)/*.paymentType(document.paymentType)*/
+					.paymentTerm(document.paymentTerm).expirationDate(document.expirationDate)
+					.currency(document.currency).totalValueNoTax(document.totalValueNoTax)
+					.totalValue(document.totalValue).reference(document.reference).details(document.details);
+		}
+
+		public Builder id(BigInteger id) {
+			this.id = id;
+			return this;
+		}
+
+		public Builder creationDate(Date creationDate) {
+			this.creationDate = creationDate;
+			return this;
+		}
+
+		public Builder modifyDate(Date modifyDate) {
+			this.modifyDate = modifyDate;
+			return this;
+		}
+
+		public Builder archived(boolean archived) {
+			this.archived = archived;
+			return this;
+		}
+
+		public Builder code(String code) {
+			this.code = code;
+			return this;
+		}
+
+		public Builder documentType(DocumentType documentType) {
+			this.documentType = documentType;
+			return this;
+		}
+
+		public Builder person(Person person) {
+			this.person = person;
+			return this;
+		}
+
+		public Builder documentDate(Date documentDate) {
+			this.documentDate = documentDate;
+			return this;
+		}
+
+		public Builder paymentType(PaymentType paymentType) {
+			this.paymentType = paymentType;
+			return this;
+		}
+
+		public Builder paymentTerm(String paymentTerm) {
+			this.paymentTerm = paymentTerm;
+			return this;
+		}
+
+		public Builder expirationDate(Date expirationDate) {
+			this.expirationDate = expirationDate;
+			return this;
+		}
+
+		public Builder currency(Currency currency) {
+			this.currency = currency;
+			return this;
+		}
+
+		public Builder totalValueNoTax(double totalValueNoTax) {
+			this.totalValueNoTax = totalValueNoTax;
+			return this;
+		}
+
+		public Builder totalValue(double totalValue) {
+			this.totalValue = totalValue;
+			return this;
+		}
+
+		public Builder reference(String reference) {
+			this.reference = reference;
+			return this;
+		}
+
+		public Builder details(Set<DocumentDetail> details) {
+			this.details = details;
+			return this;
+		}
+
+		public Document build() {
+			return new Document(this);
+		}
 	}
-
-
-	public void setPaymentMethod(PaymentType paymentMethod) {
-		this.paymentMethod = paymentMethod;
-	}
-
-
-	public void setPaymentTerm(String paymentTerm) {
-		this.paymentTerm = paymentTerm;
-	}
-
-
-	public void setExpirationDate(Date expirationDate) {
-		this.expirationDate = expirationDate;
-	}
-
-
-	public void setCurrency(Currency currency) {
-		this.currency = currency;
-	}
-
-
-	public void setTotalValueNoTax(Currency totalValueNoTax) {
-		this.totalValueNoTax = totalValueNoTax;
-	}
-
-
-	public void setTotalValue(Currency totalValue) {	
-		this.totalValue = totalValue;
-	}
-	
-	
-
 }

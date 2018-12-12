@@ -7,6 +7,7 @@ import java.util.Date;
 import javax.persistence.Entity;
 
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
 import org.hibernate.annotations.SelectBeforeUpdate;
@@ -25,6 +26,7 @@ public class DocumentType extends CommonData {
 
 	private static final long serialVersionUID = 7247768338497639839L;
 
+	@NaturalId
 	private String code;
 	private String name;
 
@@ -36,6 +38,14 @@ public class DocumentType extends CommonData {
 		super(builder.id, builder.creationDate, builder.modifyDate, builder.archived);
 		code = builder.code;
 		name = builder.name;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	@Override
@@ -94,7 +104,7 @@ public class DocumentType extends CommonData {
 			return this;
 		}
 
-		private Builder code(String code) {
+		public Builder code(String code) {
 			this.code = code;
 			return this;
 		}
