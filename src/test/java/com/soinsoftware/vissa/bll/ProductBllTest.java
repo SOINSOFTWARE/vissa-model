@@ -51,7 +51,7 @@ public class ProductBllTest extends TestCase {
 		final Product entity = bll.select("TEST");
 		assertNotNull(entity);
 	}
-/*
+
 	public void testSelectByProductCategory() throws IOException {
 		ProductCategory productCategory = ProductCategoryBll.getInstance().select("Category Test");
 		final List<Product> entities = bll.select(productCategory);
@@ -81,7 +81,7 @@ public class ProductBllTest extends TestCase {
 		assertNotNull(entities);
 		assertNotSame(entities.size(), 0);
 	}
-	
+
 	public void testSelectByCategoryAndType() throws IOException {
 		ProductCategory productCategory = ProductCategoryBll.getInstance().select("Category Test");
 		ProductType productType = ProductTypeBll.getInstance().select("Type Test");
@@ -89,7 +89,7 @@ public class ProductBllTest extends TestCase {
 		assertNotNull(entities);
 		assertNotSame(entities.size(), 0);
 	}
-	
+
 	public void testSelectByCategoryAndUnit() throws IOException {
 		ProductCategory productCategory = ProductCategoryBll.getInstance().select("Category Test");
 		MeasurementUnit measurementUnit = MeasurementUnitBll.getInstance().select("Measurement unit Test");
@@ -97,7 +97,7 @@ public class ProductBllTest extends TestCase {
 		assertNotNull(entities);
 		assertNotSame(entities.size(), 0);
 	}
-	
+
 	public void testSelectByTypeAndUnit() throws IOException {
 		ProductType productType = ProductTypeBll.getInstance().select("Type Test");
 		MeasurementUnit measurementUnit = MeasurementUnitBll.getInstance().select("Measurement unit Test");
@@ -105,7 +105,7 @@ public class ProductBllTest extends TestCase {
 		assertNotNull(entities);
 		assertNotSame(entities.size(), 0);
 	}
-	
+
 	public void testSelectByAllCriteriaWithNulls() throws IOException {
 		final List<Product> entities = bll.select(null, null, null);
 		assertNotNull(entities);
@@ -118,7 +118,7 @@ public class ProductBllTest extends TestCase {
 		} catch (Exception ex) {
 			assertTrue(ex instanceof ModelValidationException);
 		}
-	}*/
+	}
 
 	private void saveTestData() throws IOException {
 		Product product = bll.select("TEST");

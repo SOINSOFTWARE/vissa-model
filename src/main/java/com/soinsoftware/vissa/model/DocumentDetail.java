@@ -14,6 +14,8 @@ import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
 import org.hibernate.annotations.SelectBeforeUpdate;
 
+import com.soinsoftware.vissa.exception.ModelValidationException;
+
 /**
  * @author Carlos Rodriguez
  * @since 11/12/2018
@@ -26,6 +28,9 @@ public class DocumentDetail extends CommonData {
 
 	private static final long serialVersionUID = -5272764778535491233L;
 
+	@ManyToOne
+	@JoinColumn(name = "document_id", nullable = false)
+	private Document document;
 	@ManyToOne
 	@JoinColumn(name = "product_id")
 	private Product product;
@@ -40,6 +45,7 @@ public class DocumentDetail extends CommonData {
 
 	public DocumentDetail(Builder builder) {
 		super(builder.id, builder.creationDate, builder.modifyDate, builder.archived);
+		document = builder.document;
 		product = builder.product;
 		description = builder.description;
 		quantity = builder.quantity;
@@ -48,8 +54,11 @@ public class DocumentDetail extends CommonData {
 
 	@Override
 	public void validate() {
-		// TODO Auto-generated method stub
-
+		if (product == null) {
+			throw new ModelValidationException("El producto es obligatorio.");
+		} else {
+			product.validate();
+		}
 	}
 
 	public static Builder builder() {
@@ -66,6 +75,7 @@ public class DocumentDetail extends CommonData {
 		private Date creationDate;
 		private Date modifyDate;
 		private boolean archived;
+		private Document document;
 		private Product product;
 		private String description;
 		private int quantity;
@@ -77,8 +87,9 @@ public class DocumentDetail extends CommonData {
 		private Builder(DocumentDetail documentDetail) {
 			id(documentDetail.getId()).creationDate(documentDetail.getCreationDate())
 					.modifyDate(documentDetail.getModifyDate()).archived(documentDetail.isArchived())
-					.product(documentDetail.product).description(documentDetail.description)
-					.quantity(documentDetail.quantity).subtotal(documentDetail.subtotal);
+					.document(documentDetail.document).product(documentDetail.product)
+					.description(documentDetail.description).quantity(documentDetail.quantity)
+					.subtotal(documentDetail.subtotal);
 		}
 
 		public Builder id(BigInteger id) {
@@ -98,6 +109,11 @@ public class DocumentDetail extends CommonData {
 
 		public Builder archived(boolean archived) {
 			this.archived = archived;
+			return this;
+		}
+
+		public Builder document(Document document) {
+			this.document = document;
 			return this;
 		}
 

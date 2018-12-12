@@ -16,6 +16,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
 import org.hibernate.annotations.SelectBeforeUpdate;
@@ -34,6 +35,7 @@ public class Document extends CommonData {
 
 	private static final long serialVersionUID = -3704226411029215206L;
 
+	@NaturalId
 	private String code;
 	@ManyToOne
 	@JoinColumn(name = "type_id")
@@ -44,12 +46,12 @@ public class Document extends CommonData {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "document_date")
 	private Date documentDate;
-	/*@ManyToOne
+	@ManyToOne
 	@JoinColumn(name = "payment_type_id")
 	private PaymentType paymentType;
 	@ManyToOne
 	@JoinColumn(name = "payment_method_id")
-	private PaymentType paymentMethod;*/
+	private PaymentMethod paymentMethod;
 	@Column(name = "payment_term")
 	private String paymentTerm;
 	@Temporal(TemporalType.TIMESTAMP)
@@ -63,8 +65,7 @@ public class Document extends CommonData {
 	@Column(name = "total_value")
 	private double totalValue;
 	private String reference;
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "document_id")
+	@OneToMany(mappedBy = "document", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<DocumentDetail> details = new HashSet<>();
 
 	public Document() {
@@ -77,8 +78,8 @@ public class Document extends CommonData {
 		documentType = builder.documentType;
 		person = builder.person;
 		documentDate = builder.documentDate;
-		//paymentType = builder.paymentType;
-		//
+		paymentType = builder.paymentType;
+		paymentMethod = builder.paymentMethod;
 		paymentTerm = builder.paymentTerm;
 		expirationDate = builder.expirationDate;
 		currency = builder.currency;
@@ -104,13 +105,13 @@ public class Document extends CommonData {
 		return documentDate;
 	}
 
-	/*public PaymentType getPaymentType() {
+	public PaymentType getPaymentType() {
 		return paymentType;
 	}
 
-	public PaymentType getPaymentMethod() {
+	public PaymentMethod getPaymentMethod() {
 		return paymentMethod;
-	}*/
+	}
 
 	public String getPaymentTerm() {
 		return paymentTerm;
@@ -134,6 +135,10 @@ public class Document extends CommonData {
 
 	public String getReference() {
 		return reference;
+	}
+
+	public Set<DocumentDetail> getDetails() {
+		return details;
 	}
 
 	@Override
@@ -167,7 +172,7 @@ public class Document extends CommonData {
 		private Person person;
 		private Date documentDate;
 		private PaymentType paymentType;
-		private PaymentType paymentMethod;
+		private PaymentMethod paymentMethod;
 		private String paymentTerm;
 		private Date expirationDate;
 		private Currency currency;
@@ -182,10 +187,11 @@ public class Document extends CommonData {
 		private Builder(Document document) {
 			id(document.getId()).creationDate(document.getCreationDate()).modifyDate(document.getModifyDate())
 					.archived(document.isArchived()).code(document.code).documentType(document.documentType)
-					.person(document.person).documentDate(document.documentDate)/*.paymentType(document.paymentType)*/
-					.paymentTerm(document.paymentTerm).expirationDate(document.expirationDate)
-					.currency(document.currency).totalValueNoTax(document.totalValueNoTax)
-					.totalValue(document.totalValue).reference(document.reference).details(document.details);
+					.person(document.person).documentDate(document.documentDate).paymentType(document.paymentType)
+					.paymentMethod(document.paymentMethod).paymentTerm(document.paymentTerm)
+					.expirationDate(document.expirationDate).currency(document.currency)
+					.totalValueNoTax(document.totalValueNoTax).totalValue(document.totalValue)
+					.reference(document.reference).details(document.details);
 		}
 
 		public Builder id(BigInteger id) {
@@ -230,6 +236,11 @@ public class Document extends CommonData {
 
 		public Builder paymentType(PaymentType paymentType) {
 			this.paymentType = paymentType;
+			return this;
+		}
+
+		public Builder paymentMethod(PaymentMethod paymentMethod) {
+			this.paymentMethod = paymentMethod;
 			return this;
 		}
 
