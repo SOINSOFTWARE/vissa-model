@@ -7,8 +7,6 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -34,8 +32,8 @@ public class Supplier extends CommonData {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "person_id")
 	private Person person;
-	@Enumerated(EnumType.STRING)
-	@Column(name = "payment_type")
+	@ManyToOne
+	@JoinColumn(name = "payment_type_id")
 	private PaymentType paymentType;
 	@Column(name = "payment_term")
 	private String paymentTerm;

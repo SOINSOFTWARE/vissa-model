@@ -1,6 +1,7 @@
 // Soin Software, 2018
 package com.soinsoftware.vissa.bll;
 
+import java.io.IOException;
 import java.util.List;
 
 import com.soinsoftware.vissa.exception.ModelValidationException;
@@ -87,7 +88,7 @@ public class SupplierBllTest extends TestCase {
 		}
 	}
 
-	private void saveSupplierTestData() {
+	private void saveSupplierTestData() throws IOException {
 		Supplier supplier = bll.select("09876");
 		if (supplier == null) {
 			supplier = buildSupplier();
@@ -98,9 +99,10 @@ public class SupplierBllTest extends TestCase {
 		bll.save(supplier);
 	}
 
-	private Supplier buildSupplier() {
+	private Supplier buildSupplier() throws IOException {
+		PaymentType paymentType = PaymentTypeBll.getInstance().select("PAID");
 		Person person = Person.builder().documentType(DocumentIdType.CC).documentNumber("09876").name("Test")
 				.lastName("Test").type(PersonType.SUPPLIER).build();
-		return Supplier.builder().person(person).paymentType(PaymentType.PAID).paymentTerm("30 Dias").build();
+		return Supplier.builder().person(person).paymentType(paymentType).paymentTerm("30 Dias").build();
 	}
 }
