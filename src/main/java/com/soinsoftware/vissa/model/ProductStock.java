@@ -3,14 +3,24 @@ package com.soinsoftware.vissa.model;
 import java.math.BigInteger;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
 import org.hibernate.annotations.SelectBeforeUpdate;
 
+import com.soinsoftware.vissa.model.InventoryTransaction.Builder;
 
+
+@Entity(name = "product_stock")
+@OptimisticLocking(type = OptimisticLockType.DIRTY)
+@DynamicUpdate
+@SelectBeforeUpdate
 public class ProductStock extends CommonData {
 
 	/**
@@ -18,8 +28,12 @@ public class ProductStock extends CommonData {
 	 */
 	private static final long serialVersionUID = -9129864576513912670L;
 
-	private Product product;
+	@ManyToOne
+	@JoinColumn(name = "product_id")
+	@NaturalId
+	private Product product;	
 	private Integer stock;
+	@Column(name = "stock_date")
 	private Date stockDate;
 	
 	public ProductStock() {
@@ -40,6 +54,35 @@ public class ProductStock extends CommonData {
 		
 	}
 	
+	
+	
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public Integer getStock() {
+		return stock;
+	}
+
+	public Date getStockDate() {
+		return stockDate;
+	}
+
+	
+	public static Builder builder() {
+		return new Builder();
+	}
+
+	public static Builder builder(ProductStock productStock) {
+		return new Builder(productStock);
+	}
+
+
+
 	public static class Builder {
 
 		private BigInteger id;

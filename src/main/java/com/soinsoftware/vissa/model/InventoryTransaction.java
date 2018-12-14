@@ -15,6 +15,8 @@ import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
 import org.hibernate.annotations.SelectBeforeUpdate;
 
+import com.soinsoftware.vissa.model.Product.Builder;
+
 @Entity(name = "inventory_transaction")
 @OptimisticLocking(type = OptimisticLockType.DIRTY)
 @DynamicUpdate
@@ -121,6 +123,14 @@ public class InventoryTransaction extends CommonData {
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
+	
+	public static Builder builder() {
+		return new Builder();
+	}
+
+	public static Builder builder(InventoryTransaction inventoryTransaction) {
+		return new Builder(inventoryTransaction);
+	}
 
 	public static class Builder {
 
@@ -191,7 +201,7 @@ public class InventoryTransaction extends CommonData {
 		}
 
 		public Builder finalStock(Integer finalStock) {
-			this.initialStock = finalStock;
+			this.finalStock = finalStock;
 			return this;
 		}
 

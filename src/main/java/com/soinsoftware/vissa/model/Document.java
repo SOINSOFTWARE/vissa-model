@@ -143,7 +143,7 @@ public class Document extends CommonData {
 
 	@Override
 	public void validate() {
-		if (code == null || code.trim().equals("")) {
+	/*	if (code == null || code.trim().equals("")) {
 			throw new ModelValidationException("El código es obligatorio.");
 		}
 		if (documentType == null) {
@@ -151,6 +151,7 @@ public class Document extends CommonData {
 		} else {
 			documentType.validate();
 		}
+		*/
 	}
 
 	public static Builder builder() {

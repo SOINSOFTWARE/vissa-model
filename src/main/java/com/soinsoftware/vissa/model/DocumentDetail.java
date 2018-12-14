@@ -77,6 +77,16 @@ public class DocumentDetail extends CommonData {
 	public double getSubtotal() {
 		return subtotal;
 	}
+	
+	
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
 
 	@Override
 	public void validate() {
