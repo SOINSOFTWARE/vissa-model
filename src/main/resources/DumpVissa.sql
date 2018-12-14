@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.17, for macos10.12 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
--- Host: localhost    Database: vissa
+-- Host: 127.0.0.1    Database: vissa
 -- ------------------------------------------------------
--- Server version	8.0.13
+-- Server version	5.6.23-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -331,6 +331,41 @@ INSERT INTO `document_type` VALUES (1,'CO','Factura de compra','2018-12-06 01:26
 UNLOCK TABLES;
 
 --
+-- Table structure for table `inventory_transaction`
+--
+
+DROP TABLE IF EXISTS `inventory_transaction`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `inventory_transaction` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `product_id` bigint(20) NOT NULL,
+  `transaction_type` varchar(45) NOT NULL,
+  `document_id` bigint(20) DEFAULT NULL,
+  `initial_stock` int(10) DEFAULT NULL,
+  `final_stock` int(10) DEFAULT NULL,
+  `quantity` int(10) DEFAULT NULL,
+  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `archived` bit(1) NOT NULL DEFAULT b'0',
+  PRIMARY KEY (`id`),
+  KEY `product_fk_idx` (`product_id`),
+  KEY `document_fk_idx` (`document_id`),
+  CONSTRAINT `inventory_document` FOREIGN KEY (`document_id`) REFERENCES `document` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `inventory_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `inventory_transaction`
+--
+
+LOCK TABLES `inventory_transaction` WRITE;
+/*!40000 ALTER TABLE `inventory_transaction` DISABLE KEYS */;
+/*!40000 ALTER TABLE `inventory_transaction` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `measurement_unit`
 --
 
@@ -441,7 +476,7 @@ CREATE TABLE `person` (
 
 LOCK TABLES `person` WRITE;
 /*!40000 ALTER TABLE `person` DISABLE KEYS */;
-INSERT INTO `person` VALUES (6,'CC','09876','Test','Test','SUPPLIER','2018-12-12 15:32:21','2018-12-12 15:32:21','\0'),(7,'CC','104567608','LINA','F','SUPPLIER','2018-11-30 02:58:37','2018-11-30 02:58:37','\0');
+INSERT INTO `person` VALUES (6,'CC','09876','Updated','Test','SUPPLIER','2018-12-14 03:54:17','2018-12-14 03:54:17','\0'),(7,'CC','104567608','LINA','F','SUPPLIER','2018-11-30 02:58:37','2018-11-30 02:58:37','\0');
 /*!40000 ALTER TABLE `person` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -515,6 +550,36 @@ LOCK TABLES `product_category` WRITE;
 /*!40000 ALTER TABLE `product_category` DISABLE KEYS */;
 INSERT INTO `product_category` VALUES (1,'Category Test',NULL,'2018-12-06 01:26:54','2018-12-06 01:26:54','\0');
 /*!40000 ALTER TABLE `product_category` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `product_stock`
+--
+
+DROP TABLE IF EXISTS `product_stock`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `product_stock` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `product_id` bigint(20) NOT NULL,
+  `stock` int(10) NOT NULL DEFAULT '0',
+  `stock_date` datetime NOT NULL,
+  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `archived` bit(1) NOT NULL DEFAULT b'0',
+  PRIMARY KEY (`id`),
+  KEY `product_fk_idx` (`product_id`),
+  CONSTRAINT `stock_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `product_stock`
+--
+
+LOCK TABLES `product_stock` WRITE;
+/*!40000 ALTER TABLE `product_stock` DISABLE KEYS */;
+/*!40000 ALTER TABLE `product_stock` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -604,9 +669,17 @@ CREATE TABLE `supplier` (
 
 LOCK TABLES `supplier` WRITE;
 /*!40000 ALTER TABLE `supplier` DISABLE KEYS */;
-INSERT INTO `supplier` VALUES (2,6,1,'30 Dias','2018-12-12 15:32:21','2018-12-12 15:32:21','\0',NULL),(3,7,NULL,NULL,'2018-11-30 02:58:37','2018-11-30 02:58:37','\0',NULL);
+INSERT INTO `supplier` VALUES (2,6,1,'30 Dias','2018-12-14 03:54:16','2018-12-14 03:54:16','\0',NULL),(3,7,NULL,NULL,'2018-11-30 02:58:37','2018-11-30 02:58:37','\0',NULL);
 /*!40000 ALTER TABLE `supplier` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Dumping events for database 'vissa'
+--
+
+--
+-- Dumping routines for database 'vissa'
+--
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -617,4 +690,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-12-12 12:07:54
+-- Dump completed on 2018-12-14  8:02:45
