@@ -10,10 +10,7 @@ import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
 import org.hibernate.annotations.SelectBeforeUpdate;
 
-@Entity(name = "product_stock")
-@OptimisticLocking(type = OptimisticLockType.DIRTY)
-@DynamicUpdate
-@SelectBeforeUpdate
+
 public class ProductStock extends CommonData {
 
 	/**

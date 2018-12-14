@@ -5,6 +5,8 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
@@ -29,8 +31,8 @@ public class InventoryTransaction extends CommonData {
 	@ManyToOne
 	@JoinColumn(name = "product_id")
 	private Product product;
-	@ManyToOne
-	@JoinColumn(name = "transaction_type")
+	@Enumerated(EnumType.STRING)
+	@Column(name = "transaction_type")
 	private InventoryTransactionType transactionType;
 	@ManyToOne
 	@JoinColumn(name = "document_id")
