@@ -51,6 +51,32 @@ public class DocumentDetail extends CommonData {
 		quantity = builder.quantity;
 		subtotal = builder.subtotal;
 	}
+	
+	
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public Document getDocument() {
+		return document;
+	}
+
+	public Product getProduct() {
+		return product;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public double getSubtotal() {
+		return subtotal;
+	}
 
 	@Override
 	public void validate() {
