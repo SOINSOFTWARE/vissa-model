@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `vissa` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `vissa`;
 -- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: vissa
@@ -366,6 +368,39 @@ LOCK TABLES `inventory_transaction` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `lot`
+--
+
+DROP TABLE IF EXISTS `lot`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `lot` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `code` varchar(45) DEFAULT NULL,
+  `name` varchar(45) DEFAULT NULL,
+  `lot_date` timestamp NULL DEFAULT NULL,
+  `expiration_date` timestamp NULL DEFAULT NULL,
+  `product_id` bigint(20) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `archived` bit(1) NOT NULL DEFAULT b'0',
+  PRIMARY KEY (`id`),
+  KEY `lot_product_idx` (`product_id`),
+  CONSTRAINT `lot_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `lot`
+--
+
+LOCK TABLES `lot` WRITE;
+/*!40000 ALTER TABLE `lot` DISABLE KEYS */;
+/*!40000 ALTER TABLE `lot` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `measurement_unit`
 --
 
@@ -476,7 +511,7 @@ CREATE TABLE `person` (
 
 LOCK TABLES `person` WRITE;
 /*!40000 ALTER TABLE `person` DISABLE KEYS */;
-INSERT INTO `person` VALUES (6,'CC','09876','Updated','Test','SUPPLIER','2018-12-14 03:54:17','2018-12-14 03:54:17','\0'),(7,'CC','104567608','LINA','F','SUPPLIER','2018-11-30 02:58:37','2018-11-30 02:58:37','\0');
+INSERT INTO `person` VALUES (6,'CC','09876','Test','Test','SUPPLIER','2018-12-20 05:37:03','2018-12-20 05:37:03','\0'),(7,'CC','104567608','LINA','F','SUPPLIER','2018-11-30 02:58:37','2018-11-30 02:58:37','\0');
 /*!40000 ALTER TABLE `person` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -669,7 +704,7 @@ CREATE TABLE `supplier` (
 
 LOCK TABLES `supplier` WRITE;
 /*!40000 ALTER TABLE `supplier` DISABLE KEYS */;
-INSERT INTO `supplier` VALUES (2,6,1,'30 Dias','2018-12-14 03:54:16','2018-12-14 03:54:16','\0',NULL),(3,7,NULL,NULL,'2018-11-30 02:58:37','2018-11-30 02:58:37','\0',NULL);
+INSERT INTO `supplier` VALUES (2,6,1,'30 Dias','2018-12-20 05:37:03','2018-12-20 05:37:03','\0',NULL),(3,7,NULL,NULL,'2018-11-30 02:58:37','2018-11-30 02:58:37','\0',NULL);
 /*!40000 ALTER TABLE `supplier` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -690,4 +725,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-12-14  8:02:45
+-- Dump completed on 2018-12-20  1:15:59
