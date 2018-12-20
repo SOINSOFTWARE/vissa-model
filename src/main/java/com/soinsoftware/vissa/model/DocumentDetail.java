@@ -35,7 +35,7 @@ public class DocumentDetail extends CommonData {
 	@JoinColumn(name = "product_id")
 	private Product product;
 	private String description;
-	private int quantity;
+	private String quantity;
 	@Column(name = "sub_total")
 	private double subtotal;
 
@@ -70,7 +70,7 @@ public class DocumentDetail extends CommonData {
 		return description;
 	}
 
-	public int getQuantity() {
+	public String getQuantity() {
 		return quantity;
 	}
 
@@ -84,8 +84,13 @@ public class DocumentDetail extends CommonData {
 		this.description = description;
 	}
 
-	public void setQuantity(int quantity) {
+	public void setQuantity(String quantity) {
 		this.quantity = quantity;
+	}
+
+	
+	public void setSubtotal(double subtotal) {
+		this.subtotal = subtotal;
 	}
 
 	@Override
@@ -114,7 +119,7 @@ public class DocumentDetail extends CommonData {
 		private Document document;
 		private Product product;
 		private String description;
-		private int quantity;
+		private String quantity;
 		private double subtotal;
 
 		private Builder() {
@@ -163,7 +168,7 @@ public class DocumentDetail extends CommonData {
 			return this;
 		}
 
-		public Builder quantity(int quantity) {
+		public Builder quantity(String quantity) {
 			this.quantity = quantity;
 			return this;
 		}
