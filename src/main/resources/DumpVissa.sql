@@ -1,10 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `vissa` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `vissa`;
--- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.17, for macos10.12 (x86_64)
 --
--- Host: 127.0.0.1    Database: vissa
+-- Host: localhost    Database: vissa
 -- ------------------------------------------------------
--- Server version	5.6.23-log
+-- Server version	8.0.13
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -353,8 +351,8 @@ CREATE TABLE `inventory_transaction` (
   PRIMARY KEY (`id`),
   KEY `product_fk_idx` (`product_id`),
   KEY `document_fk_idx` (`document_id`),
-  CONSTRAINT `inventory_document` FOREIGN KEY (`document_id`) REFERENCES `document` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `inventory_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `inventory_document` FOREIGN KEY (`document_id`) REFERENCES `document` (`id`),
+  CONSTRAINT `inventory_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -376,19 +374,19 @@ DROP TABLE IF EXISTS `lot`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `lot` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `code` varchar(45) DEFAULT NULL,
+  `code` varchar(45) NOT NULL,
   `name` varchar(45) DEFAULT NULL,
   `lot_date` timestamp NULL DEFAULT NULL,
   `expiration_date` timestamp NULL DEFAULT NULL,
-  `product_id` bigint(20) DEFAULT NULL,
-  `quantity` int(11) DEFAULT NULL,
+  `product_id` bigint(20) NOT NULL,
+  `quantity` int(11) NOT NULL,
   `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `modify_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `archived` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`),
   KEY `lot_product_idx` (`product_id`),
-  CONSTRAINT `lot_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  CONSTRAINT `lot_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -397,6 +395,7 @@ CREATE TABLE `lot` (
 
 LOCK TABLES `lot` WRITE;
 /*!40000 ALTER TABLE `lot` DISABLE KEYS */;
+INSERT INTO `lot` VALUES (1,'TEST',NULL,NULL,NULL,1,1,'2018-12-21 16:57:33','2018-12-21 16:57:33','\0');
 /*!40000 ALTER TABLE `lot` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -511,7 +510,7 @@ CREATE TABLE `person` (
 
 LOCK TABLES `person` WRITE;
 /*!40000 ALTER TABLE `person` DISABLE KEYS */;
-INSERT INTO `person` VALUES (6,'CC','09876','Test','Test','SUPPLIER','2018-12-20 05:37:03','2018-12-20 05:37:03','\0'),(7,'CC','104567608','LINA','F','SUPPLIER','2018-11-30 02:58:37','2018-11-30 02:58:37','\0');
+INSERT INTO `person` VALUES (6,'CC','09876','Test','Test','SUPPLIER','2018-12-21 17:02:28','2018-12-21 17:02:28','\0'),(7,'CC','104567608','LINA','F','SUPPLIER','2018-11-30 02:58:37','2018-11-30 02:58:37','\0');
 /*!40000 ALTER TABLE `person` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -604,7 +603,7 @@ CREATE TABLE `product_stock` (
   `archived` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`),
   KEY `product_fk_idx` (`product_id`),
-  CONSTRAINT `stock_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `stock_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -704,17 +703,9 @@ CREATE TABLE `supplier` (
 
 LOCK TABLES `supplier` WRITE;
 /*!40000 ALTER TABLE `supplier` DISABLE KEYS */;
-INSERT INTO `supplier` VALUES (2,6,1,'30 Dias','2018-12-20 05:37:03','2018-12-20 05:37:03','\0',NULL),(3,7,NULL,NULL,'2018-11-30 02:58:37','2018-11-30 02:58:37','\0',NULL);
+INSERT INTO `supplier` VALUES (2,6,1,'60 Dias','2018-12-21 17:02:28','2018-12-21 17:02:28','\0',NULL),(3,7,NULL,NULL,'2018-11-30 02:58:37','2018-11-30 02:58:37','\0',NULL);
 /*!40000 ALTER TABLE `supplier` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping events for database 'vissa'
---
-
---
--- Dumping routines for database 'vissa'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -725,4 +716,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-12-20  1:15:59
+-- Dump completed on 2018-12-21 12:09:47

@@ -14,9 +14,6 @@ import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
 import org.hibernate.annotations.SelectBeforeUpdate;
 
-import com.soinsoftware.vissa.model.InventoryTransaction.Builder;
-
-
 @Entity(name = "product_stock")
 @OptimisticLocking(type = OptimisticLockType.DIRTY)
 @DynamicUpdate
@@ -31,15 +28,15 @@ public class ProductStock extends CommonData {
 	@ManyToOne
 	@JoinColumn(name = "product_id")
 	@NaturalId
-	private Product product;	
-	private Integer stock;
+	private Product product;
+	private int stock;
 	@Column(name = "stock_date")
 	private Date stockDate;
-	
+
 	public ProductStock() {
 		super();
 	}
-	
+
 	public ProductStock(Builder builder) {
 		super(builder.id, builder.creationDate, builder.modifyDate, builder.archived);
 		product = builder.product;
@@ -47,15 +44,12 @@ public class ProductStock extends CommonData {
 		stockDate = builder.stockDate;
 	}
 
-	
 	@Override
 	public void validate() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
-	
-	
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -64,7 +58,7 @@ public class ProductStock extends CommonData {
 		return product;
 	}
 
-	public Integer getStock() {
+	public int getStock() {
 		return stock;
 	}
 
@@ -72,7 +66,6 @@ public class ProductStock extends CommonData {
 		return stockDate;
 	}
 
-	
 	public static Builder builder() {
 		return new Builder();
 	}
@@ -81,8 +74,6 @@ public class ProductStock extends CommonData {
 		return new Builder(productStock);
 	}
 
-
-
 	public static class Builder {
 
 		private BigInteger id;
@@ -90,7 +81,7 @@ public class ProductStock extends CommonData {
 		private Date modifyDate;
 		private boolean archived;
 		private Product product;
-		private Integer stock;
+		private int stock;
 		private Date stockDate;
 
 		private Builder() {
@@ -98,9 +89,7 @@ public class ProductStock extends CommonData {
 
 		private Builder(ProductStock stock) {
 			id(stock.getId()).creationDate(stock.getCreationDate()).modifyDate(stock.getModifyDate())
-					.archived(stock.isArchived()).product(stock.product)
-					.stock(stock.stock).stockDate(stock.stockDate)
-					;
+					.archived(stock.isArchived()).product(stock.product).stock(stock.stock).stockDate(stock.stockDate);
 		}
 
 		public Builder id(BigInteger id) {
@@ -128,7 +117,7 @@ public class ProductStock extends CommonData {
 			return this;
 		}
 
-		public Builder stock(Integer stock) {
+		public Builder stock(int stock) {
 			this.stock = stock;
 			return this;
 		}
@@ -138,7 +127,6 @@ public class ProductStock extends CommonData {
 			return this;
 		}
 
-		
 		public ProductStock build() {
 			return new ProductStock(this);
 		}
