@@ -29,7 +29,7 @@ public class ProductStock extends CommonData {
 	@JoinColumn(name = "product_id")
 	@NaturalId
 	private Product product;
-	private int stock;
+	private Integer stock;
 	@Column(name = "stock_date")
 	private Date stockDate;
 
@@ -58,12 +58,22 @@ public class ProductStock extends CommonData {
 		return product;
 	}
 
-	public int getStock() {
+	public Integer getStock() {
 		return stock;
 	}
 
 	public Date getStockDate() {
 		return stockDate;
+	}
+
+	
+	
+	public void setStock(Integer stock) {
+		this.stock = stock;
+	}
+
+	public void setStockDate(Date stockDate) {
+		this.stockDate = stockDate;
 	}
 
 	public static Builder builder() {
@@ -81,7 +91,7 @@ public class ProductStock extends CommonData {
 		private Date modifyDate;
 		private boolean archived;
 		private Product product;
-		private int stock;
+		private Integer stock;
 		private Date stockDate;
 
 		private Builder() {
@@ -117,7 +127,7 @@ public class ProductStock extends CommonData {
 			return this;
 		}
 
-		public Builder stock(int stock) {
+		public Builder stock(Integer stock) {
 			this.stock = stock;
 			return this;
 		}

@@ -28,8 +28,8 @@ public class LotBll extends AbstractBll<Lot, BigInteger> {
 	}
 
 	public List<Lot> select(Product product) {
-		List<Lot> cities = ((LotDao) dao).select(product);
-		return cities.stream().sorted(Comparator.comparing(Lot::getCode)).collect(Collectors.toList());
+		List<Lot> lots = ((LotDao) dao).select(product);
+		return lots.stream().sorted(Comparator.comparing(Lot::getCode)).collect(Collectors.toList());
 	}
 
 	public static LotBll getInstance() throws IOException {

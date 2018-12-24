@@ -43,7 +43,7 @@ public class Lot extends CommonData {
 	@ManyToOne
 	@JoinColumn(name = "product_id")
 	private Product product;
-	private int quantity;
+	private Integer quantity;
 
 	public Lot() {
 		super();
@@ -79,7 +79,7 @@ public class Lot extends CommonData {
 		return product;
 	}
 
-	public int getQuantity() {
+	public Integer getQuantity() {
 		return quantity;
 	}
 
@@ -117,7 +117,7 @@ public class Lot extends CommonData {
 		private Date lotDate;
 		private Date expirationDate;
 		private Product product;
-		private int quantity;
+		private Integer quantity;
 
 		private Builder() {
 		}
@@ -173,7 +173,7 @@ public class Lot extends CommonData {
 			return this;
 		}
 
-		public Builder quantity(int quantity) {
+		public Builder quantity(Integer quantity) {
 			this.quantity = quantity;
 			return this;
 		}
