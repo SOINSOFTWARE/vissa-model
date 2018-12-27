@@ -82,6 +82,12 @@ public class Lot extends CommonData {
 	public Integer getQuantity() {
 		return quantity;
 	}
+	
+	
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
+	}
 
 	@Override
 	public void validate() {

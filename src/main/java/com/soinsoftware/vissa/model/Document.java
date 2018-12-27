@@ -145,10 +145,13 @@ public class Document extends CommonData {
 	public void validate() {
 		if (code == null || code.trim().equals("")) {
 			throw new ModelValidationException("El código es obligatorio.");
-		}
-		if (documentType == null) {
+		}else if (documentType == null) {
 			throw new ModelValidationException("El tipo es obligatorio.");
-		} else {
+		}else if (person == null) {
+				throw new ModelValidationException("El tercero (proveedor/cliente) es obligatorio.");
+		} else if (documentDate == null) {
+			throw new ModelValidationException("La fecha de la factura es obligatoria.");
+		}else {
 			documentType.validate();
 		}		
 	}
