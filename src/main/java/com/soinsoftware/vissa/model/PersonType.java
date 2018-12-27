@@ -7,7 +7,7 @@ package com.soinsoftware.vissa.model;
  */
 public enum PersonType {
 
-	SUPPLIER("Proveedor"), CUSTOMER("Cliente");
+	SUPPLIER("Proveedor"), CUSTOMER("Cliente"), USER("Usuario");
 
 	private String display;
 

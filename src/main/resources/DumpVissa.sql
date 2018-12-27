@@ -501,7 +501,7 @@ CREATE TABLE `person` (
   `archived` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `identification_number_UNIQUE` (`document_number`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='Tabla para el almacenamiento de clientes, proveedores, terceros o cualquier tipo de persona';
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='Tabla para el almacenamiento de clientes, proveedores, terceros o cualquier tipo de persona';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -510,7 +510,7 @@ CREATE TABLE `person` (
 
 LOCK TABLES `person` WRITE;
 /*!40000 ALTER TABLE `person` DISABLE KEYS */;
-INSERT INTO `person` VALUES (6,'CC','09876','Test','Test','SUPPLIER','2018-12-21 17:02:28','2018-12-21 17:02:28','\0'),(7,'CC','104567608','LINA','F','SUPPLIER','2018-11-30 02:58:37','2018-11-30 02:58:37','\0');
+INSERT INTO `person` VALUES (6,'CC','09876','Test','Test','SUPPLIER','2018-12-21 17:02:28','2018-12-21 17:02:28','\0'),(7,'CC','104567608','LINA','F','SUPPLIER','2018-11-30 02:58:37','2018-11-30 02:58:37','\0'),(14,'CC','14579','Other','Test','USER','2018-12-27 03:09:16','2018-12-27 03:09:16','\0');
 /*!40000 ALTER TABLE `person` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -706,6 +706,38 @@ LOCK TABLES `supplier` WRITE;
 INSERT INTO `supplier` VALUES (2,6,1,'60 Dias','2018-12-21 17:02:28','2018-12-21 17:02:28','\0',NULL),(3,7,NULL,NULL,'2018-11-30 02:58:37','2018-11-30 02:58:37','\0',NULL);
 /*!40000 ALTER TABLE `supplier` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `user`
+--
+
+DROP TABLE IF EXISTS `user`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `login` varchar(60) NOT NULL,
+  `pass` varchar(60) NOT NULL,
+  `person_id` bigint(20) NOT NULL,
+  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `archived` bit(1) NOT NULL DEFAULT b'0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `login_UNIQUE` (`login`),
+  KEY `fk_user_person_idx` (`person_id`),
+  CONSTRAINT `fk_user_person` FOREIGN KEY (`person_id`) REFERENCES `person` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user`
+--
+
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (4,'test','pnbrmR5/2yU1paLqlMjzRg==',14,'2018-12-27 03:09:16','2018-12-27 03:09:16','\0');
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -716,4 +748,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-12-21 12:09:47
+-- Dump completed on 2018-12-26 22:12:19
