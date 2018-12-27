@@ -52,6 +52,9 @@ public class Product extends CommonData {
 	private Double saleTax;
 	@Column(name = "purchase_tax")
 	private Double purchaseTax;
+	private Integer stock;
+	@Column(name = "stock_date")
+	private Date stockDate;
 
 	public Product() {
 		super();
@@ -70,6 +73,8 @@ public class Product extends CommonData {
 		purchasePrice = builder.purchasePrice;
 		saleTax = builder.saleTax;
 		purchaseTax = builder.purchaseTax;
+		stock = builder.stock;
+		stockDate = builder.stockDate;
 	}
 
 	public String getCode() {
@@ -116,6 +121,22 @@ public class Product extends CommonData {
 		return purchaseTax;
 	}
 
+	public Integer getStock() {
+		return stock;
+	}
+
+	public void setStock(Integer stock) {
+		this.stock = stock;
+	}
+
+	public Date getStockDate() {
+		return stockDate;
+	}
+
+	public void setStockDate(Date stockDate) {
+		this.stockDate = stockDate;
+	}
+
 	@Override
 	public void validate() {
 		if (code == null || code.trim().equals("")) {
@@ -151,6 +172,8 @@ public class Product extends CommonData {
 		private Double purchasePrice;
 		private Double saleTax;
 		private Double purchaseTax;
+		private Integer stock;
+		private Date stockDate;
 
 		private Builder() {
 		}
@@ -160,7 +183,8 @@ public class Product extends CommonData {
 					.archived(product.isArchived()).code(product.code).name(product.name)
 					.description(product.description).category(product.category).type(product.type)
 					.measurementUnit(product.measurementUnit).eanCode(product.eanCode).salePrice(product.salePrice)
-					.purchasePrice(product.purchasePrice).saleTax(product.saleTax).purchaseTax(product.purchaseTax);
+					.purchasePrice(product.purchasePrice).saleTax(product.saleTax).purchaseTax(product.purchaseTax)
+					.stock(product.stock).stockDate(product.stockDate);
 		}
 
 		public Builder id(BigInteger id) {
@@ -235,6 +259,16 @@ public class Product extends CommonData {
 
 		public Builder purchaseTax(Double purchaseTax) {
 			this.purchaseTax = purchaseTax;
+			return this;
+		}
+
+		public Builder stock(Integer stock) {
+			this.stock = stock;
+			return this;
+		}
+
+		public Builder stockDate(Date stockDate) {
+			this.stockDate = stockDate;
 			return this;
 		}
 
