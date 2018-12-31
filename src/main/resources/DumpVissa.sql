@@ -281,6 +281,8 @@ CREATE TABLE `document_detail` (
   `description` varchar(100) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
   `sub_total` decimal(16,2) DEFAULT NULL,
+  `stock` int(11) DEFAULT NULL,
+  `stock_date` timestamp,
   `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `modify_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `archived` bit(1) NOT NULL DEFAULT b'0',
@@ -292,17 +294,7 @@ CREATE TABLE `document_detail` (
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `document_detail`
---
 
-LOCK TABLES `document_detail` WRITE;
-/*!40000 ALTER TABLE `document_detail` DISABLE KEYS */;
-INSERT INTO `document_detail` VALUES (1,37,1,NULL,0,0.00,'2018-12-12 17:03:22','2018-12-12 17:03:22','\0');
-/*!40000 ALTER TABLE `document_detail` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `document_type`
 --
 
@@ -534,6 +526,8 @@ CREATE TABLE `product` (
   `purchase_price` decimal(16,2) DEFAULT NULL,
   `sale_tax` decimal(16,2) DEFAULT NULL,
   `purchase_tax` decimal(16,2) DEFAULT NULL,
+  `stock` int(11),
+  `stock_date` timestamp ,
   `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `modify_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `archived` bit(1) NOT NULL DEFAULT b'0',
@@ -548,15 +542,6 @@ CREATE TABLE `product` (
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `product`
---
-
-LOCK TABLES `product` WRITE;
-/*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (1,'TEST','Product Test',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2018-12-06 01:26:54','2018-12-06 01:26:54','\0'),(3,'1','prod1u','producto 1',1,1,1,'',30000.00,30000.00,NULL,NULL,'2018-12-11 05:41:26','2018-12-11 05:41:26',''),(4,'TEST-1','Product with classes',NULL,1,1,1,NULL,NULL,NULL,NULL,NULL,'2018-12-12 16:15:27','2018-12-12 16:15:27','\0');
-/*!40000 ALTER TABLE `product` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `product_category`
@@ -591,30 +576,6 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `product_stock`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `product_stock` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `product_id` bigint(20) NOT NULL,
-  `stock` int(10) NOT NULL DEFAULT '0',
-  `stock_date` datetime NOT NULL,
-  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `modify_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `archived` bit(1) NOT NULL DEFAULT b'0',
-  PRIMARY KEY (`id`),
-  KEY `product_fk_idx` (`product_id`),
-  CONSTRAINT `stock_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `product_stock`
---
-
-LOCK TABLES `product_stock` WRITE;
-/*!40000 ALTER TABLE `product_stock` DISABLE KEYS */;
-/*!40000 ALTER TABLE `product_stock` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `product_type`

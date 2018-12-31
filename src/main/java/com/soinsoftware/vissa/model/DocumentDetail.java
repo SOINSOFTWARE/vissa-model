@@ -86,6 +86,11 @@ public class DocumentDetail extends CommonData {
 
 	public void setQuantity(String quantity) {
 		this.quantity = quantity;
+		calculateSubtotal();
+	}
+	
+	public void calculateSubtotal() {
+		setSubtotal(product.getSalePrice() * Integer.parseInt(quantity));
 	}
 
 	
@@ -100,6 +105,37 @@ public class DocumentDetail extends CommonData {
 		} else {
 			product.validate();
 		}
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((document == null) ? 0 : document.hashCode());
+		result = prime * result + ((product == null) ? 0 : product.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DocumentDetail other = (DocumentDetail) obj;
+		if (document == null) {
+			if (other.document != null)
+				return false;
+		} else if (!document.equals(other.document))
+			return false;
+		if (product == null) {
+			if (other.product != null)
+				return false;
+		} else if (!product.equals(other.product))
+			return false;
+		return true;
 	}
 
 	public static Builder builder() {

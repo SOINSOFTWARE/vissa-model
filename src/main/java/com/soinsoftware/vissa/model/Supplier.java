@@ -38,7 +38,7 @@ public class Supplier extends CommonData {
 	@Column(name = "payment_term")
 	private String paymentTerm;
 	@Column(name = "payment_method")
-	private String paymentMethod;
+	private PaymentMethod paymentMethod;
 
 	public Supplier() {
 		super();
@@ -64,7 +64,7 @@ public class Supplier extends CommonData {
 		return paymentTerm;
 	}
 
-	public String getPaymentMethod() {
+	public PaymentMethod getPaymentMethod() {
 		return paymentMethod;
 	}
 
@@ -94,7 +94,7 @@ public class Supplier extends CommonData {
 		private Person person;
 		private PaymentType paymentType;
 		private String paymentTerm;
-		private String paymentMethod;
+		private PaymentMethod paymentMethod;
 
 		private Builder() {
 		}
@@ -140,7 +140,7 @@ public class Supplier extends CommonData {
 			return this;
 		}
 
-		public Builder paymentMethod(String paymentMethod) {
+		public Builder paymentMethod(PaymentMethod paymentMethod) {
 			this.paymentMethod = paymentMethod;
 			return this;
 		}
