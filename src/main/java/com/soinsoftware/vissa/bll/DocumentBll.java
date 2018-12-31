@@ -23,8 +23,8 @@ public class DocumentBll extends AbstractBll<Document, BigInteger> {
 		return ((DocumentDao) dao).select(code);
 	}
 	
-	public String selectMaxDoc() {
-		return ((DocumentDao) dao).maxDocument();
+	public String selectNextDocumentNumber() {
+		return ((DocumentDao) dao).selectNextDocumentNumber();
 	}
 
 	public static DocumentBll getInstance() throws IOException {
