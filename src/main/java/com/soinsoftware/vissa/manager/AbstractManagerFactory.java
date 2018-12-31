@@ -91,12 +91,14 @@ public abstract class AbstractManagerFactory implements IEntityManagerFactory {
 	private void buildEntityManagerFactory(final String packageToScan, final String persistenceName,
 			final String propFile, final boolean loadAsResource) throws IOException {
 		final HikariConfig config = new HikariConfig(loadPropertyFile(propFile, loadAsResource));
+		config.setMaxLifetime(600000);
 		final HikariDataSource dataSource = new HikariDataSource(config);
 		final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
 		em.setDataSource(dataSource);
 		em.setPackagesToScan(packageToScan);
 		em.setPersistenceProviderClass(HibernatePersistenceProvider.class);
 		em.setPersistenceUnitName(persistenceName);
+	
 		em.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
 		em.afterPropertiesSet();
 		emf = em.getObject();
