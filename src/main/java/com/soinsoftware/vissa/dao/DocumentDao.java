@@ -25,8 +25,9 @@ public class DocumentDao extends AbstractDataAccessibleObject<Document, BigInteg
 		return session.bySimpleNaturalId(Document.class).load(code);
 	}
 	
+
 	public String selectNextDocumentNumber() {
-		Query query = manager.createNativeQuery("SELECT max(cast(id as signed)) + 1 from document" );
+		Query query = manager.createNativeQuery("SELECT IFNULL(max(cast(id as signed)),0) + 1 from document" );
 		BigInteger num = (java.math.BigInteger)  query.getSingleResult();	
 		return String.valueOf(num);
 	}

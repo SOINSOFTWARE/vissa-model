@@ -65,6 +65,9 @@ public class Document extends CommonData {
 	@Column(name = "total_value")
 	private double totalValue;
 	private String reference;
+	@ManyToOne
+	@JoinColumn(name = "status_id")
+	private DocumentStatus status;
 	@OneToMany(mappedBy = "document", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<DocumentDetail> details = new HashSet<>();
 
@@ -87,6 +90,7 @@ public class Document extends CommonData {
 		totalValue = builder.totalValue;
 		reference = builder.reference;
 		details = builder.details;
+		status = builder.status;
 	}
 
 	public String getCode() {
@@ -137,6 +141,14 @@ public class Document extends CommonData {
 		return reference;
 	}
 
+	public DocumentStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(DocumentStatus status) {
+		this.status = status;
+	}
+
 	public Set<DocumentDetail> getDetails() {
 		return details;
 	}
@@ -145,15 +157,15 @@ public class Document extends CommonData {
 	public void validate() {
 		if (code == null || code.trim().equals("")) {
 			throw new ModelValidationException("El código es obligatorio.");
-		}else if (documentType == null) {
+		} else if (documentType == null) {
 			throw new ModelValidationException("El tipo es obligatorio.");
-		}else if (person == null) {
-				throw new ModelValidationException("El tercero (proveedor/cliente) es obligatorio.");
+		} else if (person == null) {
+			throw new ModelValidationException("El tercero (proveedor/cliente) es obligatorio.");
 		} else if (documentDate == null) {
 			throw new ModelValidationException("La fecha de la factura es obligatoria.");
-		}else {
+		} else {
 			documentType.validate();
-		}		
+		}
 	}
 
 	@Override
@@ -207,6 +219,7 @@ public class Document extends CommonData {
 		private double totalValueNoTax;
 		private double totalValue;
 		private String reference;
+		private DocumentStatus status;
 		private Set<DocumentDetail> details = new HashSet<>();
 
 		private Builder() {
@@ -219,7 +232,7 @@ public class Document extends CommonData {
 					.paymentMethod(document.paymentMethod).paymentTerm(document.paymentTerm)
 					.expirationDate(document.expirationDate).currency(document.currency)
 					.totalValueNoTax(document.totalValueNoTax).totalValue(document.totalValue)
-					.reference(document.reference).details(document.details);
+					.reference(document.reference).status(document.status).details(document.details);
 		}
 
 		public Builder id(BigInteger id) {
@@ -299,6 +312,11 @@ public class Document extends CommonData {
 
 		public Builder reference(String reference) {
 			this.reference = reference;
+			return this;
+		}
+
+		public Builder status(DocumentStatus status) {
+			this.status = status;
 			return this;
 		}
 

@@ -305,6 +305,7 @@ CREATE TABLE `document_type` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `code` varchar(45) NOT NULL,
   `name` varchar(45) NOT NULL,
+  `transaction_type` varchar(45) NOT NULL,
   `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `modify_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `archived` bit(1) NOT NULL DEFAULT b'0',
@@ -318,7 +319,7 @@ CREATE TABLE `document_type` (
 
 LOCK TABLES `document_type` WRITE;
 /*!40000 ALTER TABLE `document_type` DISABLE KEYS */;
-INSERT INTO `document_type` VALUES (1,'CO','Factura de compra','2018-12-06 01:26:54','2018-12-06 01:26:54','\0'),(2,'VE','Factura de venta','2018-12-06 01:26:54','2018-12-06 01:26:54','\0'),(3,'RE','Remision','2018-12-06 01:26:54','2018-12-06 01:26:54','\0'),(4,'FV','Factura de venta','2018-12-12 03:48:05','2018-12-12 03:48:05','\0');
+INSERT INTO `document_type` VALUES (1,'CO','Factura de compra', 'ENTRADA','2018-12-06 01:26:54','2018-12-06 01:26:54','\0'),(2,'VE','Factura de venta','ENTRADA','2018-12-06 01:26:54','2018-12-06 01:26:54','\0'),(3,'RE','Remision','ENTRADA','2018-12-06 01:26:54','2018-12-06 01:26:54','\0'),(4,'FV','Factura de venta','SALIDA','2018-12-12 03:48:05','2018-12-12 03:48:05','\1');
 /*!40000 ALTER TABLE `document_type` ENABLE KEYS */;
 UNLOCK TABLES;
 

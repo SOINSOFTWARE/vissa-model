@@ -4,7 +4,10 @@ package com.soinsoftware.vissa.model;
 import java.math.BigInteger;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.NaturalId;
@@ -29,6 +32,9 @@ public class DocumentType extends CommonData {
 	@NaturalId
 	private String code;
 	private String name;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "transaction_type")
+	private TransactionType transactionType;
 
 	public DocumentType() {
 		super();
@@ -38,6 +44,7 @@ public class DocumentType extends CommonData {
 		super(builder.id, builder.creationDate, builder.modifyDate, builder.archived);
 		code = builder.code;
 		name = builder.name;
+		transactionType = builder.transactionType;
 	}
 
 	public String getCode() {
@@ -46,6 +53,10 @@ public class DocumentType extends CommonData {
 
 	public String getName() {
 		return name;
+	}
+
+	public TransactionType getTransactionType() {
+		return transactionType;
 	}
 
 	@Override
@@ -74,6 +85,7 @@ public class DocumentType extends CommonData {
 		private boolean archived;
 		private String code;
 		private String name;
+		private TransactionType transactionType;
 
 		private Builder() {
 		}
@@ -81,7 +93,7 @@ public class DocumentType extends CommonData {
 		private Builder(DocumentType documentType) {
 			id(documentType.getId()).creationDate(documentType.getCreationDate())
 					.modifyDate(documentType.getModifyDate()).archived(documentType.isArchived())
-					.code(documentType.code).name(documentType.name);
+					.code(documentType.code).name(documentType.name).transactionType(documentType.transactionType);
 		}
 
 		public Builder id(BigInteger id) {
@@ -111,6 +123,11 @@ public class DocumentType extends CommonData {
 
 		public Builder name(String name) {
 			this.name = name;
+			return this;
+		}
+
+		public Builder transactionType(TransactionType transactionType) {
+			this.transactionType = transactionType;
 			return this;
 		}
 
