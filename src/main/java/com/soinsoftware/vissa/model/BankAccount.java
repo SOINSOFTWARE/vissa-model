@@ -4,6 +4,7 @@ package com.soinsoftware.vissa.model;
 import java.math.BigInteger;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -30,16 +31,16 @@ public class BankAccount extends CommonData {
 
 	private static final long serialVersionUID = 5807717858270495166L;
 
-	@NaturalId
-	private String account;
+
+	@Column(name = "account_number")
+	private String accountNumber;
 	@Enumerated(EnumType.STRING)
 	private BankAccountType type;
 	@ManyToOne
 	@JoinColumn(name = "bank_id")
 	private Bank bank;
-	@ManyToOne
-	@JoinColumn(name = "supplier_id")
-	private Supplier supplier;
+	@Enumerated(EnumType.STRING)
+	private BankAccountStatus status;
 
 	public BankAccount() {
 		super();
@@ -47,30 +48,46 @@ public class BankAccount extends CommonData {
 
 	public BankAccount(Builder builder) {
 		super(builder.id, builder.creationDate, builder.modifyDate, builder.archived);
-		account = builder.account;
+		accountNumber = builder.account;
 		type = builder.type;
 		bank = builder.bank;
-		supplier = builder.supplier;
+		status = builder.status;
 	}
 
 	@Override
 	public void validate() {
-		if (account == null || account.trim().equals("")) {
-			throw new ModelValidationException("El número de cuenta es obligatorio.");
-		}
+
 		if (type == null) {
 			throw new ModelValidationException("El tipo de cuenta es obligatorio.");
 		}
-		if (bank == null) {
+
+		if (accountNumber == null || accountNumber.trim().equals("")) {
+			throw new ModelValidationException("El número de cuenta es obligatorio.");
+		}
+		if ( bank == null) {
 			throw new ModelValidationException("El banco es obligatorio.");
 		} else {
 			bank.validate();
 		}
-		if (supplier == null) {
-			throw new ModelValidationException("El proveedor es obligatorio.");
-		} else {
-			supplier.validate();
+		if (status == null) {
+			throw new ModelValidationException("El estado de la cuenta es obligatorio.");
 		}
+	}
+
+	public String getAccountNumber() {
+		return accountNumber;
+	}
+
+	public BankAccountType getType() {
+		return type;
+	}
+
+	public Bank getBank() {
+		return bank;
+	}
+
+	public BankAccountStatus getStatus() {
+		return status;
 	}
 
 	public static Builder builder() {
@@ -90,15 +107,15 @@ public class BankAccount extends CommonData {
 		private String account;
 		private BankAccountType type;
 		private Bank bank;
-		private Supplier supplier;
+		private BankAccountStatus status;
 
 		private Builder() {
 		}
 
 		private Builder(BankAccount bankAccount) {
 			id(bankAccount.getId()).creationDate(bankAccount.getCreationDate()).modifyDate(bankAccount.getModifyDate())
-					.archived(bankAccount.isArchived()).account(bankAccount.account).type(bankAccount.type)
-					.bank(bankAccount.bank).supplier(bankAccount.supplier);
+					.archived(bankAccount.isArchived()).account(bankAccount.accountNumber).type(bankAccount.type)
+					.bank(bankAccount.bank).status(bankAccount.status);
 		}
 
 		public Builder id(BigInteger id) {
@@ -136,8 +153,8 @@ public class BankAccount extends CommonData {
 			return this;
 		}
 
-		public Builder supplier(Supplier supplier) {
-			this.supplier = supplier;
+		public Builder status(BankAccountStatus status) {
+			this.status = status;
 			return this;
 		}
 
@@ -145,4 +162,11 @@ public class BankAccount extends CommonData {
 			return new BankAccount(this);
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "BankAccount [accountNumber=" + accountNumber + ", type=" + type + ", bank=" + bank + ", status="
+				+ status + "]";
+	}
+
 }

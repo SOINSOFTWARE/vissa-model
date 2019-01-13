@@ -8,6 +8,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.NaturalId;
@@ -40,6 +43,20 @@ public class Person extends CommonData {
 	private String lastName;
 	@Enumerated(EnumType.STRING)
 	private PersonType type;
+	@Column(name = "contact_name")
+	private String contactName;
+	private String address;
+	@ManyToOne
+	@JoinColumn(name = "city_id")
+	private City city;
+	private String mobile;
+	private String phone;
+	private String email;
+	@Column(name = "web_site")
+	private String webSite;
+	@OneToOne
+	@JoinColumn(name = "bank_account_id")
+	private BankAccount bankAccount;
 
 	public Person() {
 		super();
@@ -52,6 +69,14 @@ public class Person extends CommonData {
 		name = builder.name;
 		lastName = builder.lastName;
 		type = builder.type;
+		address = builder.address;
+		city = builder.city;
+		mobile = builder.mobile;
+		phone = builder.phone;
+		email = builder.email;
+		webSite = builder.webSite;
+		contactName = builder.contactName;
+		bankAccount = builder.bankAccount;
 	}
 
 	public DocumentIdType getDocumentType() {
@@ -72,6 +97,38 @@ public class Person extends CommonData {
 
 	public PersonType getType() {
 		return type;
+	}
+
+	public String getContactName() {
+		return contactName;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public City getCity() {
+		return city;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public String getWebSite() {
+		return webSite;
+	}
+
+	public BankAccount getBankAccount() {
+		return bankAccount;
 	}
 
 	@Override
@@ -111,6 +168,14 @@ public class Person extends CommonData {
 		private String name;
 		private String lastName;
 		private PersonType type;
+		private String contactName;
+		private String address;
+		private City city;
+		private String mobile;
+		private String phone;
+		private String email;
+		private String webSite;
+		private BankAccount bankAccount;
 
 		private Builder() {
 		}
@@ -118,8 +183,9 @@ public class Person extends CommonData {
 		private Builder(Person person) {
 			id(person.getId()).creationDate(person.getCreationDate()).modifyDate(person.getModifyDate())
 					.archived(person.isArchived()).documentType(person.documentType)
-					.documentNumber(person.documentNumber).name(person.name).lastName(person.lastName)
-					.type(person.type);
+					.documentNumber(person.documentNumber).name(person.name).lastName(person.lastName).type(person.type)
+					.contactName(person.contactName).address(person.address).city(person.city).mobile(person.mobile)
+					.phone(person.phone).email(person.email).webSite(person.webSite).bankAccount(person.bankAccount);
 		}
 
 		public Builder id(BigInteger id) {
@@ -167,8 +233,58 @@ public class Person extends CommonData {
 			return this;
 		}
 
+		public Builder contactName(String contactName) {
+			this.contactName = contactName;
+			return this;
+		}
+
+		public Builder address(String address) {
+			this.address = address;
+			return this;
+		}
+
+		public Builder city(City city) {
+			this.city = city;
+			return this;
+		}
+
+		public Builder mobile(String mobile) {
+			this.mobile = mobile;
+			return this;
+		}
+
+		public Builder phone(String phone) {
+			this.phone = phone;
+			return this;
+		}
+
+		public Builder email(String email) {
+			this.email = email;
+			return this;
+		}
+
+		public Builder webSite(String webSite) {
+			this.webSite = webSite;
+			return this;
+		}
+
+		public Builder bankAccount(BankAccount bankAccount) {
+			this.bankAccount = bankAccount;
+			return this;
+		}
+
 		public Person build() {
 			return new Person(this);
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "Person [documentType=" + documentType + ", documentNumber=" + documentNumber + ", name=" + name
+				+ ", lastName=" + lastName + ", type=" + type + ", contactName=" + contactName + ", address=" + address
+				+ ", city=" + city + ", mobile=" + mobile + ", phone=" + phone + ", email=" + email + ", webSite="
+				+ webSite + ", bankAccount=" + bankAccount + "]";
+	}
+	
+	
 }
