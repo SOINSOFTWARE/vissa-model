@@ -2,9 +2,9 @@ CREATE DATABASE  IF NOT EXISTS `vissa` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `vissa`;
 -- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
--- Host: 104.236.248.165    Database: vissa
+-- Host: 127.0.0.1    Database: vissa
 -- ------------------------------------------------------
--- Server version	5.5.5-10.2.12-MariaDB
+-- Server version	5.5.5-10.1.30-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -27,8 +27,8 @@ DROP TABLE IF EXISTS `bank`;
 CREATE TABLE `bank` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
-  `creation_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `modify_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `archived` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
@@ -53,17 +53,17 @@ DROP TABLE IF EXISTS `bank_account`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `bank_account` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `account` varchar(50) DEFAULT NULL,
+  `account_number` varchar(50) DEFAULT NULL,
   `type` varchar(20) DEFAULT NULL,
   `bank_id` bigint(20) DEFAULT NULL,
-  `supplier_id` bigint(20) NOT NULL,
-  `creation_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `modify_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `status` varchar(45) NOT NULL,
+  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `archived` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`),
-  KEY `bank_account_bank_fk_idx` (`bank_id`),
-  CONSTRAINT `bank_account_bank_fk` FOREIGN KEY (`bank_id`) REFERENCES `bank` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+  KEY `bank_account_bank_idx` (`bank_id`),
+  CONSTRAINT `bank_account_bank` FOREIGN KEY (`bank_id`) REFERENCES `bank` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,7 +72,7 @@ CREATE TABLE `bank_account` (
 
 LOCK TABLES `bank_account` WRITE;
 /*!40000 ALTER TABLE `bank_account` DISABLE KEYS */;
-INSERT INTO `bank_account` VALUES (1,'1234-5678-9012','SAVING',1,2,'2018-11-28 16:00:56','2018-11-28 16:00:56','\0');
+INSERT INTO `bank_account` VALUES (1,'1234-5678-9012','SAVING',1,'','2018-11-28 16:00:56','2018-11-28 16:00:56','\0'),(2,'220','SAVING',1,'ACIVE','2019-01-13 23:08:39','2019-01-13 23:08:39','\0');
 /*!40000 ALTER TABLE `bank_account` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -87,8 +87,8 @@ CREATE TABLE `city` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `state_id` bigint(20) NOT NULL,
   `name` varchar(250) NOT NULL,
-  `creation_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `modify_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `archived` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`),
   KEY `state_fk_idx` (`state_id`),
@@ -124,8 +124,8 @@ CREATE TABLE `contact` (
   `web_site` varchar(250) DEFAULT NULL,
   `type` char(1) NOT NULL,
   `person_id` bigint(20) NOT NULL,
-  `creation_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `modify_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `archived` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`),
   KEY `contact_person_fk_idx` (`person_id`),
@@ -154,8 +154,8 @@ DROP TABLE IF EXISTS `country`;
 CREATE TABLE `country` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(250) NOT NULL,
-  `creation_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `modify_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `archived` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
@@ -183,7 +183,7 @@ CREATE TABLE `currency` (
   `code` varchar(45) NOT NULL,
   `name` varchar(45) NOT NULL,
   `creation_date` timestamp NULL DEFAULT NULL,
-  `modify_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `modify_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `archived` bit(1) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
@@ -242,11 +242,12 @@ CREATE TABLE `document` (
   `currency_id` bigint(20) DEFAULT NULL,
   `total_value_no_tax` decimal(16,2) DEFAULT NULL,
   `total_value` decimal(16,2) DEFAULT NULL,
-  `status_id` bigint(20) NOT NULL DEFAULT 1,
-  `creation_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `modify_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `status_id` bigint(20) NOT NULL DEFAULT '1',
+  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `archived` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`),
+  UNIQUE KEY `document_number_UQ` (`code`),
   KEY `document_document_type_idx` (`type_id`),
   KEY `document_person_idx` (`person_id`),
   KEY `document_payment_type_idx` (`payment_type_id`),
@@ -259,7 +260,7 @@ CREATE TABLE `document` (
   CONSTRAINT `document_payment_type` FOREIGN KEY (`payment_type_id`) REFERENCES `payment_type` (`id`),
   CONSTRAINT `document_person` FOREIGN KEY (`person_id`) REFERENCES `person` (`id`),
   CONSTRAINT `document_status` FOREIGN KEY (`status_id`) REFERENCES `document_status` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -268,7 +269,7 @@ CREATE TABLE `document` (
 
 LOCK TABLES `document` WRITE;
 /*!40000 ALTER TABLE `document` DISABLE KEYS */;
-INSERT INTO `document` VALUES (39,'CO-39','56485',1,6,'2019-01-04 05:00:00',1,1,'10',NULL,NULL,0.00,0.00,1,'2019-01-04 08:41:08','2019-01-04 08:41:08','\0'),(40,'CO-40','7878',1,6,'2019-01-04 05:00:00',1,1,'10',NULL,NULL,0.00,0.00,2,'2019-01-04 08:41:14','2019-01-04 08:41:14','\0'),(41,'VE-41','24234',2,6,'2019-01-04 05:00:00',1,1,'10','2019-01-14 05:00:00',NULL,0.00,0.00,2,'2019-01-04 09:27:32','2019-01-04 09:27:32','\0'),(42,'CO-42','4454',1,6,'2019-01-04 05:00:00',1,1,'8','2019-01-12 05:00:00',NULL,0.00,0.00,2,'2019-01-04 10:46:23','2019-01-04 10:46:23','\0'),(43,'VE-43','',2,7,'2019-01-04 05:00:00',1,1,'10','2019-01-14 05:00:00',NULL,0.00,0.00,2,'2019-01-04 10:52:10','2019-01-04 10:52:10','\0');
+INSERT INTO `document` VALUES (39,'CO-39','56485',1,6,'2019-01-04 05:00:00',1,1,'10',NULL,NULL,0.00,0.00,1,'2019-01-04 08:41:08','2019-01-04 08:41:08','\0'),(40,'CO-40','7878',1,6,'2019-01-04 05:00:00',1,1,'10',NULL,NULL,0.00,0.00,2,'2019-01-04 08:41:14','2019-01-04 08:41:14','\0'),(41,'VE-41','24234',2,6,'2019-01-04 05:00:00',1,1,'10','2019-01-14 05:00:00',NULL,0.00,0.00,2,'2019-01-04 09:27:32','2019-01-04 09:27:32','\0'),(42,'CO-42','4454',1,6,'2019-01-04 05:00:00',1,1,'8','2019-01-12 05:00:00',NULL,0.00,0.00,2,'2019-01-04 10:46:23','2019-01-04 10:46:23','\0'),(43,'VE-43','',2,7,'2019-01-04 05:00:00',1,1,'10','2019-01-14 05:00:00',NULL,0.00,0.00,2,'2019-01-04 10:52:10','2019-01-04 10:52:10','\0'),(44,'CO-44','4654',1,6,'2019-01-10 10:00:00',1,1,'10','2019-01-20 10:00:00',NULL,0.00,0.00,2,'2019-01-11 03:20:50','2019-01-11 03:20:50','\0'),(45,'CO-45','65415',1,6,'2019-01-10 10:00:00',1,1,'10','2019-01-20 10:00:00',NULL,0.00,0.00,2,'2019-01-11 03:24:46','2019-01-11 03:24:46','\0'),(46,'CO-46','uiu',1,6,'2019-01-25 22:32:03',1,1,'10','2019-02-04 22:32:03',NULL,0.00,0.00,2,'2019-01-14 00:33:28','2019-01-14 00:33:28','\0');
 /*!40000 ALTER TABLE `document` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -287,16 +288,16 @@ CREATE TABLE `document_detail` (
   `quantity` int(11) DEFAULT NULL,
   `sub_total` decimal(16,2) DEFAULT NULL,
   `stock` int(11) DEFAULT NULL,
-  `stock_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `creation_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `modify_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `stock_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `archived` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`),
   KEY `document_detail_document_idx` (`document_id`),
   KEY `document_product_idx` (`product_id`),
   CONSTRAINT `document_detail_document` FOREIGN KEY (`document_id`) REFERENCES `document` (`id`),
   CONSTRAINT `document_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -305,7 +306,7 @@ CREATE TABLE `document_detail` (
 
 LOCK TABLES `document_detail` WRITE;
 /*!40000 ALTER TABLE `document_detail` DISABLE KEYS */;
-INSERT INTO `document_detail` VALUES (2,39,3,NULL,1,5000.00,NULL,'2019-01-04 02:32:03','2019-01-04 02:32:03','2019-01-04 02:32:03','\0'),(3,40,10,NULL,1,1000.00,NULL,'2019-01-04 08:40:03','2019-01-04 08:40:03','2019-01-04 08:40:03','\0'),(4,41,8,NULL,1,7500.00,NULL,'2019-01-04 09:27:32','2019-01-04 09:27:32','2019-01-04 09:27:32','\0'),(5,42,4,NULL,1,4700.00,NULL,'2019-01-04 10:46:23','2019-01-04 10:46:23','2019-01-04 10:46:23','\0'),(6,43,3,NULL,2,10000.00,NULL,'2019-01-04 10:52:10','2019-01-04 10:52:10','2019-01-04 10:52:10','\0');
+INSERT INTO `document_detail` VALUES (2,39,3,NULL,1,5000.00,NULL,'2019-01-04 02:32:03','2019-01-04 02:32:03','2019-01-04 02:32:03','\0'),(3,40,10,NULL,1,1000.00,NULL,'2019-01-04 08:40:03','2019-01-04 08:40:03','2019-01-04 08:40:03','\0'),(4,41,8,NULL,1,7500.00,NULL,'2019-01-04 09:27:32','2019-01-04 09:27:32','2019-01-04 09:27:32','\0'),(5,42,4,NULL,1,4700.00,NULL,'2019-01-04 10:46:23','2019-01-04 10:46:23','2019-01-04 10:46:23','\0'),(6,43,3,NULL,2,10000.00,NULL,'2019-01-04 10:52:10','2019-01-04 10:52:10','2019-01-04 10:52:10','\0'),(7,44,3,NULL,2,10000.00,NULL,'2019-01-11 03:20:50','2019-01-11 03:20:50','2019-01-11 03:20:50','\0'),(8,45,3,NULL,2,10000.00,NULL,'2019-01-11 03:24:46','2019-01-11 03:24:46','2019-01-11 03:24:46','\0'),(9,46,3,NULL,1,5000.00,NULL,'2019-01-14 00:33:28','2019-01-14 00:33:28','2019-01-14 00:33:28','\0');
 /*!40000 ALTER TABLE `document_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -320,8 +321,8 @@ CREATE TABLE `document_status` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   `document_type_id` bigint(20) DEFAULT NULL,
-  `creation_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `modify_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `archived` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`),
   KEY `status_document_type` (`document_type_id`),
@@ -351,8 +352,8 @@ CREATE TABLE `document_type` (
   `code` varchar(45) NOT NULL,
   `name` varchar(45) NOT NULL,
   `transaction_type` varchar(45) NOT NULL,
-  `creation_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `modify_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `archived` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
@@ -383,15 +384,15 @@ CREATE TABLE `inventory_transaction` (
   `initial_stock` int(10) DEFAULT NULL,
   `final_stock` int(10) DEFAULT NULL,
   `quantity` int(10) DEFAULT NULL,
-  `creation_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `modify_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `archived` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`),
   KEY `product_fk_idx` (`product_id`),
   KEY `document_fk_idx` (`document_id`),
   CONSTRAINT `inventory_document` FOREIGN KEY (`document_id`) REFERENCES `document` (`id`),
   CONSTRAINT `inventory_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -400,7 +401,7 @@ CREATE TABLE `inventory_transaction` (
 
 LOCK TABLES `inventory_transaction` WRITE;
 /*!40000 ALTER TABLE `inventory_transaction` DISABLE KEYS */;
-INSERT INTO `inventory_transaction` VALUES (1,3,'ENTRADA',39,525,524,1,'2019-01-04 02:32:03','2019-01-04 02:32:03','\0'),(2,10,'ENTRADA',40,222,221,1,'2019-01-04 08:40:03','2019-01-04 08:40:03','\0'),(3,8,'SALIDA',41,220,219,1,'2019-01-04 09:27:32','2019-01-04 09:27:32','\0'),(4,4,'ENTRADA',42,291,290,1,'2019-01-04 10:46:23','2019-01-04 10:46:23','\0'),(5,3,'SALIDA',43,524,522,2,'2019-01-04 10:52:10','2019-01-04 10:52:10','\0');
+INSERT INTO `inventory_transaction` VALUES (1,3,'ENTRADA',39,525,524,1,'2019-01-04 02:32:03','2019-01-04 02:32:03','\0'),(2,10,'ENTRADA',40,222,221,1,'2019-01-04 08:40:03','2019-01-04 08:40:03','\0'),(3,8,'SALIDA',41,220,219,1,'2019-01-04 09:27:32','2019-01-04 09:27:32','\0'),(4,4,'ENTRADA',42,291,290,1,'2019-01-04 10:46:23','2019-01-04 10:46:23','\0'),(5,3,'SALIDA',43,524,522,2,'2019-01-04 10:52:10','2019-01-04 10:52:10','\0'),(6,3,'ENTRADA',45,522,520,2,'2019-01-11 03:24:46','2019-01-11 03:24:46','\0'),(7,3,'ENTRADA',46,520,519,1,'2019-01-14 00:33:28','2019-01-14 00:33:28','\0');
 /*!40000 ALTER TABLE `inventory_transaction` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -419,8 +420,8 @@ CREATE TABLE `lot` (
   `expiration_date` timestamp NULL DEFAULT NULL,
   `product_id` bigint(20) NOT NULL,
   `quantity` int(11) NOT NULL,
-  `creation_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `modify_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `archived` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`),
   KEY `lot_product_idx` (`product_id`),
@@ -448,8 +449,8 @@ DROP TABLE IF EXISTS `measurement_unit`;
 CREATE TABLE `measurement_unit` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
-  `creation_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `modify_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `archived` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
@@ -476,8 +477,8 @@ CREATE TABLE `payment_method` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `code` varchar(45) NOT NULL,
   `name` varchar(45) NOT NULL,
-  `creation_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `modify_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `archived` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
@@ -504,8 +505,8 @@ CREATE TABLE `payment_type` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `code` varchar(45) NOT NULL,
   `name` varchar(45) NOT NULL,
-  `creation_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `modify_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `archived` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
@@ -542,12 +543,15 @@ CREATE TABLE `person` (
   `phone` varchar(20) DEFAULT '',
   `email` varchar(50) DEFAULT '',
   `web_site` varchar(250) DEFAULT '',
-  `creation_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `modify_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `archived` bit(1) NOT NULL DEFAULT b'0',
-  PRIMARY KEY (`id`),
+  `bank_account_id` bigint(20) DEFAULT NULL,
+  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `archived` bit(1) NOT NULL,
+  PRIMARY KEY (`id`,`archived`),
   UNIQUE KEY `identification_number_UNIQUE` (`document_number`),
   KEY `person_city` (`city_id`),
+  KEY `person_bank_account_idx` (`bank_account_id`),
+  CONSTRAINT `person_bank_account` FOREIGN KEY (`bank_account_id`) REFERENCES `bank_account` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `person_city` FOREIGN KEY (`city_id`) REFERENCES `city` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COMMENT='Tabla para el almacenamiento de clientes, proveedores, terceros o cualquier tipo de persona';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -558,7 +562,7 @@ CREATE TABLE `person` (
 
 LOCK TABLES `person` WRITE;
 /*!40000 ALTER TABLE `person` DISABLE KEYS */;
-INSERT INTO `person` VALUES (6,'CC','09876','Lina Maria','Mejia','SUPPLIER','Lina Maria Flórez Mejia','Calle 75C # 114 -18',1,'','','','','2019-01-08 22:23:02','2019-01-08 22:23:02',''),(7,'CC','104567608','LINA','F','SUPPLIER',NULL,'',1,'','','','','2019-01-08 21:06:29','2019-01-08 21:06:29','\0'),(14,'CC','14579','Other','Test','USER',NULL,'',1,'','','','','2019-01-08 21:06:29','2019-01-08 21:06:29',''),(20,'CC','145795','Alex','Quiroz','USER',NULL,'',1,'','','','','2019-01-08 21:06:29','2019-01-08 21:06:29','\0'),(21,'CC','123','Eider','Samia','USER',NULL,'',1,'','','','','2019-01-08 21:06:29','2019-01-08 21:06:29','\0'),(22,'CC','1234','Diana','Carbo','USER',NULL,'',1,'','','','','2019-01-08 21:06:29','2019-01-08 21:06:29','\0'),(23,'CC','1234567','Jhon','Castellanos','USER',NULL,'',1,'','','','','2019-01-08 21:06:29','2019-01-08 21:06:29','\0'),(24,'CC','104567','dummy','dummy','CUSTOMER',NULL,'',1,'','','','','2019-01-08 21:06:29','2019-01-08 21:06:29','\0');
+INSERT INTO `person` VALUES (6,'CC','09876','Lina Maria','Florez Mejia','SUPPLIER','Lina Maria Flórez Mejia','Calle 75C # 114 -18',1,'3002007694','','','ab',2,'2019-01-13 23:13:41','2019-01-13 23:13:41',''),(7,'CC','104567608','LINAf','F','SUPPLIER','TEST','TEST',2,'3000','21','55','www.ee',NULL,'2019-01-13 23:13:52','2019-01-13 23:13:52','\0'),(14,'CC','14579','Other','Test','USER',NULL,'',1,'','','','',NULL,'2019-01-08 21:06:29','2019-01-08 21:06:29',''),(20,'CC','145795','Alex','Quiroz','USER',NULL,'',1,'','','','',NULL,'2019-01-08 21:06:29','2019-01-08 21:06:29','\0'),(21,'CC','123','Eider','Samia','USER',NULL,'',1,'','','','',NULL,'2019-01-08 21:06:29','2019-01-08 21:06:29','\0'),(22,'CC','1234','Diana','Carbo','USER',NULL,'',1,'','','','',NULL,'2019-01-08 21:06:29','2019-01-08 21:06:29','\0'),(23,'CC','1234567','Jhon','Castellanos','USER',NULL,'',1,'','','','',NULL,'2019-01-08 21:06:29','2019-01-08 21:06:29','\0'),(24,'CC','104567','dummy','dummy','SUPPLIER','','',1,'','','','www.misitio',NULL,'2019-01-13 23:43:09','2019-01-13 23:43:09','\0');
 /*!40000 ALTER TABLE `person` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -584,8 +588,8 @@ CREATE TABLE `product` (
   `purchase_tax` decimal(16,2) DEFAULT NULL,
   `stock` int(11) DEFAULT NULL,
   `stock_date` timestamp NULL DEFAULT NULL,
-  `creation_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `modify_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `archived` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `code_UNIQUE` (`code`),
@@ -604,7 +608,7 @@ CREATE TABLE `product` (
 
 LOCK TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
-INSERT INTO `product` VALUES (1,'1','ACEITE CELEC','ACEITE CELEC',NULL,NULL,NULL,'',NULL,NULL,NULL,NULL,470,'2019-01-04 04:46:47','2019-01-03 23:46:57','2019-01-03 23:46:57','\0'),(2,'2','ACEITE VEGETAL','ACEITE VEGETAL',NULL,NULL,NULL,'',NULL,NULL,NULL,NULL,463,'2019-01-04 04:48:22','2019-01-03 23:48:27','2019-01-03 23:48:27','\0'),(3,'3','ADORNO FUTBOL','ADORNO FUTBOL',NULL,NULL,NULL,'',5000.00,NULL,NULL,NULL,522,'2019-01-04 15:52:10','2019-01-04 10:52:10','2019-01-04 10:52:10','\0'),(4,'4','AGOGO CAJAS','AGOGO CAJAS',NULL,NULL,NULL,'',4700.00,NULL,NULL,NULL,290,'2019-01-04 15:46:23','2019-01-04 10:46:23','2019-01-04 10:46:23','\0'),(5,'5','AGOGO PAQ','AGOGO PAQ',NULL,NULL,NULL,'',NULL,NULL,NULL,NULL,296,'2019-01-04 04:49:31','2019-01-03 23:49:32','2019-01-03 23:49:32','\0'),(7,'6','AGOGO UND','AGOGO UND',NULL,NULL,NULL,'',NULL,NULL,NULL,NULL,297,'2019-01-04 04:49:52','2019-01-03 23:49:54','2019-01-03 23:49:54','\0'),(8,'8','AJI PICANTE JR 2000 GR','AJI PICANTE JR 2000 GR',NULL,NULL,NULL,'',7500.00,NULL,NULL,NULL,219,'2019-01-04 14:27:32','2019-01-04 09:27:32','2019-01-04 09:27:32','\0'),(9,'9','AJI PICANTE JR 370','AJI PICANTE JR 370',NULL,NULL,NULL,'',1800.00,NULL,NULL,NULL,221,'2019-01-04 04:50:30','2019-01-03 23:50:32','2019-01-03 23:50:32','\0'),(10,'10','AJI PICANTE JR PEQUEÑO 180','AJI PICANTE JR PEQUEÑO 180',NULL,NULL,NULL,'',1000.00,NULL,NULL,NULL,221,'2019-01-04 13:40:03','2019-01-04 08:40:03','2019-01-04 08:40:03','\0');
+INSERT INTO `product` VALUES (1,'1','ACEITE CELEC','ACEITE CELEC',NULL,NULL,NULL,'',NULL,NULL,NULL,NULL,470,'2019-01-04 04:46:47','2019-01-03 23:46:57','2019-01-03 23:46:57','\0'),(2,'2','ACEITE VEGETAL','ACEITE VEGETAL',NULL,NULL,NULL,'',NULL,NULL,NULL,NULL,463,'2019-01-04 04:48:22','2019-01-03 23:48:27','2019-01-03 23:48:27','\0'),(3,'3','ADORNO FUTBOL','ADORNO FUTBOL',NULL,NULL,NULL,'',5000.00,NULL,NULL,NULL,519,'2019-01-14 05:33:28','2019-01-14 00:33:28','2019-01-14 00:33:28','\0'),(4,'4','AGOGO CAJAS','AGOGO CAJAS',NULL,NULL,NULL,'',4700.00,NULL,NULL,NULL,290,'2019-01-04 15:46:23','2019-01-04 10:46:23','2019-01-04 10:46:23','\0'),(5,'5','AGOGO PAQ','AGOGO PAQ',NULL,NULL,NULL,'',NULL,NULL,NULL,NULL,296,'2019-01-04 04:49:31','2019-01-03 23:49:32','2019-01-03 23:49:32','\0'),(7,'6','AGOGO UND','AGOGO UND',NULL,NULL,NULL,'',NULL,NULL,NULL,NULL,297,'2019-01-04 04:49:52','2019-01-03 23:49:54','2019-01-03 23:49:54','\0'),(8,'8','AJI PICANTE JR 2000 GR','AJI PICANTE JR 2000 GR',NULL,NULL,NULL,'',7500.00,NULL,NULL,NULL,219,'2019-01-04 14:27:32','2019-01-04 09:27:32','2019-01-04 09:27:32','\0'),(9,'9','AJI PICANTE JR 370','AJI PICANTE JR 370',NULL,NULL,NULL,'',1800.00,NULL,NULL,NULL,221,'2019-01-04 04:50:30','2019-01-03 23:50:32','2019-01-03 23:50:32','\0'),(10,'10','AJI PICANTE JR PEQUEÑO 180','AJI PICANTE JR PEQUEÑO 180',NULL,NULL,NULL,'',1000.00,NULL,NULL,NULL,221,'2019-01-04 13:40:03','2019-01-04 08:40:03','2019-01-04 08:40:03','\0');
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -619,8 +623,8 @@ CREATE TABLE `product_category` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   `description` varchar(100) DEFAULT NULL,
-  `creation_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `modify_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `archived` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
@@ -646,7 +650,7 @@ DROP TABLE IF EXISTS `product_type`;
 CREATE TABLE `product_type` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
-  `creation_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `modify_date` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `archived` bit(1) NOT NULL,
   PRIMARY KEY (`id`)
@@ -674,8 +678,8 @@ CREATE TABLE `state` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `country_id` bigint(20) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `creation_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `modify_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `archived` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`),
   KEY `country_state_fk_idx` (`country_id`),
@@ -705,15 +709,18 @@ CREATE TABLE `supplier` (
   `person_id` bigint(20) NOT NULL,
   `payment_type_id` bigint(20) DEFAULT NULL,
   `payment_term` varchar(45) DEFAULT NULL,
-  `creation_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `modify_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `payment_method_id` bigint(20) DEFAULT NULL,
+  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `archived` bit(1) NOT NULL DEFAULT b'0',
-  `payment_method` varchar(45) DEFAULT NULL,
+  `account_bank` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `supplier_person_fk_idx` (`person_id`),
   KEY `supplier_payment_type_fk_idx` (`payment_type_id`),
+  KEY `supplier_payment_method_idx` (`payment_method_id`),
+  CONSTRAINT `supplier_payment_method` FOREIGN KEY (`payment_method_id`) REFERENCES `payment_method` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `supplier_payment_type` FOREIGN KEY (`payment_type_id`) REFERENCES `payment_type` (`id`),
-  CONSTRAINT `supplier_person_fk` FOREIGN KEY (`person_id`) REFERENCES `person` (`id`)
+  CONSTRAINT `supplier_person` FOREIGN KEY (`person_id`) REFERENCES `person` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -723,7 +730,7 @@ CREATE TABLE `supplier` (
 
 LOCK TABLES `supplier` WRITE;
 /*!40000 ALTER TABLE `supplier` DISABLE KEYS */;
-INSERT INTO `supplier` VALUES (2,6,1,'60','2019-01-08 22:17:23','2019-01-08 22:17:23','\0',NULL),(3,7,NULL,NULL,'2018-11-29 21:58:37','2018-11-29 21:58:37','\0',NULL),(4,24,NULL,'','2019-01-04 09:37:19','2019-01-04 09:37:19','\0',NULL);
+INSERT INTO `supplier` VALUES (2,6,1,'61',1,'2019-01-13 23:42:41','2019-01-13 23:42:41','\0',NULL),(3,7,NULL,'',NULL,'2019-01-13 23:13:52','2019-01-13 23:13:52','\0',NULL),(4,24,1,'',2,'2019-01-13 23:43:09','2019-01-13 23:43:09','\0',NULL);
 /*!40000 ALTER TABLE `supplier` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -739,14 +746,14 @@ CREATE TABLE `user` (
   `login` varchar(60) NOT NULL,
   `pass` varchar(60) NOT NULL,
   `person_id` bigint(20) NOT NULL,
-  `creation_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `modify_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `modify_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `archived` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `login_UNIQUE` (`login`),
   KEY `fk_user_person_idx` (`person_id`),
   CONSTRAINT `fk_user_person` FOREIGN KEY (`person_id`) REFERENCES `person` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -776,4 +783,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-01-10 22:13:22
+-- Dump completed on 2019-01-13 21:34:35
