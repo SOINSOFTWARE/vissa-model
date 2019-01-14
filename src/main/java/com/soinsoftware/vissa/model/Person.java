@@ -4,6 +4,7 @@ package com.soinsoftware.vissa.model;
 import java.math.BigInteger;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -54,7 +55,7 @@ public class Person extends CommonData {
 	private String email;
 	@Column(name = "web_site")
 	private String webSite;
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "bank_account_id")
 	private BankAccount bankAccount;
 
