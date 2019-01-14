@@ -51,8 +51,6 @@ public class DocumentDetail extends CommonData {
 		quantity = builder.quantity;
 		subtotal = builder.subtotal;
 	}
-	
-	
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -77,8 +75,11 @@ public class DocumentDetail extends CommonData {
 	public double getSubtotal() {
 		return subtotal;
 	}
-	
-	
+
+	public String getSubtotalStr() {
+		System.out.println("getSubtotalStr: " + subtotal);
+		return String.valueOf(subtotal);
+	}
 
 	public void setDescription(String description) {
 		this.description = description;
@@ -88,14 +89,20 @@ public class DocumentDetail extends CommonData {
 		this.quantity = quantity;
 		calculateSubtotal();
 	}
-	
+
 	public void calculateSubtotal() {
-		setSubtotal(product.getSalePrice() * Integer.parseInt(quantity));
+		System.out.println("price: " + product.getSalePrice() + ", quantity: " + quantity);
+		setSubtotalStr(String.valueOf(product.getSalePrice() * Integer.parseInt(quantity)));
+		System.out.println("subtotal: " + this.subtotal);
 	}
 
-	
 	public void setSubtotal(double subtotal) {
 		this.subtotal = subtotal;
+	}
+
+	public void setSubtotalStr(String subtotal) {
+		System.out.println("setSubtotalStr: " + subtotal);
+		this.subtotal = Double.parseDouble(subtotal);
 	}
 
 	@Override
@@ -106,7 +113,7 @@ public class DocumentDetail extends CommonData {
 			product.validate();
 		}
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
