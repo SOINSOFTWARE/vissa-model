@@ -37,7 +37,8 @@ public class Supplier extends CommonData {
 	private PaymentType paymentType;
 	@Column(name = "payment_term")
 	private String paymentTerm;
-	@Column(name = "payment_method")
+	@ManyToOne
+	@JoinColumn(name = "payment_method_id")
 	private PaymentMethod paymentMethod;
 
 	public Supplier() {
