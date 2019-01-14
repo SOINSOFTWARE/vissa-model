@@ -9,14 +9,14 @@ public enum PersonType {
 
 	SUPPLIER("Proveedor"), CUSTOMER("Cliente"), USER("Usuario");
 
-	private String display;
+	private String name;
 
-	private PersonType(String display) {
-		this.display = display;
+	private PersonType(String name) {
+		this.name = name;
 	}
 
-	public String getDisplay() {
-		return display;
+	public String getName() {
+		return name;
 	}
 
 	public static PersonType fromString(String value) throws IllegalArgumentException {
