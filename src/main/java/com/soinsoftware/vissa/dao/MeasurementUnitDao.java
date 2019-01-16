@@ -4,8 +4,6 @@ package com.soinsoftware.vissa.dao;
 import java.io.IOException;
 import java.math.BigInteger;
 
-import org.hibernate.Session;
-
 import com.soinsoftware.vissa.model.MeasurementUnit;
 
 /**
@@ -19,7 +17,6 @@ public class MeasurementUnitDao extends AbstractDataAccessibleObject<Measurement
 	}
 	
 	public MeasurementUnit select(final String name) {
-		final Session session = (Session) manager.getDelegate();
-		return session.bySimpleNaturalId(MeasurementUnit.class).load(name);
+		return getSession().bySimpleNaturalId(MeasurementUnit.class).load(name);
 	}
 }

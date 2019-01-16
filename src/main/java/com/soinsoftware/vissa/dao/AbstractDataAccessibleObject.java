@@ -31,8 +31,9 @@ import com.soinsoftware.vissa.manager.VissaManagerFactory;
 public abstract class AbstractDataAccessibleObject<T, P> implements DataAccessibleObject<T, P> {
 
 	protected final Logger log = Logger.getLogger(AbstractDataAccessibleObject.class);
-	protected final EntityManager manager;
+	private final EntityManager manager;
 	private final Class<T> clazz;
+	private static Session session;
 
 	/**
 	 * Default constructor that must be used for all DAO implementations.
@@ -122,8 +123,14 @@ public abstract class AbstractDataAccessibleObject<T, P> implements DataAccessib
 
 	@Override
 	public Criteria buildCriteria() {
-		final Session session = (Session) manager.getDelegate();
-		return session.createCriteria(clazz);
+		return getSession().createCriteria(clazz);
+	}
+	
+	public Session getSession() {
+		if (session == null || !session.isOpen()) {
+			session = manager.unwrap(Session.class);
+		}
+		return session;
 	}
 
 	/**

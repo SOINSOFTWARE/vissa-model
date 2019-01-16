@@ -4,8 +4,6 @@ package com.soinsoftware.vissa.dao;
 import java.io.IOException;
 import java.math.BigInteger;
 
-import org.hibernate.Session;
-
 import com.soinsoftware.vissa.model.Country;
 
 /**
@@ -19,7 +17,6 @@ public class CountryDao extends AbstractDataAccessibleObject<Country, BigInteger
 	}
 	
 	public Country select(final String name) {
-		final Session session = (Session) manager.getDelegate();
-		return session.bySimpleNaturalId(Country.class).load(name);
+		return getSession().bySimpleNaturalId(Country.class).load(name);
 	}
 }

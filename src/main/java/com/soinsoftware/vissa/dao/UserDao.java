@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
-import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 
@@ -24,8 +23,7 @@ public class UserDao extends AbstractDataAccessibleObject<User, BigInteger> {
 	}
 
 	public User select(final String login) {
-		final Session session = (Session) manager.getDelegate();
-		return session.bySimpleNaturalId(User.class).load(login);
+		return getSession().bySimpleNaturalId(User.class).load(login);
 	}
 
 	public User select(String login, String password) {

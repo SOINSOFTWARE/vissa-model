@@ -4,8 +4,6 @@ package com.soinsoftware.vissa.dao;
 import java.io.IOException;
 import java.math.BigInteger;
 
-import org.hibernate.Session;
-
 import com.soinsoftware.vissa.model.Bank;
 
 /**
@@ -19,7 +17,6 @@ public class BankDao extends AbstractDataAccessibleObject<Bank, BigInteger> {
 	}
 
 	public Bank select(final String name) {
-		final Session session = (Session) manager.getDelegate();
-		return session.bySimpleNaturalId(Bank.class).load(name);
+		return getSession().bySimpleNaturalId(Bank.class).load(name);
 	}
 }

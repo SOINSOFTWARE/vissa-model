@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
-import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 
@@ -26,8 +25,7 @@ public class DocumentTypeDao extends AbstractDataAccessibleObject<DocumentType, 
 	}
 
 	public DocumentType select(final String code) {
-		final Session session = (Session) manager.getDelegate();
-		return session.bySimpleNaturalId(DocumentType.class).load(code);
+		return getSession().bySimpleNaturalId(DocumentType.class).load(code);
 	}
 
 	public List<DocumentType> select(TransactionType transactionType) {

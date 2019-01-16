@@ -21,14 +21,13 @@ public class DocumentDao extends AbstractDataAccessibleObject<Document, BigInteg
 	}
 
 	public Document select(final String code) {
-		final Session session = (Session) manager.getDelegate();
-		return session.bySimpleNaturalId(Document.class).load(code);
+		return getSession().bySimpleNaturalId(Document.class).load(code);
 	}
 	
 
 	public String selectNextDocumentNumber() {
-		Query query = manager.createNativeQuery("SELECT IFNULL(max(cast(id as signed)),0) + 1 from document" );
-		BigInteger num = (java.math.BigInteger)  query.getSingleResult();	
-		return String.valueOf(num);
+		//Query query = manager.createNativeQuery("SELECT IFNULL(max(cast(id as signed)),0) + 1 from document" );
+		//BigInteger num = (java.math.BigInteger)  query.getSingleResult();	
+		return String.valueOf(1);
 	}
 }

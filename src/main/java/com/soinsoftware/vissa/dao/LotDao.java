@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Criteria;
-import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 
@@ -25,8 +24,7 @@ public class LotDao extends AbstractDataAccessibleObject<Lot, BigInteger> {
 	}
 
 	public Lot select(final String code) {
-		final Session session = (Session) manager.getDelegate();
-		return session.bySimpleNaturalId(Lot.class).load(code);
+		return getSession().bySimpleNaturalId(Lot.class).load(code);
 	}
 
 	@SuppressWarnings("unchecked")

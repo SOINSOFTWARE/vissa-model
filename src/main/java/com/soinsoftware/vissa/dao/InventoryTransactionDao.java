@@ -4,8 +4,6 @@ package com.soinsoftware.vissa.dao;
 import java.io.IOException;
 import java.math.BigInteger;
 
-import org.hibernate.Session;
-
 import com.soinsoftware.vissa.model.InventoryTransaction;
 import com.soinsoftware.vissa.model.Product;
 
@@ -20,7 +18,6 @@ public class InventoryTransactionDao extends AbstractDataAccessibleObject<Invent
 	}
 
 	public InventoryTransaction select(final Product product) {
-		final Session session = (Session) manager.getDelegate();
-		return session.bySimpleNaturalId(InventoryTransaction.class).load(product);
+		return getSession().bySimpleNaturalId(InventoryTransaction.class).load(product);
 	}
 }

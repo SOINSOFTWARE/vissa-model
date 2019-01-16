@@ -4,8 +4,6 @@ package com.soinsoftware.vissa.dao;
 import java.io.IOException;
 import java.math.BigInteger;
 
-import org.hibernate.Session;
-
 import com.soinsoftware.vissa.model.ProductType;
 
 /**
@@ -19,7 +17,6 @@ public class ProductTypeDao extends AbstractDataAccessibleObject<ProductType, Bi
 	}
 	
 	public ProductType select(final String name) {
-		final Session session = (Session) manager.getDelegate();
-		return session.bySimpleNaturalId(ProductType.class).load(name);
+		return getSession().bySimpleNaturalId(ProductType.class).load(name);
 	}
 }

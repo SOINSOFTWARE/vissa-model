@@ -4,8 +4,6 @@ package com.soinsoftware.vissa.dao;
 import java.io.IOException;
 import java.math.BigInteger;
 
-import org.hibernate.Session;
-
 import com.soinsoftware.vissa.model.PaymentType;
 
 /**
@@ -19,7 +17,6 @@ public class PaymentTypeDao extends AbstractDataAccessibleObject<PaymentType, Bi
 	}
 
 	public PaymentType select(final String code) {
-		final Session session = (Session) manager.getDelegate();
-		return session.bySimpleNaturalId(PaymentType.class).load(code);
+		return getSession().bySimpleNaturalId(PaymentType.class).load(code);
 	}
 }

@@ -9,7 +9,6 @@ import java.util.List;
 import javax.persistence.Query;
 
 import org.hibernate.Criteria;
-import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 
@@ -30,8 +29,7 @@ public class ProductDao extends AbstractDataAccessibleObject<Product, BigInteger
 	}
 
 	public Product select(final String code) {
-		final Session session = (Session) manager.getDelegate();
-		return session.bySimpleNaturalId(Product.class).load(code);
+		return getSession().bySimpleNaturalId(Product.class).load(code);
 	}
 
 	public List<Product> select(ProductCategory productCategory) {
@@ -80,8 +78,8 @@ public class ProductDao extends AbstractDataAccessibleObject<Product, BigInteger
 	}
 	
 	public String selectNextProductCode() {
-		Query query = manager.createNativeQuery("SELECT max(cast(id as signed)) + 1 from product" );
-		BigInteger code = (BigInteger)  query.getSingleResult();	
-		return String.valueOf(code);
+		//Query query = manager.createNativeQuery("SELECT max(cast(id as signed)) + 1 from product" );
+		//BigInteger code = (BigInteger)  query.getSingleResult();	
+		return String.valueOf("code");
 	}
 }
