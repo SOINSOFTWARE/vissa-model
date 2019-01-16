@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityTransaction;
 
 import org.hibernate.Criteria;
+import org.hibernate.Transaction;
 
 /**
  * Interface for creating DAO objects.
@@ -64,7 +65,7 @@ public interface DataAccessibleObject<T, P> {
 	 * @param record
 	 *            Object to be stored.
 	 */
-	void persist(EntityTransaction transaction, T record);
+	void persist(Transaction transaction, T record);
 	
 	/**
 	 * Called when record must be updated in database.
@@ -83,7 +84,7 @@ public interface DataAccessibleObject<T, P> {
 	 * @param record
 	 *            Object to be stored.
 	 */
-	void update(EntityTransaction transaction, T record);
+	void update(Transaction transaction, T record);
 
 	/**
 	 * When using transaction to store data, use this method to roll back
