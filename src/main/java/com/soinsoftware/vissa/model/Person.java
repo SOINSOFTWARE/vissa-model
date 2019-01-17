@@ -50,6 +50,7 @@ public class Person extends CommonData {
 	@ManyToOne
 	@JoinColumn(name = "city_id")
 	private City city;
+	private String neighborhood;
 	private String mobile;
 	private String phone;
 	private String email;
@@ -78,6 +79,7 @@ public class Person extends CommonData {
 		webSite = builder.webSite;
 		contactName = builder.contactName;
 		bankAccount = builder.bankAccount;
+		neighborhood = builder.neighborhood;
 	}
 
 	public DocumentIdType getDocumentType() {
@@ -111,6 +113,13 @@ public class Person extends CommonData {
 	public City getCity() {
 		return city;
 	}
+
+	
+	public String getNeighborhood() {
+		return neighborhood;
+	}
+
+
 
 	public String getMobile() {
 		return mobile;
@@ -172,6 +181,7 @@ public class Person extends CommonData {
 		private String contactName;
 		private String address;
 		private City city;
+		private String neighborhood;
 		private String mobile;
 		private String phone;
 		private String email;
@@ -185,8 +195,9 @@ public class Person extends CommonData {
 			id(person.getId()).creationDate(person.getCreationDate()).modifyDate(person.getModifyDate())
 					.archived(person.isArchived()).documentType(person.documentType)
 					.documentNumber(person.documentNumber).name(person.name).lastName(person.lastName).type(person.type)
-					.contactName(person.contactName).address(person.address).city(person.city).mobile(person.mobile)
-					.phone(person.phone).email(person.email).webSite(person.webSite).bankAccount(person.bankAccount);
+					.contactName(person.contactName).address(person.address).city(person.city)
+					.neighborhood(person.neighborhood).mobile(person.mobile).phone(person.phone).email(person.email)
+					.webSite(person.webSite).bankAccount(person.bankAccount);
 		}
 
 		public Builder id(BigInteger id) {
@@ -249,6 +260,11 @@ public class Person extends CommonData {
 			return this;
 		}
 
+		public Builder neighborhood(String neighborhood) {
+			this.neighborhood = neighborhood;
+			return this;
+		}
+
 		public Builder mobile(String mobile) {
 			this.mobile = mobile;
 			return this;
@@ -286,6 +302,5 @@ public class Person extends CommonData {
 				+ ", city=" + city + ", mobile=" + mobile + ", phone=" + phone + ", email=" + email + ", webSite="
 				+ webSite + ", bankAccount=" + bankAccount + "]";
 	}
-	
-	
+
 }
