@@ -9,8 +9,10 @@ import javax.persistence.EntityTransaction;
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.resource.transaction.spi.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.soinsoftware.vissa.manager.AbstractManagerFactory;
@@ -18,10 +20,8 @@ import com.soinsoftware.vissa.manager.VissaManagerFactory;
 
 /**
  * 
- * @param <T>
- *            Class that represents the model.
- * @param <P>
- *            Class that represents the primary key.
+ * @param <T> Class that represents the model.
+ * @param <P> Class that represents the primary key.
  * 
  * @author Carlos Rodriguez
  * @since 13/08/2018
@@ -67,45 +67,47 @@ public abstract class AbstractDataAccessibleObject<T, P> implements DataAccessib
 	@Override
 	public void persist(T record) {
 		try {
-			persist(manager.getTransaction(), record);
+			persist(getSession().getTransaction(), record);
 		} finally {
-			manager.getTransaction().commit();
+			getSession().getTransaction().commit();
+			getSession().flush();
 		}
 	}
 
 	@Override
-	public void persist(final EntityTransaction transaction, final T record) {
+	public void persist(final Transaction transaction, final T record) {
 		log.info("Persisting object: " + record.toString());
-		if (!transaction.isActive()) {
+		if (!transaction.getStatus().equals(TransactionStatus.ACTIVE)) {
 			transaction.begin();
 		}
-		manager.persist(record);
+		getSession().persist(record);
 	}
 
 	@Override
 	public void update(T record) {
 		try {
-			update(manager.getTransaction(), record);
+			update(getSession().getTransaction(), record);
 		} finally {
-			manager.getTransaction().commit();
+			getSession().getTransaction().commit();
 		}
 	}
 
 	@Override
-	public void update(final EntityTransaction transaction, final T record) {
+	public void update(final Transaction transaction, final T record) {
 		log.info("Updating object: " + record.toString());
-		if (!transaction.isActive()) {
+		if (!transaction.getStatus().equals(TransactionStatus.ACTIVE)) {
 			transaction.begin();
 		}
-		T merged = manager.merge(record);
+		T merged = (T) getSession().merge(record);
 		persist(transaction, merged);
 	}
 
 	@Override
 	public void delete(final T record) {
 		log.info("Deleting object: " + record.toString());
-		manager.remove(record);
-		manager.getTransaction().commit();
+		getSession().delete(record);
+		getSession().getTransaction().commit();
+		session.flush();
 	}
 
 	@Override
@@ -125,7 +127,7 @@ public abstract class AbstractDataAccessibleObject<T, P> implements DataAccessib
 	public Criteria buildCriteria() {
 		return getSession().createCriteria(clazz);
 	}
-	
+
 	public Session getSession() {
 		if (session == null || !session.isOpen()) {
 			session = manager.unwrap(Session.class);
@@ -136,8 +138,7 @@ public abstract class AbstractDataAccessibleObject<T, P> implements DataAccessib
 	/**
 	 * Builds a {@link Criteria} object with a restriction.
 	 * 
-	 * @param enabled
-	 *            filter list of data using the archived column.
+	 * @param enabled filter list of data using the archived column.
 	 * @return {@link Criteria} object.
 	 */
 	public Criteria buildCriteriaWithArchivedRestriction(final boolean enabled) {
