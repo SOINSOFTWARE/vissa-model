@@ -299,8 +299,10 @@ public class Person extends CommonData {
 	public String toString() {
 		return "Person [documentType=" + documentType + ", documentNumber=" + documentNumber + ", name=" + name
 				+ ", lastName=" + lastName + ", type=" + type + ", contactName=" + contactName + ", address=" + address
-				+ ", city=" + city + ", mobile=" + mobile + ", phone=" + phone + ", email=" + email + ", webSite="
-				+ webSite + ", bankAccount=" + bankAccount + "]";
+				+ ", city=" + city + ", neighborhood=" + neighborhood + ", mobile=" + mobile + ", phone=" + phone
+				+ ", email=" + email + ", webSite=" + webSite + ", bankAccount=" + bankAccount + "]";
 	}
+
+	
 
 }

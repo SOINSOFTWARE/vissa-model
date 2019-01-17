@@ -143,7 +143,7 @@ public abstract class AbstractDataAccessibleObject<T, P> implements DataAccessib
 	 */
 	public Criteria buildCriteriaWithArchivedRestriction(final boolean enabled) {
 		final Criteria criteria = buildCriteria();
-		final Criterion criterion = Restrictions.eq("archived", enabled);
+		final Criterion criterion = Restrictions.eq("archived", enabled);		
 		criteria.add(criterion);
 		return criteria;
 	}

@@ -11,25 +11,30 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 
 import com.soinsoftware.vissa.model.Person;
-import com.soinsoftware.vissa.model.Supplier;
+import com.soinsoftware.vissa.model.PersonType;
 
 /**
  * @author Carlos Rodriguez
  * @since 27/11/2018
  */
+@SuppressWarnings("unchecked")
 public class PersonDao extends AbstractDataAccessibleObject<Person, BigInteger> {
 
 	public PersonDao() throws IOException {
 		super(Person.class);
 	}
 
-	public Supplier select(final String documentNumber) {
+	public Person select(final String documentNumber) {
+		return getSession().bySimpleNaturalId(Person.class).load(documentNumber);
+	}
+	
+	public List<Person> select(final PersonType personType) {
 		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
-		criteria.createAlias("person", "p");
 		final List<Criterion> predicates = new ArrayList<>();
-		predicates.add(Restrictions.eq("p.documentNumber", documentNumber));
+		predicates.add(Restrictions.eq("type", personType));
 		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
 		criteria.add(criterion);
-		return (Supplier) criteria.uniqueResult();
+		return criteria.list();
 	}
+
 }
