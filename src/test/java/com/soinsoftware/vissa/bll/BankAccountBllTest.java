@@ -8,8 +8,8 @@ import com.soinsoftware.vissa.exception.ModelValidationException;
 import com.soinsoftware.vissa.manager.VissaManagerFactory;
 import com.soinsoftware.vissa.model.Bank;
 import com.soinsoftware.vissa.model.BankAccount;
+import com.soinsoftware.vissa.model.BankAccountStatus;
 import com.soinsoftware.vissa.model.BankAccountType;
-import com.soinsoftware.vissa.model.Supplier;
 
 import junit.framework.TestCase;
 
@@ -70,7 +70,6 @@ public class BankAccountBllTest extends TestCase {
 
 	private BankAccount buildTestData() throws IOException {
 		Bank bank = BankBll.getInstance().select("test");
-		Supplier supplier = SupplierBll.getInstance().select("09876");
-		return BankAccount.builder().account("1234-5678-9012").type(BankAccountType.SAVING).bank(bank).build();
+		return BankAccount.builder().account("1234-5678-9012").type(BankAccountType.SAVING).bank(bank).status(BankAccountStatus.ACTIVE).build();
 	}
 }

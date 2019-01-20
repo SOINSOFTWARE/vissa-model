@@ -46,7 +46,7 @@ public class DocumentBllTest extends TestCase {
 	}
 
 	public void testSelectByCodeExists() {
-		final Document entity = bll.select("FAC-001");
+		final Document entity = bll.select("CO-39");
 		assertNotNull(entity);
 	}
 
@@ -59,7 +59,7 @@ public class DocumentBllTest extends TestCase {
 	}
 
 	private void saveTestData() throws IOException {
-		Document document = bll.select("FAC-001");
+		Document document = bll.select("CO-39");
 		if (document == null) {
 			document = buildTestData();
 			bll.save(document);
@@ -67,7 +67,7 @@ public class DocumentBllTest extends TestCase {
 	}
 
 	private Document buildTestData() throws IOException {
-		DocumentType documentType = DocumentTypeBll.getInstance().select("FV");
-		return Document.builder().code("FAC-001").documentType(documentType).build();
+		DocumentType documentType = DocumentTypeBll.getInstance().select("CO");
+		return Document.builder().code("CO-1").documentType(documentType).build();
 	}
 }

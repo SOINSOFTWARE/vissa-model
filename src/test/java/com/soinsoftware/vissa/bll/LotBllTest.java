@@ -75,6 +75,6 @@ public class LotBllTest extends TestCase {
 
 	private Lot buildTestData() throws IOException {
 		Product product = ProductBll.getInstance().select("TEST");
-		return Lot.builder().code("TEST").product(product).quantity(1).build();
+		return Lot.builder().code("TEST").name("TEST").product(product).quantity(1).build();
 	}
 }

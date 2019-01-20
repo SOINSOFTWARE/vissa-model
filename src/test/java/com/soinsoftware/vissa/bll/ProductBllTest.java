@@ -76,7 +76,7 @@ public class ProductBllTest extends TestCase {
 	public void testSelectByAllCriteria() throws IOException {
 		ProductCategory productCategory = ProductCategoryBll.getInstance().select("Category Test");
 		ProductType productType = ProductTypeBll.getInstance().select("Type Test");
-		MeasurementUnit measurementUnit = MeasurementUnitBll.getInstance().select("Measurement unit Test");
+		MeasurementUnit measurementUnit = MeasurementUnitBll.getInstance().select("TEST");
 		final List<Product> entities = bll.select(productCategory, productType, measurementUnit);
 		assertNotNull(entities);
 		assertNotSame(entities.size(), 0);
@@ -92,7 +92,7 @@ public class ProductBllTest extends TestCase {
 
 	public void testSelectByCategoryAndUnit() throws IOException {
 		ProductCategory productCategory = ProductCategoryBll.getInstance().select("Category Test");
-		MeasurementUnit measurementUnit = MeasurementUnitBll.getInstance().select("Measurement unit Test");
+		MeasurementUnit measurementUnit = MeasurementUnitBll.getInstance().select("TEST");
 		final List<Product> entities = bll.select(productCategory, null, measurementUnit);
 		assertNotNull(entities);
 		assertNotSame(entities.size(), 0);
@@ -100,7 +100,7 @@ public class ProductBllTest extends TestCase {
 
 	public void testSelectByTypeAndUnit() throws IOException {
 		ProductType productType = ProductTypeBll.getInstance().select("Type Test");
-		MeasurementUnit measurementUnit = MeasurementUnitBll.getInstance().select("Measurement unit Test");
+		MeasurementUnit measurementUnit = MeasurementUnitBll.getInstance().select("TEST");
 		final List<Product> entities = bll.select(null, productType, measurementUnit);
 		assertNotNull(entities);
 		assertNotSame(entities.size(), 0);

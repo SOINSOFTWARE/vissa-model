@@ -75,7 +75,7 @@ public class CityBllTest extends TestCase {
 	private State getDefaultState() throws IOException {
 		Country country = CountryBll.getInstance().select("Colombia");
 		List<State> states = StateBll.getInstance().select(country);
-		return states.stream().filter(state -> state.getName().equals("Atlantico")).findFirst().get();
+		return states.stream().filter(state -> state.getName().equals("ATLÁNTICO")).findFirst().get();
 	}
 
 	private City buildTestData() throws IOException {

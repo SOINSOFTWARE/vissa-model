@@ -77,6 +77,6 @@ public class StateBllTest extends TestCase {
 
 	private State buildTestData() throws IOException {
 		Country country = getDefaultCountry();
-		return State.builder().name("Atlantico").country(country).build();
+		return State.builder().name("ATLÁNTICO").country(country).build();
 	}
 }
