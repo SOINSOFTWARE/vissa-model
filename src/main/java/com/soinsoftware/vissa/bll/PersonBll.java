@@ -3,10 +3,11 @@ package com.soinsoftware.vissa.bll;
 
 import java.io.IOException;
 import java.math.BigInteger;
+import java.util.List;
 
 import com.soinsoftware.vissa.dao.PersonDao;
 import com.soinsoftware.vissa.model.Person;
-import com.soinsoftware.vissa.model.Supplier;
+import com.soinsoftware.vissa.model.PersonType;
 
 /**
  * @author Carlos Rodriguez
@@ -20,8 +21,12 @@ public class PersonBll extends AbstractBll<Person, BigInteger> {
 		super(new PersonDao());
 	}
 
-	public Supplier select(final String document) {
+	public Person select(final String document) {
 		return ((PersonDao) dao).select(document);
+	}
+	
+	public List<Person> select(final PersonType personType) {
+		return ((PersonDao) dao).select(personType);
 	}
 	
 	public static PersonBll getInstance() throws IOException {
