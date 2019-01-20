@@ -31,7 +31,7 @@ public class BankAccount extends CommonData {
 
 	private static final long serialVersionUID = 5807717858270495166L;
 
-
+	@NaturalId
 	@Column(name = "account_number")
 	private String accountNumber;
 	@Enumerated(EnumType.STRING)

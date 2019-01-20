@@ -7,7 +7,7 @@ package com.soinsoftware.vissa.model;
  */
 public enum BankAccountStatus {
 
-	ACIVE("Activa"), INACTIVE("Inactiva"), CANCELED("Cancelada");
+	ACTIVE("Activa"), INACTIVE("Inactiva"), CANCELED("Cancelada");
 
 	private String display;
 

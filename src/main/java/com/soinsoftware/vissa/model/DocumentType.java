@@ -35,6 +35,7 @@ public class DocumentType extends CommonData {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "transaction_type")
 	private TransactionType transactionType;
+	private Integer sequence;
 
 	public DocumentType() {
 		super();
@@ -45,6 +46,7 @@ public class DocumentType extends CommonData {
 		code = builder.code;
 		name = builder.name;
 		transactionType = builder.transactionType;
+		sequence = builder.sequence;
 	}
 
 	public String getCode() {
@@ -57,6 +59,10 @@ public class DocumentType extends CommonData {
 
 	public TransactionType getTransactionType() {
 		return transactionType;
+	}
+
+	public Integer getSequence() {
+		return sequence;
 	}
 
 	@Override
@@ -86,6 +92,7 @@ public class DocumentType extends CommonData {
 		private String code;
 		private String name;
 		private TransactionType transactionType;
+		private Integer sequence;
 
 		private Builder() {
 		}
@@ -93,7 +100,8 @@ public class DocumentType extends CommonData {
 		private Builder(DocumentType documentType) {
 			id(documentType.getId()).creationDate(documentType.getCreationDate())
 					.modifyDate(documentType.getModifyDate()).archived(documentType.isArchived())
-					.code(documentType.code).name(documentType.name).transactionType(documentType.transactionType);
+					.code(documentType.code).name(documentType.name).transactionType(documentType.transactionType)
+					.sequence(sequence);
 		}
 
 		public Builder id(BigInteger id) {
@@ -128,6 +136,11 @@ public class DocumentType extends CommonData {
 
 		public Builder transactionType(TransactionType transactionType) {
 			this.transactionType = transactionType;
+			return this;
+		}
+
+		public Builder sequence(Integer sequence) {
+			this.sequence = sequence;
 			return this;
 		}
 

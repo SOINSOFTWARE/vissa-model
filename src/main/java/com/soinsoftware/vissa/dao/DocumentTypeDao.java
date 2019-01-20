@@ -36,5 +36,7 @@ public class DocumentTypeDao extends AbstractDataAccessibleObject<DocumentType, 
 		criteria.add(criterion);
 		return criteria.list();
 	}
+	
+	
 
 }
