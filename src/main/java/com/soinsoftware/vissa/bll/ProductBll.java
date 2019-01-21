@@ -53,10 +53,6 @@ public class ProductBll extends AbstractBll<Product, BigInteger> {
 	private List<Product> sortedByName(List<Product> products) {
 		return products.stream().sorted(Comparator.comparing(Product::getName)).collect(Collectors.toList());
 	}
-	
-	public String selectNextProductCode() {
-		return ((ProductDao) dao).selectNextProductCode();
-	}
 
 	public static ProductBll getInstance() throws IOException {
 		if (instance == null) {

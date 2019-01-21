@@ -3,9 +3,11 @@ package com.soinsoftware.vissa.bll;
 
 import java.io.IOException;
 import java.math.BigInteger;
+import java.util.List;
 
 import com.soinsoftware.vissa.dao.DocumentDao;
 import com.soinsoftware.vissa.model.Document;
+import com.soinsoftware.vissa.model.DocumentType;
 
 /**
  * @author Carlos Rodriguez
@@ -21,6 +23,10 @@ public class DocumentBll extends AbstractBll<Document, BigInteger> {
 
 	public Document select(final String code) {
 		return ((DocumentDao) dao).select(code);
+	}
+
+	public List<Document> select(DocumentType documentType) {
+		return ((DocumentDao) dao).select(documentType);
 	}
 
 	public static DocumentBll getInstance() throws IOException {

@@ -114,12 +114,9 @@ public class Person extends CommonData {
 		return city;
 	}
 
-	
 	public String getNeighborhood() {
 		return neighborhood;
 	}
-
-
 
 	public String getMobile() {
 		return mobile;
@@ -296,13 +293,60 @@ public class Person extends CommonData {
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((address == null) ? 0 : address.hashCode());
+		result = prime * result + ((bankAccount == null) ? 0 : bankAccount.hashCode());
+		result = prime * result + ((city == null) ? 0 : city.hashCode());
+		result = prime * result + ((contactName == null) ? 0 : contactName.hashCode());
+		result = prime * result + ((documentNumber == null) ? 0 : documentNumber.hashCode());
+		result = prime * result + ((documentType == null) ? 0 : documentType.hashCode());
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
+		result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
+		result = prime * result + ((mobile == null) ? 0 : mobile.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((neighborhood == null) ? 0 : neighborhood.hashCode());
+		result = prime * result + ((phone == null) ? 0 : phone.hashCode());
+		result = prime * result + ((type == null) ? 0 : type.hashCode());
+		result = prime * result + ((webSite == null) ? 0 : webSite.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		System.out.println("this:"+this);
+		System.out.println("obj:"+obj);
+		if (this == obj) {
+			 System.out.println("1");
+			return true;
+		}
+		if (!super.equals(obj)) {
+			 System.out.println("2");
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			 System.out.println("3");
+			return false;
+		}
+		Person other = (Person) obj;
+		System.out.println("documentNumber:"+documentNumber + ", other documentNumber" + other.documentNumber);
+		if (documentNumber == null) {
+			if (other.documentNumber != null)
+				return false;
+		} else if (!documentNumber.equals(other.documentNumber))
+			return false;
+		if (documentType != other.documentType)
+			return false;
+		return true;
+	}
+
+	@Override
 	public String toString() {
 		return "Person [documentType=" + documentType + ", documentNumber=" + documentNumber + ", name=" + name
 				+ ", lastName=" + lastName + ", type=" + type + ", contactName=" + contactName + ", address=" + address
 				+ ", city=" + city + ", neighborhood=" + neighborhood + ", mobile=" + mobile + ", phone=" + phone
 				+ ", email=" + email + ", webSite=" + webSite + ", bankAccount=" + bankAccount + "]";
 	}
-
-	
 
 }

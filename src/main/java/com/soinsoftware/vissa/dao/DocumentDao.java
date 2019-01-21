@@ -3,8 +3,15 @@ package com.soinsoftware.vissa.dao;
 
 import java.io.IOException;
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Restrictions;
 
 import com.soinsoftware.vissa.model.Document;
+import com.soinsoftware.vissa.model.DocumentType;
 
 /**
  * @author Carlos Rodriguez
@@ -20,5 +27,15 @@ public class DocumentDao extends AbstractDataAccessibleObject<Document, BigInteg
 		return getSession().bySimpleNaturalId(Document.class).load(code);
 	}
 
+	
+	@SuppressWarnings("unchecked")
+	public List<Document> select(final DocumentType documentType) {
+		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
+		final List<Criterion> predicates = new ArrayList<>();
+		predicates.add(Restrictions.eq("documentType", documentType));
+		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
+		criteria.add(criterion);
+		return criteria.list();
+	}
 	
 }

@@ -6,8 +6,6 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Query;
-
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
@@ -77,9 +75,4 @@ public class ProductDao extends AbstractDataAccessibleObject<Product, BigInteger
 		return criteria.list();
 	}
 	
-	public String selectNextProductCode() {
-		//Query query = manager.createNativeQuery("SELECT max(cast(id as signed)) + 1 from product" );
-		//BigInteger code = (BigInteger)  query.getSingleResult();	
-		return String.valueOf("code");
-	}
 }
