@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import com.soinsoftware.vissa.dao.LotDao;
 import com.soinsoftware.vissa.model.Lot;
 import com.soinsoftware.vissa.model.Product;
+import com.soinsoftware.vissa.model.Warehouse;
 
 /**
  * @author Carlos Rodriguez
@@ -29,6 +30,11 @@ public class LotBll extends AbstractBll<Lot, BigInteger> {
 
 	public List<Lot> select(Product product) {
 		List<Lot> lots = ((LotDao) dao).select(product);
+		return sortedByExpiration(lots);
+	}
+	
+	public List<Lot> select(Warehouse warehouse) {
+		List<Lot> lots = ((LotDao) dao).select(warehouse);
 		return sortedByExpiration(lots);
 	}
 

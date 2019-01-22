@@ -44,6 +44,9 @@ public class Lot extends CommonData {
 	@JoinColumn(name = "product_id")
 	private Product product;
 	private Integer quantity;
+	@ManyToOne
+	@JoinColumn(name = "warehouse_id")
+	private Warehouse warehouse;
 
 	public Lot() {
 		super();
@@ -57,6 +60,7 @@ public class Lot extends CommonData {
 		expirationDate = builder.expirationDate;
 		product = builder.product;
 		quantity = builder.quantity;
+		warehouse = builder.warehouse;
 	}
 
 	public String getCode() {
@@ -82,8 +86,10 @@ public class Lot extends CommonData {
 	public Integer getQuantity() {
 		return quantity;
 	}
-	
-	
+
+	public Warehouse getWarehouse() {
+		return warehouse;
+	}
 
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
@@ -124,6 +130,7 @@ public class Lot extends CommonData {
 		private Date expirationDate;
 		private Product product;
 		private Integer quantity;
+		private Warehouse warehouse;
 
 		private Builder() {
 		}
@@ -131,7 +138,8 @@ public class Lot extends CommonData {
 		private Builder(Lot lot) {
 			id(lot.getId()).creationDate(lot.getCreationDate()).modifyDate(lot.getModifyDate())
 					.archived(lot.isArchived()).code(lot.code).name(lot.name).lotDate(lot.lotDate)
-					.expirationDate(lot.expirationDate).product(lot.product).quantity(lot.quantity);
+					.expirationDate(lot.expirationDate).product(lot.product).quantity(lot.quantity)
+					.warehouse(lot.warehouse);
 		}
 
 		public Builder id(BigInteger id) {
@@ -184,8 +192,20 @@ public class Lot extends CommonData {
 			return this;
 		}
 
+		public Builder warehouse(Warehouse warehouse) {
+			this.warehouse = warehouse;
+			return this;
+		}
+
 		public Lot build() {
 			return new Lot(this);
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "Lot [code=" + code + ", name=" + name + ", lotDate=" + lotDate + ", expirationDate=" + expirationDate
+				+ ", product=" + product + ", quantity=" + quantity + ", warehouse=" + warehouse + "]";
+	}
+
 }

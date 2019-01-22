@@ -12,6 +12,7 @@ import org.hibernate.criterion.Restrictions;
 
 import com.soinsoftware.vissa.model.Lot;
 import com.soinsoftware.vissa.model.Product;
+import com.soinsoftware.vissa.model.Warehouse;
 
 /**
  * @author Carlos Rodriguez
@@ -32,6 +33,16 @@ public class LotDao extends AbstractDataAccessibleObject<Lot, BigInteger> {
 		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
 		final List<Criterion> predicates = new ArrayList<>();
 		predicates.add(Restrictions.eq("product", product));
+		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
+		criteria.add(criterion);
+		return criteria.list();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Lot> select(Warehouse warehouse) {
+		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
+		final List<Criterion> predicates = new ArrayList<>();
+		predicates.add(Restrictions.eq("warehouse", warehouse));
 		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
 		criteria.add(criterion);
 		return criteria.list();
