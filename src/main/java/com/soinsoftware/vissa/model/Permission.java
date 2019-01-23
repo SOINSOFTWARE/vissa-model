@@ -58,15 +58,15 @@ public class Permission extends CommonData {
 		return role;
 	}
 
-	public boolean isView() {
+	public boolean canView() {
 		return view;
 	}
 
-	public boolean isEdit() {
+	public boolean canEdit() {
 		return edit;
 	}
 
-	public boolean isDelete() {
+	public boolean canDelete() {
 		return delete;
 	}
 
