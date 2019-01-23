@@ -1,10 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `vissa` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `vissa`;
--- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.17, for macos10.12 (x86_64)
 --
--- Host: 127.0.0.1    Database: vissa
+-- Host: localhost    Database: vissa
 -- ------------------------------------------------------
--- Server version	5.5.5-10.1.30-MariaDB
+-- Server version	8.0.13
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -259,7 +257,7 @@ CREATE TABLE `departamentos` (
   `id_departamento` int(2) unsigned NOT NULL AUTO_INCREMENT,
   `departamento` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id_departamento`)
-) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -510,7 +508,7 @@ CREATE TABLE `lot` (
   KEY `lot_product_idx` (`product_id`),
   KEY `lot_warehouse_idx` (`warehouse_id`),
   CONSTRAINT `lot_product` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`),
-  CONSTRAINT `lot_warehouse` FOREIGN KEY (`warehouse_id`) REFERENCES `warehouse` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `lot_warehouse` FOREIGN KEY (`warehouse_id`) REFERENCES `warehouse` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -565,7 +563,7 @@ CREATE TABLE `menu` (
   `modify_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `archived` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -574,6 +572,7 @@ CREATE TABLE `menu` (
 
 LOCK TABLES `menu` WRITE;
 /*!40000 ALTER TABLE `menu` DISABLE KEYS */;
+INSERT INTO `menu` VALUES (1,'Productos','2019-01-23 19:39:42','2019-01-23 19:39:42','\0'),(2,'Inventario','2019-01-23 19:39:42','2019-01-23 19:39:42','\0'),(3,'Movimientos','2019-01-23 19:39:42','2019-01-23 19:39:42','\0'),(4,'Compras','2019-01-23 19:39:42','2019-01-23 19:39:42','\0'),(5,'Bodegas','2019-01-23 19:39:42','2019-01-23 19:39:42','\0'),(6,'Ventas','2019-01-23 19:39:42','2019-01-23 19:39:42','\0'),(7,'Reportes','2019-01-23 19:39:42','2019-01-23 19:39:42','\0'),(8,'Proveedores','2019-01-23 19:39:42','2019-01-23 19:39:42','\0'),(9,'Clientes','2019-01-23 19:39:42','2019-01-23 19:39:42','\0');
 /*!40000 ALTER TABLE `menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -680,9 +679,9 @@ CREATE TABLE `permission` (
   PRIMARY KEY (`id`),
   KEY `fk_permission_menu_idx` (`menu_id`),
   KEY `fk_permission_role_idx` (`role_id`),
-  CONSTRAINT `fk_permission_menu` FOREIGN KEY (`menu_id`) REFERENCES `menu` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `fk_permission_role` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  CONSTRAINT `fk_permission_menu` FOREIGN KEY (`menu_id`) REFERENCES `menu` (`id`),
+  CONSTRAINT `fk_permission_role` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -691,6 +690,7 @@ CREATE TABLE `permission` (
 
 LOCK TABLES `permission` WRITE;
 /*!40000 ALTER TABLE `permission` DISABLE KEYS */;
+INSERT INTO `permission` VALUES (1,'2019-01-23 19:43:39','2019-01-23 19:43:39','\0','','','',1,1),(2,'2019-01-23 19:43:39','2019-01-23 19:43:39','\0','','','',2,1),(3,'2019-01-23 19:43:39','2019-01-23 19:43:39','\0','','','',3,1),(4,'2019-01-23 19:43:39','2019-01-23 19:43:39','\0','','','',4,1),(5,'2019-01-23 19:43:39','2019-01-23 19:43:39','\0','','','',5,1),(6,'2019-01-23 19:43:39','2019-01-23 19:43:39','\0','','','',6,1),(7,'2019-01-23 19:43:39','2019-01-23 19:43:39','\0','','','',7,1),(8,'2019-01-23 19:43:39','2019-01-23 19:43:39','\0','','','',8,1),(9,'2019-01-23 19:43:39','2019-01-23 19:43:39','\0','','','',9,1);
 /*!40000 ALTER TABLE `permission` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -724,7 +724,7 @@ CREATE TABLE `person` (
   UNIQUE KEY `identification_number_UNIQUE` (`document_number`),
   KEY `person_city` (`city_id`),
   KEY `person_bank_account_idx` (`bank_account_id`),
-  CONSTRAINT `person_bank_account` FOREIGN KEY (`bank_account_id`) REFERENCES `bank_account` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `person_bank_account` FOREIGN KEY (`bank_account_id`) REFERENCES `bank_account` (`id`),
   CONSTRAINT `person_city` FOREIGN KEY (`city_id`) REFERENCES `city` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8 COMMENT='Tabla para el almacenamiento de clientes, proveedores, terceros o cualquier tipo de persona';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -735,7 +735,7 @@ CREATE TABLE `person` (
 
 LOCK TABLES `person` WRITE;
 /*!40000 ALTER TABLE `person` DISABLE KEYS */;
-INSERT INTO `person` VALUES (6,'CC','09876','Test','Florez Mejia','SUPPLIER','Lina Maria Flórez Mejia','Calle 75C # 114 -18',NULL,'metro','3002007694','','','abcd',2,'2019-01-23 03:08:10','2019-01-23 03:08:10',''),(7,'CC','104567608','LINAf','F','SUPPLIER','TEST','TEST',132,'','3000','21','55','www.ee',NULL,'2019-01-21 01:43:56','2019-01-21 01:43:56','\0'),(14,'CC','14579','Other','Test','USER',NULL,'',NULL,NULL,'','','','',NULL,'2019-01-19 16:17:48','2019-01-19 16:17:48',''),(20,'CC','145795','Alex','Quiroz','USER',NULL,'',NULL,NULL,'','','','',NULL,'2019-01-19 16:17:48','2019-01-19 16:17:48','\0'),(21,'CC','123','Eider','Samia','USER',NULL,'',NULL,NULL,'','','','',NULL,'2019-01-19 16:17:48','2019-01-19 16:17:48','\0'),(22,'CC','1234','Diana','Carbo','USER',NULL,'',NULL,NULL,'','','','',NULL,'2019-01-19 16:17:48','2019-01-19 16:17:48','\0'),(23,'CC','1234567','Jhon','Castellanos','USER',NULL,'',NULL,NULL,'','','','',NULL,'2019-01-19 16:17:48','2019-01-19 16:17:48','\0'),(24,'CC','104567','dummy','dummy','SUPPLIER','','',NULL,NULL,'','','','www.misitio',NULL,'2019-01-19 16:17:48','2019-01-19 16:17:48','\0'),(25,'CC','23','prueba','me','SUPPLIER','','',NULL,NULL,'','','','',NULL,'2019-01-16 04:31:34','2019-01-16 04:31:34','\0'),(26,'CC','4554','as','','SUPPLIER','','',NULL,'','','','','',NULL,'2019-01-17 03:12:22','2019-01-17 03:12:22','\0'),(27,'CC','1878','cliente1','cliente1','CUSTOMER','','',NULL,'','','','','',NULL,'2019-01-20 17:02:50','2019-01-20 17:02:50','\0'),(28,'CC','98742','cliente2','cliente2','CUSTOMER','','',NULL,'','','','','',NULL,'2019-01-20 21:40:08','2019-01-20 21:40:08','\0');
+INSERT INTO `person` VALUES (6,'CC','09876','Updated','Florez Mejia','SUPPLIER','Lina Maria Flórez Mejia','Calle 75C # 114 -18',NULL,'metro','3002007694','','','abcd',2,'2019-01-23 20:17:01','2019-01-23 20:17:01',''),(7,'CC','104567608','LINAf','F','SUPPLIER','TEST','TEST',132,'','3000','21','55','www.ee',NULL,'2019-01-21 01:43:56','2019-01-21 01:43:56','\0'),(14,'CC','14579','Other','Test','USER',NULL,'',NULL,NULL,'','','','',NULL,'2019-01-19 16:17:48','2019-01-19 16:17:48',''),(20,'CC','145795','Alex','Quiroz','USER',NULL,'',NULL,NULL,'','','','',NULL,'2019-01-19 16:17:48','2019-01-19 16:17:48','\0'),(21,'CC','123','Eider','Samia','USER',NULL,'',NULL,NULL,'','','','',NULL,'2019-01-19 16:17:48','2019-01-19 16:17:48','\0'),(22,'CC','1234','Diana','Carbo','USER',NULL,'',NULL,NULL,'','','','',NULL,'2019-01-19 16:17:48','2019-01-19 16:17:48','\0'),(23,'CC','1234567','Jhon','Castellanos','USER',NULL,'',NULL,NULL,'','','','',NULL,'2019-01-19 16:17:48','2019-01-19 16:17:48','\0'),(24,'CC','104567','dummy','dummy','SUPPLIER','','',NULL,NULL,'','','','www.misitio',NULL,'2019-01-19 16:17:48','2019-01-19 16:17:48','\0'),(25,'CC','23','prueba','me','SUPPLIER','','',NULL,NULL,'','','','',NULL,'2019-01-16 04:31:34','2019-01-16 04:31:34','\0'),(26,'CC','4554','as','','SUPPLIER','','',NULL,'','','','','',NULL,'2019-01-17 03:12:22','2019-01-17 03:12:22','\0'),(27,'CC','1878','cliente1','cliente1','CUSTOMER','','',NULL,'','','','','',NULL,'2019-01-20 17:02:50','2019-01-20 17:02:50','\0'),(28,'CC','98742','cliente2','cliente2','CUSTOMER','','',NULL,'','','','','',NULL,'2019-01-20 21:40:08','2019-01-20 21:40:08','\0');
 /*!40000 ALTER TABLE `person` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -854,7 +854,7 @@ CREATE TABLE `role` (
   `modify_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `archived` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -863,6 +863,7 @@ CREATE TABLE `role` (
 
 LOCK TABLES `role` WRITE;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
+INSERT INTO `role` VALUES (1,'SUDO','2019-01-23 19:24:58','2019-01-23 19:24:58','\0'),(2,'Administrador','2019-01-23 19:25:48','2019-01-23 19:25:48','\0'),(3,'Vendedor','2019-01-23 19:25:48','2019-01-23 19:25:48','\0');
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -917,7 +918,7 @@ CREATE TABLE `supplier` (
   KEY `supplier_person_fk_idx` (`person_id`),
   KEY `supplier_payment_type_fk_idx` (`payment_type_id`),
   KEY `supplier_payment_method_idx` (`payment_method_id`),
-  CONSTRAINT `supplier_payment_method` FOREIGN KEY (`payment_method_id`) REFERENCES `payment_method` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `supplier_payment_method` FOREIGN KEY (`payment_method_id`) REFERENCES `payment_method` (`id`),
   CONSTRAINT `supplier_payment_type` FOREIGN KEY (`payment_type_id`) REFERENCES `payment_type` (`id`),
   CONSTRAINT `supplier_person` FOREIGN KEY (`person_id`) REFERENCES `person` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
@@ -929,7 +930,7 @@ CREATE TABLE `supplier` (
 
 LOCK TABLES `supplier` WRITE;
 /*!40000 ALTER TABLE `supplier` DISABLE KEYS */;
-INSERT INTO `supplier` VALUES (2,6,1,'60 Dias',1,'2019-01-23 03:08:10','2019-01-23 03:08:10','\0',NULL),(3,7,NULL,'',NULL,'2019-01-13 23:13:52','2019-01-13 23:13:52','\0',NULL),(4,24,1,'',2,'2019-01-13 23:43:09','2019-01-13 23:43:09','\0',NULL),(5,25,NULL,'',NULL,'2019-01-17 03:24:08','2019-01-17 03:24:08','',NULL),(6,26,NULL,'',NULL,'2019-01-17 03:24:16','2019-01-17 03:24:16','',NULL),(7,27,NULL,'',NULL,'2019-01-20 17:02:50','2019-01-20 17:02:50','\0',NULL),(8,28,NULL,'',NULL,'2019-01-20 21:40:09','2019-01-20 21:40:09','\0',NULL);
+INSERT INTO `supplier` VALUES (2,6,1,'30 Dias',1,'2019-01-23 20:17:01','2019-01-23 20:17:01','\0',NULL),(3,7,NULL,'',NULL,'2019-01-13 23:13:52','2019-01-13 23:13:52','\0',NULL),(4,24,1,'',2,'2019-01-13 23:43:09','2019-01-13 23:43:09','\0',NULL),(5,25,NULL,'',NULL,'2019-01-17 03:24:08','2019-01-17 03:24:08','',NULL),(6,26,NULL,'',NULL,'2019-01-17 03:24:16','2019-01-17 03:24:16','',NULL),(7,27,NULL,'',NULL,'2019-01-20 17:02:50','2019-01-20 17:02:50','\0',NULL),(8,28,NULL,'',NULL,'2019-01-20 21:40:09','2019-01-20 21:40:09','\0',NULL);
 /*!40000 ALTER TABLE `supplier` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -978,6 +979,7 @@ CREATE TABLE `user` (
   `creation_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `modify_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `archived` bit(1) NOT NULL DEFAULT b'0',
+  `role_id` bigint(20) NOT NULL DEFAULT '3',
   PRIMARY KEY (`id`),
   UNIQUE KEY `login_UNIQUE` (`login`),
   KEY `fk_user_person_idx` (`person_id`),
@@ -991,7 +993,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (4,'test','pnbrmR5/2yU1paLqlMjzRg==',14,'2018-12-26 22:09:16','2018-12-26 22:09:16','\0'),(5,'eider.samia','XPpIEcZPlvcB+yP+qHNC9w==',21,'2019-01-03 00:48:27','2019-01-03 00:48:27','\0'),(6,'alex.quiroz','XPpIEcZPlvcB+yP+qHNC9w==',20,'2019-01-03 00:49:58','2019-01-03 00:49:58','\0'),(8,'diana.carbo','XPpIEcZPlvcB+yP+qHNC9w==',22,'2019-01-03 00:49:19','2019-01-03 00:49:19','\0'),(9,'jhon.castellanos','XPpIEcZPlvcB+yP+qHNC9w==',23,'2019-01-03 00:50:46','2019-01-03 00:50:46','\0');
+INSERT INTO `user` VALUES (4,'test','pnbrmR5/2yU1paLqlMjzRg==',14,'2019-01-23 19:30:56','2019-01-23 19:30:56','\0',1),(5,'eider.samia','XPpIEcZPlvcB+yP+qHNC9w==',21,'2019-01-23 19:30:56','2019-01-23 19:30:56','\0',2),(6,'alex.quiroz','XPpIEcZPlvcB+yP+qHNC9w==',20,'2019-01-03 00:49:58','2019-01-03 00:49:58','\0',3),(8,'diana.carbo','XPpIEcZPlvcB+yP+qHNC9w==',22,'2019-01-03 00:49:19','2019-01-03 00:49:19','\0',3),(9,'jhon.castellanos','XPpIEcZPlvcB+yP+qHNC9w==',23,'2019-01-03 00:50:46','2019-01-03 00:50:46','\0',3);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1022,14 +1024,6 @@ LOCK TABLES `warehouse` WRITE;
 INSERT INTO `warehouse` VALUES (1,'3','bodega3','2019-01-23 01:41:37','2019-01-23 01:41:37','\0');
 /*!40000 ALTER TABLE `warehouse` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping events for database 'vissa'
---
-
---
--- Dumping routines for database 'vissa'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -1040,4 +1034,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-01-22 23:22:31
+-- Dump completed on 2019-01-23 15:21:13
