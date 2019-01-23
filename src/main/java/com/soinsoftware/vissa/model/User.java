@@ -43,6 +43,9 @@ public class User extends CommonData {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "person_id")
 	private Person person;
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "role_id")
+	private Role role;
 
 	public User() {
 		super();
@@ -53,6 +56,7 @@ public class User extends CommonData {
 		login = builder.login;
 		password = builder.password;
 		person = builder.person;
+		role = builder.role;
 	}
 
 	public String getLogin() {
@@ -67,6 +71,10 @@ public class User extends CommonData {
 		return person;
 	}
 
+	public Role getRole() {
+		return role;
+	}
+
 	@Override
 	public void validate() {
 		if (login == null || login.trim().equals("")) {
@@ -79,6 +87,11 @@ public class User extends CommonData {
 			throw new ModelValidationException("Los datos de la persona son obligatorios.");
 		} else {
 			person.validate();
+		}
+		if (role == null) {
+			throw new ModelValidationException("El rol es obligatorio.");
+		} else {
+			role.validate();
 		}
 	}
 
@@ -99,13 +112,15 @@ public class User extends CommonData {
 		private String login;
 		private String password;
 		private Person person;
+		private Role role;
 
 		private Builder() {
 		}
 
 		private Builder(User user) throws NoSuchAlgorithmException, InvalidKeySpecException {
 			id(user.getId()).creationDate(user.getCreationDate()).modifyDate(user.getModifyDate())
-					.archived(user.isArchived()).login(user.login).password(user.password).person(user.person);
+					.archived(user.isArchived()).login(user.login).password(user.password).person(user.person)
+					.role(user.role);
 		}
 
 		public Builder id(BigInteger id) {
@@ -140,6 +155,11 @@ public class User extends CommonData {
 
 		public Builder person(Person person) {
 			this.person = person;
+			return this;
+		}
+
+		public Builder role(Role role) {
+			this.role = role;
 			return this;
 		}
 
