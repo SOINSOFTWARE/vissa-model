@@ -6,6 +6,7 @@ import java.math.BigInteger;
 
 import com.soinsoftware.vissa.dao.UserDao;
 import com.soinsoftware.vissa.exception.ModelValidationException;
+import com.soinsoftware.vissa.model.Person;
 import com.soinsoftware.vissa.model.User;
 
 /**
@@ -26,6 +27,10 @@ public class UserBll extends AbstractBll<User, BigInteger> {
 
 	public User select(User user) {
 		return ((UserDao) dao).select(user.getLogin(), user.getPassword());
+	}
+
+	public User select(Person person) {
+		return ((UserDao) dao).select(person);
 	}
 
 	@Override

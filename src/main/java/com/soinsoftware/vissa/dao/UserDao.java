@@ -10,6 +10,7 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 
+import com.soinsoftware.vissa.model.Person;
 import com.soinsoftware.vissa.model.User;
 
 /**
@@ -35,4 +36,15 @@ public class UserDao extends AbstractDataAccessibleObject<User, BigInteger> {
 		criteria.add(criterion);
 		return (User) criteria.uniqueResult();
 	}
+
+	public User select(Person person) {
+		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
+		final List<Criterion> predicates = new ArrayList<>();
+		predicates.add(Restrictions.eq("person", person));
+		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
+		criteria.add(criterion);
+		return (User) criteria.uniqueResult();
+	}
+	
+	
 }
