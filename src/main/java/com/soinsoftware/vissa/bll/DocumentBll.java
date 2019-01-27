@@ -28,6 +28,10 @@ public class DocumentBll extends AbstractBll<Document, BigInteger> {
 	public List<Document> select(DocumentType documentType) {
 		return ((DocumentDao) dao).select(documentType);
 	}
+	
+	public List<Document> select(List<DocumentType> documentTypes) {
+		return ((DocumentDao) dao).select(documentTypes);
+	}
 
 	public static DocumentBll getInstance() throws IOException {
 		if (instance == null) {
