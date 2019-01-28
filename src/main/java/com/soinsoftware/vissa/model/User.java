@@ -179,4 +179,10 @@ public class User extends CommonData {
 			return Base64.getEncoder().encodeToString(securePassword);
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "User [login=" + login + ", person=" + person + ", role=" + role + "]";
+	}
+
 }
