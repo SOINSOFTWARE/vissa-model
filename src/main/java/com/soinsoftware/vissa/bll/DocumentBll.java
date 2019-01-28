@@ -25,10 +25,14 @@ public class DocumentBll extends AbstractBll<Document, BigInteger> {
 		return ((DocumentDao) dao).select(code);
 	}
 
+	public Document select(String code, DocumentType documentType) {
+		return ((DocumentDao) dao).select(code, documentType);
+	}
+
 	public List<Document> select(DocumentType documentType) {
 		return ((DocumentDao) dao).select(documentType);
 	}
-	
+
 	public List<Document> select(List<DocumentType> documentTypes) {
 		return ((DocumentDao) dao).select(documentTypes);
 	}

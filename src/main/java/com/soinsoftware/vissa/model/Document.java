@@ -68,6 +68,10 @@ public class Document extends CommonData {
 	@ManyToOne
 	@JoinColumn(name = "status_id")
 	private DocumentStatus status;
+	@ManyToOne
+	@JoinColumn(name = "salesman_id")
+	private Person salesman;
+	private String cash;
 	@OneToMany(mappedBy = "document", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<DocumentDetail> details = new HashSet<>();
 
@@ -91,6 +95,8 @@ public class Document extends CommonData {
 		reference = builder.reference;
 		details = builder.details;
 		status = builder.status;
+		salesman = builder.salesman;
+		cash = builder.cash;
 	}
 
 	public String getCode() {
@@ -143,6 +149,14 @@ public class Document extends CommonData {
 
 	public DocumentStatus getStatus() {
 		return status;
+	}
+
+	public Person getSalesman() {
+		return salesman;
+	}
+
+	public String getCash() {
+		return cash;
 	}
 
 	public void setStatus(DocumentStatus status) {
@@ -224,6 +238,8 @@ public class Document extends CommonData {
 		private double totalValue;
 		private String reference;
 		private DocumentStatus status;
+		private Person salesman;
+		private String cash;
 		private Set<DocumentDetail> details = new HashSet<>();
 
 		private Builder() {
@@ -236,7 +252,8 @@ public class Document extends CommonData {
 					.paymentMethod(document.paymentMethod).paymentTerm(document.paymentTerm)
 					.expirationDate(document.expirationDate).currency(document.currency)
 					.totalValueNoTax(document.totalValueNoTax).totalValue(document.totalValue)
-					.reference(document.reference).status(document.status).details(document.details);
+					.reference(document.reference).status(document.status).salesman(document.salesman)
+					.cash(document.cash).details(document.details);
 		}
 
 		public Builder id(BigInteger id) {
@@ -321,6 +338,16 @@ public class Document extends CommonData {
 
 		public Builder status(DocumentStatus status) {
 			this.status = status;
+			return this;
+		}
+
+		public Builder salesman(Person salesman) {
+			this.salesman = salesman;
+			return this;
+		}
+
+		public Builder cash(String cash) {
+			this.cash = cash;
 			return this;
 		}
 

@@ -36,7 +36,17 @@ public class DocumentDao extends AbstractDataAccessibleObject<Document, BigInteg
 		criteria.add(criterion);
 		return criteria.list();
 	}
-	
+
+	public Document select(String code, DocumentType documentType) {
+		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
+		final List<Criterion> predicates = new ArrayList<>();
+		predicates.add(Restrictions.eq("code", code));
+		predicates.add(Restrictions.eq("documentType", documentType));
+		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
+		criteria.add(criterion);
+		return (Document) criteria.uniqueResult();
+	}
+
 	public List<Document> select(final List<DocumentType> documentTypes) {
 		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
 		final List<Criterion> predicates = new ArrayList<>();

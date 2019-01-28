@@ -14,6 +14,7 @@ import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
 import org.hibernate.annotations.SelectBeforeUpdate;
 
+import com.soinsoftware.vissa.common.CommonsUtil;
 import com.soinsoftware.vissa.exception.ModelValidationException;
 
 /**
@@ -77,7 +78,6 @@ public class DocumentDetail extends CommonData {
 	}
 
 	public String getSubtotalStr() {
-		System.out.println("getSubtotalStr: " + subtotal);
 		return String.valueOf(subtotal);
 	}
 
@@ -91,9 +91,8 @@ public class DocumentDetail extends CommonData {
 	}
 
 	public void calculateSubtotal() {
-		System.out.println("price: " + product.getSalePrice() + ", quantity: " + quantity);
 		setSubtotalStr(String.valueOf(product.getSalePrice() * Integer.parseInt(quantity)));
-		System.out.println("subtotal: " + this.subtotal);
+		CommonsUtil.currentDocumentDetail = this;
 	}
 
 	public void setSubtotal(double subtotal) {
@@ -101,7 +100,6 @@ public class DocumentDetail extends CommonData {
 	}
 
 	public void setSubtotalStr(String subtotal) {
-		System.out.println("setSubtotalStr: " + subtotal);
 		this.subtotal = Double.parseDouble(subtotal);
 	}
 
@@ -225,4 +223,11 @@ public class DocumentDetail extends CommonData {
 			return new DocumentDetail(this);
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "DocumentDetail [document=" + document + ", product=" + product + ", description=" + description
+				+ ", quantity=" + quantity + ", subtotal=" + subtotal + "]";
+	}
+
 }

@@ -81,6 +81,7 @@ public abstract class AbstractDataAccessibleObject<T, P> implements DataAccessib
 			transaction.begin();
 		}
 		getSession().persist(record);
+		getSession().flush();
 	}
 
 	@Override
@@ -89,6 +90,7 @@ public abstract class AbstractDataAccessibleObject<T, P> implements DataAccessib
 			update(getSession().getTransaction(), record);
 		} finally {
 			getSession().getTransaction().commit();
+			getSession().flush();
 		}
 	}
 

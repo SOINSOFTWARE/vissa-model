@@ -18,6 +18,7 @@ public class DocumentDetailBll extends AbstractBll<DocumentDetail, BigInteger> {
 	private DocumentDetailBll() throws IOException {
 		super(new DocumentDetailDao());
 	}
+	
 
 	public static DocumentDetailBll getInstance() throws IOException {
 		if (instance == null) {

@@ -33,12 +33,13 @@ public abstract class AbstractBll<T, P> {
 	public void save(final T entity) {
 		((CommonData) entity).validate();
 		if (((CommonData) entity).isNew()) {
-			System.out.println("persist entity");
+			System.out.println("persist entity" );
 			dao.persist(entity);
 		} else {
 			System.out.println("update entity");
 			dao.update(entity);
 		}
+		
 	}
 
 	public void update(final T entity) {

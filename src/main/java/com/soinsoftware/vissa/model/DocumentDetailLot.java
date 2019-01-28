@@ -57,6 +57,27 @@ public class DocumentDetailLot extends CommonData {
 		return serialVersionUID;
 	}
 
+	
+	public DocumentDetail getDocumentDetail() {
+		return documentDetail;
+	}
+
+	public Lot getLot() {
+		return lot;
+	}
+
+	public Integer getInitialStockLot() {
+		return initialStockLot;
+	}
+
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public Integer getFinalStockLot() {
+		return finalStockLot;
+	}
+
 	@Override
 	public void validate() {
 		if (documentDetail == null) {
@@ -156,4 +177,11 @@ public class DocumentDetailLot extends CommonData {
 			return new DocumentDetailLot(this);
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "DocumentDetailLot [documentDetail=" + documentDetail + ", lot=" + lot + ", initialStockLot="
+				+ initialStockLot + ", quantity=" + quantity + ", finalStockLot=" + finalStockLot + "]";
+	}
+
 }
