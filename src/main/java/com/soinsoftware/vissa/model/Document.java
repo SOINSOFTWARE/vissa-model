@@ -360,4 +360,15 @@ public class Document extends CommonData {
 			return new Document(this);
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "Document [code=" + code + ", documentType=" + documentType + ", person=" + person + ", documentDate="
+				+ documentDate + ", paymentType=" + paymentType + ", paymentMethod=" + paymentMethod + ", paymentTerm="
+				+ paymentTerm + ", expirationDate=" + expirationDate + ", currency=" + currency + ", totalValueNoTax="
+				+ totalValueNoTax + ", totalValue=" + totalValue + ", reference=" + reference + ", status=" + status
+				+ ", salesman=" + salesman + ", cash=" + cash + ", details=" + details + "]";
+	}
+	
+	
 }
