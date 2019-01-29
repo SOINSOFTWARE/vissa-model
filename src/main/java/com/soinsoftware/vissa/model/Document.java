@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -93,10 +94,10 @@ public class Document extends CommonData {
 		totalValueNoTax = builder.totalValueNoTax;
 		totalValue = builder.totalValue;
 		reference = builder.reference;
-		details = builder.details;
 		status = builder.status;
 		salesman = builder.salesman;
 		cash = builder.cash;
+		details = forHibernateDetails(builder.details);
 	}
 
 	public String getCode() {
@@ -175,14 +176,24 @@ public class Document extends CommonData {
 	public void validate() {
 		if (code == null || code.trim().equals("")) {
 			throw new ModelValidationException("El código es obligatorio.");
-		} else if (documentType == null) {
+		}
+		if (documentType == null) {
 			throw new ModelValidationException("El tipo es obligatorio.");
-		} else if (person == null) {
-			throw new ModelValidationException("El tercero (proveedor/cliente) es obligatorio.");
-		} else if (documentDate == null) {
-			throw new ModelValidationException("La fecha de la factura es obligatoria.");
 		} else {
 			documentType.validate();
+		}
+		if (person == null) {
+			throw new ModelValidationException("El tercero (proveedor/cliente) es obligatorio.");
+		} else {
+			person.validate();
+		}
+		if (status == null) {
+			throw new ModelValidationException("El estado es obligatorio.");
+		} else {
+			status.validate();
+		}
+		if (documentDate == null) {
+			throw new ModelValidationException("La fecha de la factura es obligatoria.");
 		}
 	}
 
@@ -209,6 +220,11 @@ public class Document extends CommonData {
 		} else if (!code.equals(other.code))
 			return false;
 		return true;
+	}
+
+	private Set<DocumentDetail> forHibernateDetails(Set<DocumentDetail> details) {
+		return details.stream().map(detail -> DocumentDetail.builder(detail).document(this).build())
+				.collect(Collectors.toSet());
 	}
 
 	public static Builder builder() {
@@ -369,6 +385,5 @@ public class Document extends CommonData {
 				+ totalValueNoTax + ", totalValue=" + totalValue + ", reference=" + reference + ", status=" + status
 				+ ", salesman=" + salesman + ", cash=" + cash + ", details=" + details + "]";
 	}
-	
-	
+
 }

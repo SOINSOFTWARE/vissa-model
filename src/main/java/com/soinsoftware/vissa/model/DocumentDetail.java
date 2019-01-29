@@ -226,7 +226,7 @@ public class DocumentDetail extends CommonData {
 
 	@Override
 	public String toString() {
-		return "DocumentDetail [document=" + document + ", product=" + product + ", description=" + description
+		return "DocumentDetail [product=" + product + ", description=" + description
 				+ ", quantity=" + quantity + ", subtotal=" + subtotal + "]";
 	}
 

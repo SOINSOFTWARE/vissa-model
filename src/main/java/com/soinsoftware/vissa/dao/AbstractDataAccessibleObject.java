@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Criteria;
@@ -76,7 +75,7 @@ public abstract class AbstractDataAccessibleObject<T, P> implements DataAccessib
 
 	@Override
 	public void persist(final Transaction transaction, final T record) {
-		log.info("Persisting object: " + record.toString());
+		log.info("Persisting object");
 		if (!transaction.getStatus().equals(TransactionStatus.ACTIVE)) {
 			transaction.begin();
 		}
@@ -96,7 +95,7 @@ public abstract class AbstractDataAccessibleObject<T, P> implements DataAccessib
 
 	@Override
 	public void update(final Transaction transaction, final T record) {
-		log.info("Updating object: " + record.toString());
+		log.info("Updating object");
 		if (!transaction.getStatus().equals(TransactionStatus.ACTIVE)) {
 			transaction.begin();
 		}
@@ -114,7 +113,7 @@ public abstract class AbstractDataAccessibleObject<T, P> implements DataAccessib
 
 	@Override
 	public void rollbackTransaction() {
-		EntityTransaction transaction = manager.getTransaction();
+		Transaction transaction = getSession().getTransaction();
 		if (transaction != null) {
 			transaction.rollback();
 		}
@@ -130,6 +129,7 @@ public abstract class AbstractDataAccessibleObject<T, P> implements DataAccessib
 		return getSession().createCriteria(clazz);
 	}
 
+	@Override
 	public Session getSession() {
 		if (session == null || !session.isOpen()) {
 			session = manager.unwrap(Session.class);

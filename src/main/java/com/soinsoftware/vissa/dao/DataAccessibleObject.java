@@ -2,9 +2,11 @@ package com.soinsoftware.vissa.dao;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 /**
@@ -111,4 +113,10 @@ public interface DataAccessibleObject<T, P> {
 	 * @return {@link Criteria} object.
 	 */
 	Criteria buildCriteria();
+	
+	/**
+	 * Gets the current session or creates a new one from {@link EntityManager}
+	 * @return {@link Session}
+	 */
+	Session getSession();
 }
