@@ -35,7 +35,7 @@ public class UserBll extends AbstractBll<User, BigInteger> {
 
 	@Override
 	public void save(User user) {
-		if (select(user.getLogin()) != null) {
+		if (user.getId().equals(null) && select(user.getLogin()) != null) {
 			throw new ModelValidationException(String.format("El usuario %s está siendo usando", user.getLogin()));
 		}
 		super.save(user);
