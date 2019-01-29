@@ -58,11 +58,11 @@ public class Role extends CommonData {
 		if (name == null || name.trim().equals("")) {
 			throw new ModelValidationException("El nombre es obligatorio.");
 		}
-		if (permissions.isEmpty()) {
-			throw new ModelValidationException("Los permisos son obligatorios.");
-		} else {
-			permissions.forEach(permission -> permission.validate());
-		}
+		/*
+		 * if (permissions.isEmpty()) { throw new
+		 * ModelValidationException("Los permisos son obligatorios."); } else {
+		 * permissions.forEach(permission -> permission.validate()); }
+		 */
 	}
 
 	public static Builder builder() {
