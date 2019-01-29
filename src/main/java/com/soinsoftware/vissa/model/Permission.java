@@ -77,11 +77,7 @@ public class Permission extends CommonData {
 		} else {
 			menu.validate();
 		}
-		if (role == null) {
-			throw new ModelValidationException("El rol es obligatorio.");
-		} else {
-			role.validate();
-		}
+
 	}
 
 	public static Builder builder() {
