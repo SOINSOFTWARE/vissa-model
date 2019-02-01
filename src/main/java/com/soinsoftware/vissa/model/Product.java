@@ -52,9 +52,11 @@ public class Product extends CommonData {
 	private Double saleTax;
 	@Column(name = "purchase_tax")
 	private Double purchaseTax;
+	private Double utility;
 	private Integer stock;
 	@Column(name = "stock_date")
 	private Date stockDate;
+	private String brand;
 
 	public Product() {
 		super();
@@ -75,6 +77,8 @@ public class Product extends CommonData {
 		purchaseTax = builder.purchaseTax;
 		stock = builder.stock;
 		stockDate = builder.stockDate;
+		utility = builder.utility;
+		brand = builder.brand;
 	}
 
 	public String getCode() {
@@ -136,6 +140,22 @@ public class Product extends CommonData {
 	public void setStockDate(Date stockDate) {
 		this.stockDate = stockDate;
 	}
+	
+	public String getBrand() {
+		return brand;
+	}
+
+	public Double getUtility() {
+		return utility;
+	}
+
+	public void setBrand(String brand) {
+		this.brand = brand;
+	}
+
+	public void setUtility(Double utility) {
+		this.utility = utility;
+	}
 
 	@Override
 	public void validate() {
@@ -146,7 +166,7 @@ public class Product extends CommonData {
 			throw new ModelValidationException("El nombre es obligatorio.");
 		}
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -192,11 +212,13 @@ public class Product extends CommonData {
 		private ProductCategory category;
 		private ProductType type;
 		private MeasurementUnit measurementUnit;
+		private String brand;
 		private String eanCode;
 		private Double salePrice;
 		private Double purchasePrice;
 		private Double saleTax;
 		private Double purchaseTax;
+		private Double utility;
 		private Integer stock;
 		private Date stockDate;
 
@@ -207,9 +229,10 @@ public class Product extends CommonData {
 			id(product.getId()).creationDate(product.getCreationDate()).modifyDate(product.getModifyDate())
 					.archived(product.isArchived()).code(product.code).name(product.name)
 					.description(product.description).category(product.category).type(product.type)
-					.measurementUnit(product.measurementUnit).eanCode(product.eanCode).salePrice(product.salePrice)
-					.purchasePrice(product.purchasePrice).saleTax(product.saleTax).purchaseTax(product.purchaseTax)
-					.stock(product.stock).stockDate(product.stockDate);
+					.measurementUnit(product.measurementUnit).brand(product.brand).eanCode(product.eanCode)
+					.salePrice(product.salePrice).purchasePrice(product.purchasePrice).saleTax(product.saleTax)
+					.purchaseTax(product.purchaseTax).utility(product.utility).stock(product.stock)
+					.stockDate(product.stockDate);
 		}
 
 		public Builder id(BigInteger id) {
@@ -262,6 +285,11 @@ public class Product extends CommonData {
 			return this;
 		}
 
+		public Builder brand(String brand) {
+			this.brand = brand;
+			return this;
+		}
+
 		public Builder eanCode(String eanCode) {
 			this.eanCode = eanCode;
 			return this;
@@ -287,6 +315,11 @@ public class Product extends CommonData {
 			return this;
 		}
 
+		public Builder utility(Double utility) {
+			this.utility = utility;
+			return this;
+		}
+
 		public Builder stock(Integer stock) {
 			this.stock = stock;
 			return this;
@@ -297,8 +330,20 @@ public class Product extends CommonData {
 			return this;
 		}
 
+	
+
 		public Product build() {
 			return new Product(this);
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "Product [code=" + code + ", name=" + name + ", description=" + description + ", category=" + category
+				+ ", type=" + type + ", measurementUnit=" + measurementUnit + ", eanCode=" + eanCode + ", salePrice="
+				+ salePrice + ", purchasePrice=" + purchasePrice + ", saleTax=" + saleTax + ", purchaseTax="
+				+ purchaseTax + ", utility=" + utility + ", stock=" + stock + ", stockDate=" + stockDate + ", brand="
+				+ brand + "]";
+	}
+
 }

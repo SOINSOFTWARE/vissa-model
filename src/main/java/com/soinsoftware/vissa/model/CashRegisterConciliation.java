@@ -34,15 +34,22 @@ public class CashRegisterConciliation extends CommonData {
 	private Double cashBase;
 	@Column(name = "cash_register_number")
 	private String cashRegisterNumber;
-	@Column(name = "total_Sale")
-	private Double totalSale;
-	@Column(name = "total_expense")
-	private Double totalExpense;
+	@Column(name = "sales")
+	private Double sales;
+	@Column(name = "credit_collection")
+	private Double creditCollection;
+	@Column(name = "remnant_sale")
+	private Double remnantSale;
+	@Column(name = "general_expense")
+	private Double generalExpense;
 	@Column(name = "supplier_payments")
 	private Double supplierPayments;
-	private Double collection;
-	@Column(name = "final_cash")
-	private Double finalCash;
+	@Column(name = "remnant_egress")
+	private Double remnantEgress;
+	@Column(name = "total_sale")
+	private Double totalSale;
+	@Column(name = "total_cash")
+	private Double totalCash;
 	@Column(name = "total_egress")
 	private Double totalEgress;
 	@Column(name = "total_credit")
@@ -63,28 +70,29 @@ public class CashRegisterConciliation extends CommonData {
 
 		cashBase = builder.cashBase;
 		cashRegisterNumber = builder.cashRegisterNumber;
-		totalSale = builder.totalSale;
-		totalExpense = builder.totalExpense;
-		totalExpense = builder.totalExpense;
-		totalExpense = builder.totalExpense;
+		sales = builder.sales;
+		creditCollection = builder.creditCollection;
+		remnantSale = builder.remnantSale;
+		generalExpense = builder.generalExpense;
 		supplierPayments = builder.supplierPayments;
-		collection = builder.collection;
-		finalCash = builder.finalCash;
+		remnantEgress = builder.remnantEgress;
+		totalSale = builder.totalSale;
+		totalCash = builder.totalCash;
 		totalEgress = builder.totalEgress;
 		totalCredit = builder.totalCredit;
 		conciliationDate = builder.conciliationDate;
 		person = builder.person;
 	}
 
-	
 	@Override
 	public void validate() {
 		if (supplierPayments == null) {
 			throw new ModelValidationException("El pago a proveedores es obligatorio.");
 		}
 	}
-
 	
+	
+
 	public Double getCashBase() {
 		return cashBase;
 	}
@@ -93,24 +101,36 @@ public class CashRegisterConciliation extends CommonData {
 		return cashRegisterNumber;
 	}
 
-	public Double getTotalSale() {
-		return totalSale;
+	public Double getSales() {
+		return sales;
 	}
 
-	public Double getTotalExpense() {
-		return totalExpense;
+	public Double getCreditCollection() {
+		return creditCollection;
+	}
+
+	public Double getRemnantSale() {
+		return remnantSale;
+	}
+
+	public Double getGeneralExpense() {
+		return generalExpense;
 	}
 
 	public Double getSupplierPayments() {
 		return supplierPayments;
 	}
 
-	public Double getCollection() {
-		return collection;
+	public Double getRemnantEgress() {
+		return remnantEgress;
 	}
 
-	public Double getFinalCash() {
-		return finalCash;
+	public Double getTotalSale() {
+		return totalSale;
+	}
+
+	public Double getTotalCash() {
+		return totalCash;
 	}
 
 	public Double getTotalEgress() {
@@ -133,8 +153,8 @@ public class CashRegisterConciliation extends CommonData {
 		return new Builder();
 	}
 
-	public static Builder builder(CashRegisterConciliation lot) {
-		return new Builder(lot);
+	public static Builder builder(CashRegisterConciliation cashRegisterConciliation) {
+		return new Builder(cashRegisterConciliation);
 	}
 
 	public static class Builder {
@@ -145,11 +165,14 @@ public class CashRegisterConciliation extends CommonData {
 		private boolean archived;
 		private Double cashBase;
 		private String cashRegisterNumber;
-		private Double totalSale;
-		private Double totalExpense;
+		private Double sales;
+		private Double creditCollection;
+		private Double remnantSale;
+		private Double generalExpense;
 		private Double supplierPayments;
-		private Double collection;
-		private Double finalCash;
+		private Double remnantEgress;
+		private Double totalSale;
+		private Double totalCash;
 		private Double totalEgress;
 		private Double totalCredit;
 		private Date conciliationDate;
@@ -158,13 +181,20 @@ public class CashRegisterConciliation extends CommonData {
 		private Builder() {
 		}
 
-		private Builder(CashRegisterConciliation expense) {
-			id(expense.getId()).creationDate(expense.getCreationDate()).modifyDate(expense.getModifyDate())
-					.archived(expense.isArchived()).cashBase(expense.cashBase)
-					.cashRegisterNumber(expense.cashRegisterNumber).totalSale(expense.totalSale)
-					.totalExpense(expense.totalExpense).supplierPayments(expense.supplierPayments)
-					.collection(expense.collection).finalCash(expense.finalCash).totalEgress(expense.totalEgress)
-					.totalCredit(expense.totalCredit).conciliationDate(expense.conciliationDate).person(expense.person);
+		private Builder(CashRegisterConciliation cashRegisterConciliation) {
+			id(cashRegisterConciliation.getId()).creationDate(cashRegisterConciliation.getCreationDate())
+					.modifyDate(cashRegisterConciliation.getModifyDate())
+					.archived(cashRegisterConciliation.isArchived()).cashBase(cashRegisterConciliation.cashBase)
+					.cashRegisterNumber(cashRegisterConciliation.cashRegisterNumber)
+					.totalSale(cashRegisterConciliation.totalSale)
+					.generalExpense(cashRegisterConciliation.generalExpense)
+					.supplierPayments(cashRegisterConciliation.supplierPayments)
+					.creditCollection(cashRegisterConciliation.creditCollection)
+					.totalCash(cashRegisterConciliation.totalCash).totalEgress(cashRegisterConciliation.totalEgress)
+					.totalCredit(cashRegisterConciliation.totalCredit)
+					.conciliationDate(cashRegisterConciliation.conciliationDate).person(cashRegisterConciliation.person)
+					.remnantEgress(cashRegisterConciliation.remnantEgress)
+					.remnantSale(cashRegisterConciliation.remnantSale).sales(cashRegisterConciliation.sales);
 		}
 
 		public Builder id(BigInteger id) {
@@ -202,8 +232,8 @@ public class CashRegisterConciliation extends CommonData {
 			return this;
 		}
 
-		public Builder totalExpense(Double totalExpense) {
-			this.totalExpense = totalExpense;
+		public Builder generalExpense(Double generalExpense) {
+			this.generalExpense = generalExpense;
 			return this;
 		}
 
@@ -212,13 +242,13 @@ public class CashRegisterConciliation extends CommonData {
 			return this;
 		}
 
-		public Builder collection(Double collection) {
-			this.collection = collection;
+		public Builder creditCollection(Double creditCollection) {
+			this.creditCollection = creditCollection;
 			return this;
 		}
 
-		public Builder finalCash(Double finalCash) {
-			this.finalCash = finalCash;
+		public Builder totalCash(Double totalCash) {
+			this.totalCash = totalCash;
 			return this;
 		}
 
@@ -231,7 +261,22 @@ public class CashRegisterConciliation extends CommonData {
 			this.totalCredit = totalCredit;
 			return this;
 		}
-		
+
+		public Builder sales(Double sales) {
+			this.sales = sales;
+			return this;
+		}
+
+		public Builder remnantSale(Double remnantSale) {
+			this.remnantSale = remnantSale;
+			return this;
+		}
+
+		public Builder remnantEgress(Double remnantEgress) {
+			this.remnantEgress = remnantEgress;
+			return this;
+		}
+
 		public Builder conciliationDate(Date conciliationDate) {
 			this.conciliationDate = conciliationDate;
 			return this;
