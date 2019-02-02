@@ -53,7 +53,7 @@ public class Product extends CommonData {
 	@Column(name = "purchase_tax")
 	private Double purchaseTax;
 	private Double utility;
-	private Integer stock;
+	private Double stock;
 	@Column(name = "stock_date")
 	private Date stockDate;
 	private String brand;
@@ -125,11 +125,11 @@ public class Product extends CommonData {
 		return purchaseTax;
 	}
 
-	public Integer getStock() {
+	public Double getStock() {
 		return stock;
 	}
 
-	public void setStock(Integer stock) {
+	public void setStock(Double stock) {
 		this.stock = stock;
 	}
 
@@ -219,7 +219,7 @@ public class Product extends CommonData {
 		private Double saleTax;
 		private Double purchaseTax;
 		private Double utility;
-		private Integer stock;
+		private Double stock;
 		private Date stockDate;
 
 		private Builder() {
@@ -320,7 +320,7 @@ public class Product extends CommonData {
 			return this;
 		}
 
-		public Builder stock(Integer stock) {
+		public Builder stock(Double stock) {
 			this.stock = stock;
 			return this;
 		}

@@ -35,10 +35,10 @@ public class DocumentDetailLot extends CommonData {
 	@JoinColumn(name = "lot_id", nullable = false)
 	private Lot lot;
 	@Column(name = "initial_stock_lot")
-	private Integer initialStockLot;
-	private Integer quantity;
+	private Double initialStockLot;
+	private Double quantity;
 	@Column(name = "final_stock_lot")
-	private Integer finalStockLot;
+	private Double finalStockLot;
 
 	public DocumentDetailLot() {
 		super();
@@ -66,15 +66,15 @@ public class DocumentDetailLot extends CommonData {
 		return lot;
 	}
 
-	public Integer getInitialStockLot() {
+	public Double getInitialStockLot() {
 		return initialStockLot;
 	}
 
-	public Integer getQuantity() {
+	public Double getQuantity() {
 		return quantity;
 	}
 
-	public Integer getFinalStockLot() {
+	public Double getFinalStockLot() {
 		return finalStockLot;
 	}
 
@@ -113,9 +113,9 @@ public class DocumentDetailLot extends CommonData {
 		private boolean archived;
 		private DocumentDetail documentDetail;
 		private Lot lot;
-		private Integer initialStockLot;
-		private Integer quantity;
-		private Integer finalStockLot;
+		private Double initialStockLot;
+		private Double quantity;
+		private Double finalStockLot;
 
 		private Builder() {
 		}
@@ -158,17 +158,17 @@ public class DocumentDetailLot extends CommonData {
 			return this;
 		}
 
-		public Builder initialStockLot(Integer initialStockLot) {
+		public Builder initialStockLot(Double initialStockLot) {
 			this.initialStockLot = initialStockLot;
 			return this;
 		}
 
-		public Builder quantity(Integer quantity) {
+		public Builder quantity(Double quantity) {
 			this.quantity = quantity;
 			return this;
 		}
 
-		public Builder finalStockLot(Integer finalStockLot) {
+		public Builder finalStockLot(Double finalStockLot) {
 			this.finalStockLot = finalStockLot;
 			return this;
 		}

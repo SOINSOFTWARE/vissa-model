@@ -38,7 +38,7 @@ public class DocumentDetail extends CommonData {
 	private String description;
 	private String quantity;
 	@Column(name = "sub_total")
-	private double subtotal;
+	private Double subtotal;
 
 	public DocumentDetail() {
 		super();
@@ -73,7 +73,7 @@ public class DocumentDetail extends CommonData {
 		return quantity;
 	}
 
-	public double getSubtotal() {
+	public Double getSubtotal() {
 		return subtotal;
 	}
 
@@ -161,7 +161,7 @@ public class DocumentDetail extends CommonData {
 		private Product product;
 		private String description;
 		private String quantity;
-		private double subtotal;
+		private Double subtotal;
 
 		private Builder() {
 		}
@@ -214,7 +214,7 @@ public class DocumentDetail extends CommonData {
 			return this;
 		}
 
-		public Builder subtotal(double subtotal) {
+		public Builder subtotal(Double subtotal) {
 			this.subtotal = subtotal;
 			return this;
 		}
