@@ -50,6 +50,7 @@ public class Document extends CommonData {
 	@ManyToOne
 	@JoinColumn(name = "payment_type_id")
 	private PaymentType paymentType;
+	private String resolution;
 	@ManyToOne
 	@JoinColumn(name = "payment_method_id")
 	private PaymentMethod paymentMethod;
@@ -94,6 +95,7 @@ public class Document extends CommonData {
 		totalValueNoTax = builder.totalValueNoTax;
 		totalValue = builder.totalValue;
 		reference = builder.reference;
+		resolution = builder.resolution;
 		status = builder.status;
 		salesman = builder.salesman;
 		cash = builder.cash;
@@ -158,6 +160,10 @@ public class Document extends CommonData {
 
 	public String getCash() {
 		return cash;
+	}
+
+	public String getResolution() {
+		return resolution;
 	}
 
 	public void setStatus(DocumentStatus status) {
@@ -246,6 +252,7 @@ public class Document extends CommonData {
 		private Person person;
 		private Date documentDate;
 		private PaymentType paymentType;
+		private String resolution;
 		private PaymentMethod paymentMethod;
 		private String paymentTerm;
 		private Date expirationDate;
@@ -265,11 +272,11 @@ public class Document extends CommonData {
 			id(document.getId()).creationDate(document.getCreationDate()).modifyDate(document.getModifyDate())
 					.archived(document.isArchived()).code(document.code).documentType(document.documentType)
 					.person(document.person).documentDate(document.documentDate).paymentType(document.paymentType)
-					.paymentMethod(document.paymentMethod).paymentTerm(document.paymentTerm)
-					.expirationDate(document.expirationDate).currency(document.currency)
-					.totalValueNoTax(document.totalValueNoTax).totalValue(document.totalValue)
-					.reference(document.reference).status(document.status).salesman(document.salesman)
-					.cash(document.cash).details(document.details);
+					.resolution(document.resolution).paymentMethod(document.paymentMethod)
+					.paymentTerm(document.paymentTerm).expirationDate(document.expirationDate)
+					.currency(document.currency).totalValueNoTax(document.totalValueNoTax)
+					.totalValue(document.totalValue).reference(document.reference).status(document.status)
+					.salesman(document.salesman).cash(document.cash).details(document.details);
 		}
 
 		public Builder id(BigInteger id) {
@@ -314,6 +321,11 @@ public class Document extends CommonData {
 
 		public Builder paymentType(PaymentType paymentType) {
 			this.paymentType = paymentType;
+			return this;
+		}
+
+		public Builder resolution(String resolution) {
+			this.resolution = resolution;
 			return this;
 		}
 

@@ -43,7 +43,7 @@ public class Lot extends CommonData {
 	@ManyToOne
 	@JoinColumn(name = "product_id")
 	private Product product;
-	private Integer quantity;
+	private Double quantity;
 	@ManyToOne
 	@JoinColumn(name = "warehouse_id")
 	private Warehouse warehouse;
@@ -83,7 +83,7 @@ public class Lot extends CommonData {
 		return product;
 	}
 
-	public Integer getQuantity() {
+	public Double getQuantity() {
 		return quantity;
 	}
 
@@ -91,7 +91,7 @@ public class Lot extends CommonData {
 		return warehouse;
 	}
 
-	public void setQuantity(Integer quantity) {
+	public void setQuantity(Double quantity) {
 		this.quantity = quantity;
 	}
 
@@ -99,6 +99,12 @@ public class Lot extends CommonData {
 	public void validate() {
 		if (code == null || code.trim().equals("")) {
 			throw new ModelValidationException("El código es obligatorio.");
+		}
+		if (name == null || name.trim().equals("")) {
+			throw new ModelValidationException("El código es obligatorio.");
+		}
+		if (warehouse == null) {
+			throw new ModelValidationException("La bodega es obligatoria.");
 		}
 		if (product == null) {
 			throw new ModelValidationException("El producto es obligatorio.");
@@ -129,7 +135,7 @@ public class Lot extends CommonData {
 		private Date lotDate;
 		private Date expirationDate;
 		private Product product;
-		private Integer quantity;
+		private Double quantity;
 		private Warehouse warehouse;
 
 		private Builder() {
@@ -187,7 +193,7 @@ public class Lot extends CommonData {
 			return this;
 		}
 
-		public Builder quantity(Integer quantity) {
+		public Builder quantity(Double quantity) {
 			this.quantity = quantity;
 			return this;
 		}
