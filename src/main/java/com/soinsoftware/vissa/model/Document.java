@@ -63,9 +63,9 @@ public class Document extends CommonData {
 	@JoinColumn(name = "currency_id")
 	private Currency currency;
 	@Column(name = "total_value_no_tax")
-	private double totalValueNoTax;
+	private Double totalValueNoTax;
 	@Column(name = "total_value")
-	private double totalValue;
+	private Double totalValue;
 	private String reference;
 	@ManyToOne
 	@JoinColumn(name = "status_id")
@@ -138,11 +138,11 @@ public class Document extends CommonData {
 		return currency;
 	}
 
-	public double getTotalValueNoTax() {
+	public Double getTotalValueNoTax() {
 		return totalValueNoTax;
 	}
 
-	public double getTotalValue() {
+	public Double getTotalValue() {
 		return totalValue;
 	}
 
@@ -257,8 +257,8 @@ public class Document extends CommonData {
 		private String paymentTerm;
 		private Date expirationDate;
 		private Currency currency;
-		private double totalValueNoTax;
-		private double totalValue;
+		private Double totalValueNoTax;
+		private Double totalValue;
 		private String reference;
 		private DocumentStatus status;
 		private Person salesman;
@@ -315,7 +315,7 @@ public class Document extends CommonData {
 		}
 
 		public Builder documentDate(Date documentDate) {
-			this.documentDate = documentDate;
+			this.documentDate = documentDate;//  DateUtil.addOrSubstractHoursToDate(documentDate, CommonsUtil.DIFF_HOURS);
 			return this;
 		}
 
@@ -349,12 +349,12 @@ public class Document extends CommonData {
 			return this;
 		}
 
-		public Builder totalValueNoTax(double totalValueNoTax) {
+		public Builder totalValueNoTax(Double totalValueNoTax) {
 			this.totalValueNoTax = totalValueNoTax;
 			return this;
 		}
 
-		public Builder totalValue(double totalValue) {
+		public Builder totalValue(Double totalValue) {
 			this.totalValue = totalValue;
 			return this;
 		}

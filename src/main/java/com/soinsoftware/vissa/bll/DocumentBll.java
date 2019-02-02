@@ -3,6 +3,7 @@ package com.soinsoftware.vissa.bll;
 
 import java.io.IOException;
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 
 import com.soinsoftware.vissa.dao.DocumentDao;
@@ -35,6 +36,10 @@ public class DocumentBll extends AbstractBll<Document, BigInteger> {
 
 	public List<Document> select(List<DocumentType> documentTypes) {
 		return ((DocumentDao) dao).select(documentTypes);
+	}
+
+	public List<Document> select(Date documentDate, Date iniDate, Date finalDate) {
+		return ((DocumentDao) dao).select(documentDate, iniDate, finalDate);
 	}
 
 	public static DocumentBll getInstance() throws IOException {

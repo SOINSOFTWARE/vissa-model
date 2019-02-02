@@ -208,4 +208,13 @@ public class Company extends CommonData {
 			return new Company(this);
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "Company [nit=" + nit + ", name=" + name + ", invoiceResolution=" + invoiceResolution + ", regimeType="
+				+ regimeType + ", address=" + address + ", phone=" + phone + ", mobile=" + mobile + ", email=" + email
+				+ ", website=" + website + "]";
+	}
+	
+	
 }

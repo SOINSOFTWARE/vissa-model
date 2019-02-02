@@ -148,4 +148,12 @@ public class DocumentType extends CommonData {
 			return new DocumentType(this);
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "DocumentType [code=" + code + ", name=" + name + ", transactionType=" + transactionType + ", sequence="
+				+ sequence + "]";
+	}
+	
+	
 }

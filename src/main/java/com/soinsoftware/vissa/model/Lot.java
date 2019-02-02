@@ -179,12 +179,12 @@ public class Lot extends CommonData {
 		}
 
 		public Builder lotDate(Date lotDate) {
-			this.lotDate = lotDate;
+			this.lotDate = lotDate;;
 			return this;
 		}
 
 		public Builder expirationDate(Date expirationDate) {
-			this.expirationDate = expirationDate;
+			this.expirationDate = expirationDate;;
 			return this;
 		}
 

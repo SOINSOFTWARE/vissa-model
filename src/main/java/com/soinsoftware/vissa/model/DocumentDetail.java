@@ -91,11 +91,11 @@ public class DocumentDetail extends CommonData {
 	}
 
 	public void calculateSubtotal() {
-		setSubtotalStr(String.valueOf(product.getSalePrice() * Integer.parseInt(quantity)));
+		setSubtotalStr(String.valueOf(product.getSalePrice() * Double.parseDouble(quantity)));
 		CommonsUtil.currentDocumentDetail = this;
 	}
 
-	public void setSubtotal(double subtotal) {
+	public void setSubtotal(Double subtotal) {
 		this.subtotal = subtotal;
 	}
 

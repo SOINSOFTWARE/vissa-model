@@ -1,6 +1,7 @@
 // Soin Software, 2018
 package com.soinsoftware.vissa.model;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 
@@ -31,35 +32,36 @@ public class CashRegisterConciliation extends CommonData {
 	private static final long serialVersionUID = 7247768338497639839L;
 
 	@Column(name = "cash_base")
-	private Double cashBase;
+	private BigDecimal cashBase;
 	@Column(name = "cash_register_number")
 	private String cashRegisterNumber;
 	@Column(name = "sales")
-	private Double sales;
+	private BigDecimal sales;
 	@Column(name = "credit_collection")
-	private Double creditCollection;
+	private BigDecimal creditCollection;
 	@Column(name = "remnant_sale")
-	private Double remnantSale;
+	private BigDecimal remnantSale;
 	@Column(name = "general_expense")
-	private Double generalExpense;
+	private BigDecimal generalExpense;
 	@Column(name = "supplier_payments")
-	private Double supplierPayments;
+	private BigDecimal supplierPayments;
 	@Column(name = "remnant_egress")
-	private Double remnantEgress;
+	private BigDecimal remnantEgress;
 	@Column(name = "total_sale")
-	private Double totalSale;
+	private BigDecimal totalSale;
 	@Column(name = "total_cash")
-	private Double totalCash;
+	private BigDecimal totalCash;
 	@Column(name = "total_egress")
-	private Double totalEgress;
+	private BigDecimal totalEgress;
 	@Column(name = "total_credit")
-	private Double totalCredit;
+	private BigDecimal totalCredit;
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "conciliation_date")
 	private Date conciliationDate;
 	@ManyToOne
 	@JoinColumn(name = "person_id")
 	private Person person;
+	private String comments;
 
 	public CashRegisterConciliation() {
 		super();
@@ -82,6 +84,7 @@ public class CashRegisterConciliation extends CommonData {
 		totalCredit = builder.totalCredit;
 		conciliationDate = builder.conciliationDate;
 		person = builder.person;
+		comments = builder.comments;
 	}
 
 	@Override
@@ -90,10 +93,8 @@ public class CashRegisterConciliation extends CommonData {
 			throw new ModelValidationException("El pago a proveedores es obligatorio.");
 		}
 	}
-	
-	
 
-	public Double getCashBase() {
+	public BigDecimal getCashBase() {
 		return cashBase;
 	}
 
@@ -101,43 +102,43 @@ public class CashRegisterConciliation extends CommonData {
 		return cashRegisterNumber;
 	}
 
-	public Double getSales() {
+	public BigDecimal getSales() {
 		return sales;
 	}
 
-	public Double getCreditCollection() {
+	public BigDecimal getCreditCollection() {
 		return creditCollection;
 	}
 
-	public Double getRemnantSale() {
+	public BigDecimal getRemnantSale() {
 		return remnantSale;
 	}
 
-	public Double getGeneralExpense() {
+	public BigDecimal getGeneralExpense() {
 		return generalExpense;
 	}
 
-	public Double getSupplierPayments() {
+	public BigDecimal getSupplierPayments() {
 		return supplierPayments;
 	}
 
-	public Double getRemnantEgress() {
+	public BigDecimal getRemnantEgress() {
 		return remnantEgress;
 	}
 
-	public Double getTotalSale() {
+	public BigDecimal getTotalSale() {
 		return totalSale;
 	}
 
-	public Double getTotalCash() {
+	public BigDecimal getTotalCash() {
 		return totalCash;
 	}
 
-	public Double getTotalEgress() {
+	public BigDecimal getTotalEgress() {
 		return totalEgress;
 	}
 
-	public Double getTotalCredit() {
+	public BigDecimal getTotalCredit() {
 		return totalCredit;
 	}
 
@@ -147,6 +148,10 @@ public class CashRegisterConciliation extends CommonData {
 
 	public Person getPerson() {
 		return person;
+	}
+
+	public String getComments() {
+		return comments;
 	}
 
 	public static Builder builder() {
@@ -163,20 +168,21 @@ public class CashRegisterConciliation extends CommonData {
 		private Date creationDate;
 		private Date modifyDate;
 		private boolean archived;
-		private Double cashBase;
+		private BigDecimal cashBase;
 		private String cashRegisterNumber;
-		private Double sales;
-		private Double creditCollection;
-		private Double remnantSale;
-		private Double generalExpense;
-		private Double supplierPayments;
-		private Double remnantEgress;
-		private Double totalSale;
-		private Double totalCash;
-		private Double totalEgress;
-		private Double totalCredit;
+		private BigDecimal sales;
+		private BigDecimal creditCollection;
+		private BigDecimal remnantSale;
+		private BigDecimal generalExpense;
+		private BigDecimal supplierPayments;
+		private BigDecimal remnantEgress;
+		private BigDecimal totalSale;
+		private BigDecimal totalCash;
+		private BigDecimal totalEgress;
+		private BigDecimal totalCredit;
 		private Date conciliationDate;
 		private Person person;
+		private String comments;
 
 		private Builder() {
 		}
@@ -194,7 +200,8 @@ public class CashRegisterConciliation extends CommonData {
 					.totalCredit(cashRegisterConciliation.totalCredit)
 					.conciliationDate(cashRegisterConciliation.conciliationDate).person(cashRegisterConciliation.person)
 					.remnantEgress(cashRegisterConciliation.remnantEgress)
-					.remnantSale(cashRegisterConciliation.remnantSale).sales(cashRegisterConciliation.sales);
+					.remnantSale(cashRegisterConciliation.remnantSale).sales(cashRegisterConciliation.sales)
+					.comments(cashRegisterConciliation.comments);
 		}
 
 		public Builder id(BigInteger id) {
@@ -217,7 +224,7 @@ public class CashRegisterConciliation extends CommonData {
 			return this;
 		}
 
-		public Builder cashBase(Double cashBase) {
+		public Builder cashBase(BigDecimal cashBase) {
 			this.cashBase = cashBase;
 			return this;
 		}
@@ -227,52 +234,57 @@ public class CashRegisterConciliation extends CommonData {
 			return this;
 		}
 
-		public Builder totalSale(Double totalSale) {
+		public Builder totalSale(BigDecimal totalSale) {
 			this.totalSale = totalSale;
 			return this;
 		}
 
-		public Builder generalExpense(Double generalExpense) {
+		public Builder generalExpense(BigDecimal generalExpense) {
 			this.generalExpense = generalExpense;
 			return this;
 		}
 
-		public Builder supplierPayments(Double supplierPayments) {
+		public Builder supplierPayments(BigDecimal supplierPayments) {
 			this.supplierPayments = supplierPayments;
 			return this;
 		}
 
-		public Builder creditCollection(Double creditCollection) {
+		public Builder creditCollection(BigDecimal creditCollection) {
 			this.creditCollection = creditCollection;
 			return this;
 		}
 
-		public Builder totalCash(Double totalCash) {
+		public Builder totalCash(BigDecimal totalCash) {
 			this.totalCash = totalCash;
 			return this;
 		}
 
-		public Builder totalEgress(Double totalEgress) {
+		public Builder totalEgress(BigDecimal totalEgress) {
 			this.totalEgress = totalEgress;
 			return this;
 		}
 
-		public Builder totalCredit(Double totalCredit) {
+		public Builder totalCredit(BigDecimal totalCredit) {
 			this.totalCredit = totalCredit;
 			return this;
 		}
 
-		public Builder sales(Double sales) {
+		public Builder sales(BigDecimal sales) {
 			this.sales = sales;
 			return this;
 		}
 
-		public Builder remnantSale(Double remnantSale) {
+		public Builder comments(String comments) {
+			this.comments = comments;
+			return this;
+		}
+
+		public Builder remnantSale(BigDecimal remnantSale) {
 			this.remnantSale = remnantSale;
 			return this;
 		}
 
-		public Builder remnantEgress(Double remnantEgress) {
+		public Builder remnantEgress(BigDecimal remnantEgress) {
 			this.remnantEgress = remnantEgress;
 			return this;
 		}

@@ -140,7 +140,7 @@ public class Product extends CommonData {
 	public void setStockDate(Date stockDate) {
 		this.stockDate = stockDate;
 	}
-	
+
 	public String getBrand() {
 		return brand;
 	}
@@ -327,10 +327,9 @@ public class Product extends CommonData {
 
 		public Builder stockDate(Date stockDate) {
 			this.stockDate = stockDate;
+			;
 			return this;
 		}
-
-	
 
 		public Product build() {
 			return new Product(this);

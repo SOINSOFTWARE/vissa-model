@@ -6,4 +6,5 @@ public class CommonsUtil {
 
 	public static Double documentTotal = 0.0;
 	public static DocumentDetail currentDocumentDetail;
+	public static int DIFF_HOURS = -5;
 }

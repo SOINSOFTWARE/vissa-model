@@ -4,6 +4,7 @@ package com.soinsoftware.vissa.dao;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -51,6 +52,15 @@ public class DocumentDao extends AbstractDataAccessibleObject<Document, BigInteg
 		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
 		final List<Criterion> predicates = new ArrayList<>();
 		predicates.add(Restrictions.in("documentType", documentTypes));
+		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
+		criteria.add(criterion);
+		return criteria.list();
+	}
+
+	public List<Document> select(final Date documentDate, Date iniDate, Date finalDate) {
+		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
+		final List<Criterion> predicates = new ArrayList<>();
+		predicates.add(Restrictions.between("documentDate", iniDate, finalDate));
 		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
 		criteria.add(criterion);
 		return criteria.list();
