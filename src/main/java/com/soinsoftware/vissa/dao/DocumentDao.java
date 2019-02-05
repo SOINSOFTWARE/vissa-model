@@ -13,6 +13,7 @@ import org.hibernate.criterion.Restrictions;
 
 import com.soinsoftware.vissa.model.Document;
 import com.soinsoftware.vissa.model.DocumentType;
+import com.soinsoftware.vissa.model.PaymentType;
 
 /**
  * @author Carlos Rodriguez
@@ -61,6 +62,15 @@ public class DocumentDao extends AbstractDataAccessibleObject<Document, BigInteg
 		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
 		final List<Criterion> predicates = new ArrayList<>();
 		predicates.add(Restrictions.between("documentDate", iniDate, finalDate));
+		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
+		criteria.add(criterion);
+		return criteria.list();
+	}
+	
+	public List<Document> select(final PaymentType paymentType) {
+		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
+		final List<Criterion> predicates = new ArrayList<>();
+		predicates.add(Restrictions.eq("paymentType", paymentType));
 		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
 		criteria.add(criterion);
 		return criteria.list();

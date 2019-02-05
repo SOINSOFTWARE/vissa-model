@@ -8,14 +8,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.soinsoftware.vissa.dao.CashRegisterConciliationDao;
-import com.soinsoftware.vissa.model.CashRegisterConciliation;
+import com.soinsoftware.vissa.model.CashConciliation;
 import com.soinsoftware.vissa.model.Person;
 
 /**
  * @author Carlos Rodriguez
  * @since 04/12/2018
  */
-public class CashRegisterConciliationBll extends AbstractBll<CashRegisterConciliation, BigInteger> {
+public class CashRegisterConciliationBll extends AbstractBll<CashConciliation, BigInteger> {
 
 	private static CashRegisterConciliationBll instance;
 
@@ -23,9 +23,9 @@ public class CashRegisterConciliationBll extends AbstractBll<CashRegisterConcili
 		super(new CashRegisterConciliationDao());
 	}
 
-	public List<CashRegisterConciliation> select(Person person) {
-		List<CashRegisterConciliation> balances = ((CashRegisterConciliationDao) dao).select(person);
-		return balances.stream().sorted(Comparator.comparing(CashRegisterConciliation::getConciliationDate))
+	public List<CashConciliation> select(Person person) {
+		List<CashConciliation> balances = ((CashRegisterConciliationDao) dao).select(person);
+		return balances.stream().sorted(Comparator.comparing(CashConciliation::getConciliationDate))
 				.collect(Collectors.toList());
 	}
 

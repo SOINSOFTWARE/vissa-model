@@ -9,6 +9,7 @@ import java.util.List;
 import com.soinsoftware.vissa.dao.DocumentDao;
 import com.soinsoftware.vissa.model.Document;
 import com.soinsoftware.vissa.model.DocumentType;
+import com.soinsoftware.vissa.model.PaymentType;
 
 /**
  * @author Carlos Rodriguez
@@ -32,6 +33,10 @@ public class DocumentBll extends AbstractBll<Document, BigInteger> {
 
 	public List<Document> select(DocumentType documentType) {
 		return ((DocumentDao) dao).select(documentType);
+	}
+
+	public List<Document> select(final PaymentType paymentType) {
+		return ((DocumentDao) dao).select(paymentType);
 	}
 
 	public List<Document> select(List<DocumentType> documentTypes) {
