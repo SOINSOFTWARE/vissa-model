@@ -118,7 +118,7 @@ public class Product extends CommonData {
 	}
 
 	public Double getSaleTax() {
-		return saleTax;
+		return saleTax != null ? saleTax : 0.0;
 	}
 
 	public Double getPurchaseTax() {
