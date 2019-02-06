@@ -220,9 +220,9 @@ DROP TABLE IF EXISTS `company`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `company` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `nit` bigint(20) NOT NULL,
+  `nit` varchar(50) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `invoice_resolution` varchar(25) NOT NULL,
+  `invoice_resolution` varchar(50) NOT NULL,
   `regime_type` varchar(25) NOT NULL,
   `address` varchar(100) NOT NULL,
   `phone` varchar(20) NOT NULL,
@@ -242,7 +242,7 @@ CREATE TABLE `company` (
 
 LOCK TABLES `company` WRITE;
 /*!40000 ALTER TABLE `company` DISABLE KEYS */;
-INSERT INTO `company` VALUES (1,901247237,'Comercializadora Kisam','','','Cra 11 # 53A - 40','3135384186','3135384186','','','2019-02-01 20:44:16','2019-02-01 20:44:16','\0');
+INSERT INTO `company` VALUES (1,'901.247.237-8','COMERCIALIZADORA KISAM SAS','18762012706565','REGIMEN COMUN','Calle 37B Cra 6a N.81 Villa Adela 2','3190539','3014037440','','','2019-02-06 03:48:38','2019-02-06 03:48:38','\0');
 /*!40000 ALTER TABLE `company` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -908,7 +908,7 @@ CREATE TABLE `product` (
   `ean_code` varchar(45) DEFAULT NULL,
   `sale_price` decimal(16,2) DEFAULT NULL,
   `purchase_price` decimal(16,2) DEFAULT NULL,
-  `sale_tax` decimal(16,2) DEFAULT NULL,
+  `sale_tax` decimal(16,2) DEFAULT '0.00',
   `purchase_tax` decimal(16,2) DEFAULT NULL,
   `utility` decimal(16,2) DEFAULT NULL,
   `stock` decimal(16,2) DEFAULT NULL,
@@ -1194,4 +1194,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-02-04 23:08:32
+-- Dump completed on 2019-02-05 23:52:36
