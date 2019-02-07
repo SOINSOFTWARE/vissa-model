@@ -43,18 +43,24 @@ public class CashConciliation extends CommonData {
 	private BigDecimal remnantSale;
 	@Column(name = "general_expense")
 	private BigDecimal generalExpense;
-	@Column(name = "supplier_payments")
-	private BigDecimal supplierPayments;
+	@Column(name = "supplier_payments_loan")
+	private BigDecimal supplierPaymentsLoan;
 	@Column(name = "remnant_egress")
 	private BigDecimal remnantEgress;
 	@Column(name = "total_sale")
-	private BigDecimal totalSale;
+	private BigDecimal totalIngress;
 	@Column(name = "total_cash")
 	private BigDecimal totalCash;
 	@Column(name = "total_egress")
 	private BigDecimal totalEgress;
 	@Column(name = "total_credit")
 	private BigDecimal totalCredit;
+	@Column(name = "supplier_payments")
+	private BigDecimal supplierPayments;
+	@Column(name = "cash_register_borrow")
+	private BigDecimal cashRegisterBorrow;
+	@Column(name = "balance")
+	private BigDecimal balance;
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "conciliation_date")
 	private Date conciliationDate;
@@ -76,12 +82,15 @@ public class CashConciliation extends CommonData {
 		creditCollection = builder.creditCollection;
 		remnantSale = builder.remnantSale;
 		generalExpense = builder.generalExpense;
-		supplierPayments = builder.supplierPayments;
+		supplierPaymentsLoan = builder.supplierPaymentsLoan;
 		remnantEgress = builder.remnantEgress;
-		totalSale = builder.totalSale;
+		totalIngress = builder.totalIngress;
 		totalCash = builder.totalCash;
 		totalEgress = builder.totalEgress;
 		totalCredit = builder.totalCredit;
+		supplierPayments = builder.supplierPayments;
+		cashRegisterBorrow = builder.cashRegisterBorrow;
+		balance = builder.balance;
 		conciliationDate = builder.conciliationDate;
 		person = builder.person;
 		comments = builder.comments;
@@ -89,7 +98,7 @@ public class CashConciliation extends CommonData {
 
 	@Override
 	public void validate() {
-		if (supplierPayments == null) {
+		if (supplierPaymentsLoan == null) {
 			throw new ModelValidationException("El pago a proveedores es obligatorio.");
 		}
 	}
@@ -118,16 +127,16 @@ public class CashConciliation extends CommonData {
 		return generalExpense;
 	}
 
-	public BigDecimal getSupplierPayments() {
-		return supplierPayments;
+	public BigDecimal getSupplierPaymentsLoan() {
+		return supplierPaymentsLoan;
 	}
 
 	public BigDecimal getRemnantEgress() {
 		return remnantEgress;
 	}
 
-	public BigDecimal getTotalSale() {
-		return totalSale;
+	public BigDecimal getTotalIngress() {
+		return totalIngress;
 	}
 
 	public BigDecimal getTotalCash() {
@@ -140,6 +149,18 @@ public class CashConciliation extends CommonData {
 
 	public BigDecimal getTotalCredit() {
 		return totalCredit;
+	}
+
+	public BigDecimal getSupplierPayments() {
+		return supplierPayments;
+	}
+
+	public BigDecimal getCashRegisterBorrow() {
+		return cashRegisterBorrow;
+	}
+
+	public BigDecimal getBalance() {
+		return balance;
 	}
 
 	public Date getConciliationDate() {
@@ -174,12 +195,15 @@ public class CashConciliation extends CommonData {
 		private BigDecimal creditCollection;
 		private BigDecimal remnantSale;
 		private BigDecimal generalExpense;
-		private BigDecimal supplierPayments;
+		private BigDecimal supplierPaymentsLoan;
 		private BigDecimal remnantEgress;
-		private BigDecimal totalSale;
+		private BigDecimal totalIngress;
 		private BigDecimal totalCash;
 		private BigDecimal totalEgress;
 		private BigDecimal totalCredit;
+		private BigDecimal supplierPayments;
+		private BigDecimal cashRegisterBorrow;//Prestamo caja
+		private BigDecimal balance;
 		private Date conciliationDate;
 		private Person person;
 		private String comments;
@@ -192,15 +216,18 @@ public class CashConciliation extends CommonData {
 					.modifyDate(cashRegisterConciliation.getModifyDate())
 					.archived(cashRegisterConciliation.isArchived()).cashBase(cashRegisterConciliation.cashBase)
 					.cashRegisterNumber(cashRegisterConciliation.cashRegisterNumber)
-					.totalSale(cashRegisterConciliation.totalSale)
+					.totalIngress(cashRegisterConciliation.totalIngress)
 					.generalExpense(cashRegisterConciliation.generalExpense)
-					.supplierPayments(cashRegisterConciliation.supplierPayments)
+					.supplierPaymentsLoan(cashRegisterConciliation.supplierPaymentsLoan)
 					.creditCollection(cashRegisterConciliation.creditCollection)
 					.totalCash(cashRegisterConciliation.totalCash).totalEgress(cashRegisterConciliation.totalEgress)
 					.totalCredit(cashRegisterConciliation.totalCredit)
 					.conciliationDate(cashRegisterConciliation.conciliationDate).person(cashRegisterConciliation.person)
 					.remnantEgress(cashRegisterConciliation.remnantEgress)
 					.remnantSale(cashRegisterConciliation.remnantSale).sales(cashRegisterConciliation.sales)
+					.supplierPayments(cashRegisterConciliation.supplierPayments)
+					.cashRegisterBorrow(cashRegisterConciliation.cashRegisterBorrow)
+					.balance(cashRegisterConciliation.balance)
 					.comments(cashRegisterConciliation.comments);
 		}
 
@@ -234,8 +261,8 @@ public class CashConciliation extends CommonData {
 			return this;
 		}
 
-		public Builder totalSale(BigDecimal totalSale) {
-			this.totalSale = totalSale;
+		public Builder totalIngress(BigDecimal totalSale) {
+			this.totalIngress = totalSale;
 			return this;
 		}
 
@@ -244,8 +271,8 @@ public class CashConciliation extends CommonData {
 			return this;
 		}
 
-		public Builder supplierPayments(BigDecimal supplierPayments) {
-			this.supplierPayments = supplierPayments;
+		public Builder supplierPaymentsLoan(BigDecimal supplierPaymentsLoan) {
+			this.supplierPaymentsLoan = supplierPaymentsLoan;
 			return this;
 		}
 
@@ -286,6 +313,20 @@ public class CashConciliation extends CommonData {
 
 		public Builder remnantEgress(BigDecimal remnantEgress) {
 			this.remnantEgress = remnantEgress;
+			return this;
+		}
+		
+		public Builder supplierPayments(BigDecimal supplierPayments) {
+			this.supplierPayments = supplierPayments;
+			return this;
+		}
+		
+		public Builder cashRegisterBorrow(BigDecimal cashRegisterBorrow) {
+			this.cashRegisterBorrow = cashRegisterBorrow;
+			return this;
+		}
+		public Builder balance(BigDecimal balance) {
+			this.balance = balance;
 			return this;
 		}
 
