@@ -58,6 +58,7 @@ public class Product extends CommonData {
 	private Date stockDate;
 	private String brand;
 
+	
 	public Product() {
 		super();
 	}
