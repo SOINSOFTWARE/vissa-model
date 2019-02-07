@@ -32,4 +32,6 @@ public class CashRegisterConciliationDao extends AbstractDataAccessibleObject<Ca
 		criteria.add(criterion);
 		return criteria.list();
 	}
+	
+	
 }

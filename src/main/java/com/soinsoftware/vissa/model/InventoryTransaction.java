@@ -38,10 +38,10 @@ public class InventoryTransaction extends CommonData {
 	@JoinColumn(name = "document_id")
 	private Document document;
 	@Column(name = "initial_stock")
-	private Integer initialStock;
-	private Integer quantity;
+	private Double initialStock;
+	private Double quantity;
 	@Column(name = "final_stock")
-	private Integer finalStock;
+	private Double finalStock;
 
 	public InventoryTransaction() {
 		super();
@@ -58,7 +58,7 @@ public class InventoryTransaction extends CommonData {
 	}
 
 	public InventoryTransaction(Product product, TransactionType transactionType, Document document,
-			Integer initialStock, Integer quantity, Integer finalStock) {
+			Double initialStock, Double quantity, Double finalStock) {
 		super();
 		this.product = product;
 		this.transactionType = transactionType;
@@ -80,11 +80,11 @@ public class InventoryTransaction extends CommonData {
 		return document;
 	}
 
-	public Integer getInitialStock() {
+	public Double getInitialStock() {
 		return initialStock;
 	}
 
-	public Integer getFinalStock() {
+	public Double getFinalStock() {
 		return finalStock;
 	}
 
@@ -100,11 +100,11 @@ public class InventoryTransaction extends CommonData {
 		this.document = document;
 	}
 
-	public void setInitialStock(Integer initialStock) {
+	public void setInitialStock(Double initialStock) {
 		this.initialStock = initialStock;
 	}
 
-	public void setFinalStock(Integer finalStock) {
+	public void setFinalStock(Double finalStock) {
 		this.finalStock = finalStock;
 	}
 
@@ -114,11 +114,11 @@ public class InventoryTransaction extends CommonData {
 
 	}
 
-	public Integer getQuantity() {
+	public Double getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(Integer quantity) {
+	public void setQuantity(Double quantity) {
 		this.quantity = quantity;
 	}
 
@@ -139,9 +139,9 @@ public class InventoryTransaction extends CommonData {
 		private Product product;
 		private TransactionType transactionType;
 		private Document document;
-		private Integer initialStock;
-		private Integer quantity;
-		private Integer finalStock;
+		private Double initialStock;
+		private Double quantity;
+		private Double finalStock;
 
 		private Builder() {
 		}
@@ -188,17 +188,17 @@ public class InventoryTransaction extends CommonData {
 			return this;
 		}
 
-		public Builder initialStock(Integer initialStock) {
+		public Builder initialStock(Double initialStock) {
 			this.initialStock = initialStock;
 			return this;
 		}
 
-		public Builder quantity(Integer quantity) {
+		public Builder quantity(Double quantity) {
 			this.quantity = quantity;
 			return this;
 		}
 
-		public Builder finalStock(Integer finalStock) {
+		public Builder finalStock(Double finalStock) {
 			this.finalStock = finalStock;
 			return this;
 		}
@@ -207,4 +207,12 @@ public class InventoryTransaction extends CommonData {
 			return new InventoryTransaction(this);
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "InventoryTransaction [product=" + product + ", transactionType=" + transactionType + ", document="
+				+ document + ", initialStock=" + initialStock + ", quantity=" + quantity + ", finalStock=" + finalStock
+				+ "]";
+	}
+
 }

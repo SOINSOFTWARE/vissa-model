@@ -10,20 +10,20 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 
-import com.soinsoftware.vissa.model.Expense;
+import com.soinsoftware.vissa.model.Egress;
 
 /**
  * @author Carlos Rodriguez
  * @since 28/11/2018
  */
-public class ExpenseDao extends AbstractDataAccessibleObject<Expense, BigInteger> {
+public class ExpenseDao extends AbstractDataAccessibleObject<Egress, BigInteger> {
 
 	public ExpenseDao() throws IOException {
-		super(Expense.class);
+		super(Egress.class);
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Expense> select(final String person) {
+	public List<Egress> select(final String person) {
 		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
 		final List<Criterion> predicates = new ArrayList<>();
 		predicates.add(Restrictions.eq("person", person));

@@ -17,8 +17,6 @@ import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
 import org.hibernate.annotations.SelectBeforeUpdate;
 
-import com.soinsoftware.vissa.exception.ModelValidationException;
-
 /**
  * @author Carlos Rodriguez
  * @since 21/12/2018
@@ -98,9 +96,7 @@ public class CashConciliation extends CommonData {
 
 	@Override
 	public void validate() {
-		if (supplierPaymentsLoan == null) {
-			throw new ModelValidationException("El pago a proveedores es obligatorio.");
-		}
+
 	}
 
 	public BigDecimal getCashBase() {
@@ -202,7 +198,7 @@ public class CashConciliation extends CommonData {
 		private BigDecimal totalEgress;
 		private BigDecimal totalCredit;
 		private BigDecimal supplierPayments;
-		private BigDecimal cashRegisterBorrow;//Prestamo caja
+		private BigDecimal cashRegisterBorrow;// Prestamo caja
 		private BigDecimal balance;
 		private Date conciliationDate;
 		private Person person;
@@ -227,8 +223,7 @@ public class CashConciliation extends CommonData {
 					.remnantSale(cashRegisterConciliation.remnantSale).sales(cashRegisterConciliation.sales)
 					.supplierPayments(cashRegisterConciliation.supplierPayments)
 					.cashRegisterBorrow(cashRegisterConciliation.cashRegisterBorrow)
-					.balance(cashRegisterConciliation.balance)
-					.comments(cashRegisterConciliation.comments);
+					.balance(cashRegisterConciliation.balance).comments(cashRegisterConciliation.comments);
 		}
 
 		public Builder id(BigInteger id) {
@@ -315,16 +310,17 @@ public class CashConciliation extends CommonData {
 			this.remnantEgress = remnantEgress;
 			return this;
 		}
-		
+
 		public Builder supplierPayments(BigDecimal supplierPayments) {
 			this.supplierPayments = supplierPayments;
 			return this;
 		}
-		
+
 		public Builder cashRegisterBorrow(BigDecimal cashRegisterBorrow) {
 			this.cashRegisterBorrow = cashRegisterBorrow;
 			return this;
 		}
+
 		public Builder balance(BigDecimal balance) {
 			this.balance = balance;
 			return this;
