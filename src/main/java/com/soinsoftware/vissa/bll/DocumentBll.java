@@ -34,6 +34,7 @@ public class DocumentBll extends AbstractBll<Document, BigInteger> {
 	public Document select(String code, List<DocumentType> documentType) {
 		return ((DocumentDao) dao).select(code, documentType);
 	}
+
 	public List<Document> select(DocumentType documentType) {
 		return ((DocumentDao) dao).select(documentType);
 	}
@@ -44,6 +45,14 @@ public class DocumentBll extends AbstractBll<Document, BigInteger> {
 
 	public List<Document> select(List<DocumentType> documentTypes) {
 		return ((DocumentDao) dao).select(documentTypes);
+	}
+	
+	public List<Document> select(List<DocumentType> documentTypes, List<PaymentType> paymentTypes) {
+		return ((DocumentDao) dao).select(documentTypes, paymentTypes);
+	}
+
+	public List<Document> selectByPaymentTypes(List<PaymentType> paymentTypes) {
+		return ((DocumentDao) dao).selectByPaymentTypes(paymentTypes);
 	}
 
 	public List<Document> select(Date documentDate, Date iniDate, Date finalDate) {

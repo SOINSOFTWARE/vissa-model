@@ -85,4 +85,23 @@ public class DocumentDao extends AbstractDataAccessibleObject<Document, BigInteg
 		criteria.add(criterion);
 		return criteria.list();
 	}
+	
+	public List<Document> selectByPaymentTypes(final List<PaymentType> paymentTypes) {
+		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
+		final List<Criterion> predicates = new ArrayList<>();
+		predicates.add(Restrictions.in("paymentType", paymentTypes));
+		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
+		criteria.add(criterion);
+		return criteria.list();
+	}
+	
+	public List<Document> select(final List<DocumentType> documentTypes, List<PaymentType> paymentTypes) {
+		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
+		final List<Criterion> predicates = new ArrayList<>();
+		predicates.add(Restrictions.in("documentType", documentTypes));
+		predicates.add(Restrictions.in("paymentType", paymentTypes));
+		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
+		criteria.add(criterion);
+		return criteria.list();
+	}
 }
