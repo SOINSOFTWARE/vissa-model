@@ -49,6 +49,16 @@ public class DocumentDao extends AbstractDataAccessibleObject<Document, BigInteg
 		return (Document) criteria.uniqueResult();
 	}
 
+	public Document select(String code, List<DocumentType> documentType) {
+		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
+		final List<Criterion> predicates = new ArrayList<>();
+		predicates.add(Restrictions.eq("code", code));
+		predicates.add(Restrictions.in("documentType", documentType));
+		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
+		criteria.add(criterion);
+		return (Document) criteria.uniqueResult();
+	}
+
 	public List<Document> select(final List<DocumentType> documentTypes) {
 		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
 		final List<Criterion> predicates = new ArrayList<>();
@@ -66,7 +76,7 @@ public class DocumentDao extends AbstractDataAccessibleObject<Document, BigInteg
 		criteria.add(criterion);
 		return criteria.list();
 	}
-	
+
 	public List<Document> select(final PaymentType paymentType) {
 		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
 		final List<Criterion> predicates = new ArrayList<>();
