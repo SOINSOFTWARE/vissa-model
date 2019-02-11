@@ -33,7 +33,7 @@ public class InventoryTransaction extends CommonData {
 	private Product product;
 	@Enumerated(EnumType.STRING)
 	@Column(name = "transaction_type")
-	private TransactionType transactionType;
+	private ETransactionType transactionType;
 	@ManyToOne
 	@JoinColumn(name = "document_id")
 	private Document document;
@@ -57,7 +57,7 @@ public class InventoryTransaction extends CommonData {
 		finalStock = builder.finalStock;
 	}
 
-	public InventoryTransaction(Product product, TransactionType transactionType, Document document,
+	public InventoryTransaction(Product product, ETransactionType transactionType, Document document,
 			Double initialStock, Double quantity, Double finalStock) {
 		super();
 		this.product = product;
@@ -72,7 +72,7 @@ public class InventoryTransaction extends CommonData {
 		return product;
 	}
 
-	public TransactionType getTransactionType() {
+	public ETransactionType getTransactionType() {
 		return transactionType;
 	}
 
@@ -92,7 +92,7 @@ public class InventoryTransaction extends CommonData {
 		this.product = product;
 	}
 
-	public void setTransactionType(TransactionType transactionType) {
+	public void setTransactionType(ETransactionType transactionType) {
 		this.transactionType = transactionType;
 	}
 
@@ -137,7 +137,7 @@ public class InventoryTransaction extends CommonData {
 		private Date modifyDate;
 		private boolean archived;
 		private Product product;
-		private TransactionType transactionType;
+		private ETransactionType transactionType;
 		private Document document;
 		private Double initialStock;
 		private Double quantity;
@@ -178,7 +178,7 @@ public class InventoryTransaction extends CommonData {
 			return this;
 		}
 
-		public Builder transactionType(TransactionType transactionType) {
+		public Builder transactionType(ETransactionType transactionType) {
 			this.transactionType = transactionType;
 			return this;
 		}

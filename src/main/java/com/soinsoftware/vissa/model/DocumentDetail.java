@@ -91,8 +91,26 @@ public class DocumentDetail extends CommonData {
 	}
 
 	public void calculateSubtotal() {
-		setSubtotalStr(String.valueOf(product.getSalePrice() * Double.parseDouble(quantity)));
-		CommonsUtil.currentDocumentDetail = this;
+
+		Double priceWithTax = 0.0;
+		if (CommonsUtil.TRANSACTION_TYPE.equals(ETransactionType.ENTRADA.getName())) {
+			Double purchaseTax = product.getPurchaseTax();
+			priceWithTax = product.getPurchasePrice();
+			if (purchaseTax != null && !purchaseTax.equals(0.0)) {
+				purchaseTax = purchaseTax / 100;
+				priceWithTax = priceWithTax + (priceWithTax * purchaseTax);
+			}
+		} else if (CommonsUtil.TRANSACTION_TYPE.equals(ETransactionType.SALIDA.getName())) {
+			Double saleTax = product.getSaleTax();
+			priceWithTax = product.getSalePrice();
+			if (saleTax != null && !saleTax.equals(0.0)) {
+				saleTax = saleTax / 100;
+				priceWithTax = priceWithTax + priceWithTax * saleTax;
+			}
+		}
+
+		setSubtotalStr(String.valueOf(priceWithTax * Double.parseDouble(quantity)));
+		CommonsUtil.CURRENT_DOCUMENT_DETAIL = this;
 	}
 
 	public void setSubtotal(Double subtotal) {
@@ -226,8 +244,8 @@ public class DocumentDetail extends CommonData {
 
 	@Override
 	public String toString() {
-		return "DocumentDetail [product=" + product + ", description=" + description
-				+ ", quantity=" + quantity + ", subtotal=" + subtotal + "]";
+		return "DocumentDetail [product=" + product + ", description=" + description + ", quantity=" + quantity
+				+ ", subtotal=" + subtotal + "]";
 	}
 
 }

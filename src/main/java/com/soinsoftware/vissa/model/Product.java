@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.NaturalId;
@@ -50,15 +51,18 @@ public class Product extends CommonData {
 	private Double purchasePrice;
 	@Column(name = "sale_tax")
 	private Double saleTax;
+	@Transient
+	private Double saleTaxValue;
 	@Column(name = "purchase_tax")
 	private Double purchaseTax;
+	@Transient
+	private Double purchaseTaxValue;
 	private Double utility;
 	private Double stock;
 	@Column(name = "stock_date")
 	private Date stockDate;
 	private String brand;
 
-	
 	public Product() {
 		super();
 	}
@@ -124,6 +128,31 @@ public class Product extends CommonData {
 
 	public Double getPurchaseTax() {
 		return purchaseTax;
+	}
+
+	public Double getSaleTaxValue() {
+		saleTaxValue = 0.0;
+		if ((saleTax != null && !saleTax.equals(0.0) && (salePrice != null && !salePrice.equals(0.0)))) {
+			saleTaxValue = salePrice * (saleTax/100);
+		}
+		return saleTaxValue;
+	}
+
+	public Double getPurchaseTaxValue() {
+		purchaseTaxValue = 0.0;
+		if ((purchaseTax != null && !purchaseTax.equals(0.0)
+				&& (purchasePrice != null && !purchasePrice.equals(0.0)))) {
+			purchaseTaxValue = purchasePrice * (purchaseTax/100);
+		}
+		return purchaseTaxValue;
+	}
+
+	public void setSaleTaxValue(Double saleTaxValue) {
+		this.saleTaxValue = saleTaxValue;
+	}
+
+	public void setPurchaseTaxValue(Double purchaseTaxValue) {
+		this.purchaseTaxValue = purchaseTaxValue;
 	}
 
 	public Double getStock() {

@@ -7,7 +7,7 @@ import java.util.List;
 
 import com.soinsoftware.vissa.dao.DocumentTypeDao;
 import com.soinsoftware.vissa.model.DocumentType;
-import com.soinsoftware.vissa.model.TransactionType;
+import com.soinsoftware.vissa.model.ETransactionType;
 
 /**
  * @author Carlos Rodriguez
@@ -25,7 +25,7 @@ public class DocumentTypeBll extends AbstractBll<DocumentType, BigInteger> {
 		return ((DocumentTypeDao) dao).select(code);
 	}
 
-	public List<DocumentType> select(TransactionType transactionType) {
+	public List<DocumentType> select(ETransactionType transactionType) {
 		List<DocumentType> documentTypes = ((DocumentTypeDao) dao).select(transactionType);
 		return documentTypes;
 	}

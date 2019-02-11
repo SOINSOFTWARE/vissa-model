@@ -62,12 +62,44 @@ public class Permission extends CommonData {
 		return view;
 	}
 
+	public String canViewStr() {
+		return "☒";
+	}
+
 	public boolean canEdit() {
 		return edit;
 	}
 
 	public boolean canDelete() {
 		return delete;
+	}
+
+	public boolean isView() {
+		return view;
+	}
+
+	public boolean isEdit() {
+		return edit;
+	}
+
+	public boolean isDelete() {
+		return delete;
+	}
+
+	public void setView(boolean view) {
+		this.view = view;
+	}
+	
+	public void setViewStr(String view) {
+		this.view = Boolean.parseBoolean(view);
+	}
+
+	public void setEdit(boolean edit) {
+		this.edit = edit;
+	}
+
+	public void setDelete(boolean delete) {
+		this.delete = delete;
 	}
 
 	@Override

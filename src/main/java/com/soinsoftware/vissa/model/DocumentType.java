@@ -34,7 +34,7 @@ public class DocumentType extends CommonData {
 	private String name;
 	@Enumerated(EnumType.STRING)
 	@Column(name = "transaction_type")
-	private TransactionType transactionType;
+	private ETransactionType transactionType;
 	private Integer sequence;
 
 	public DocumentType() {
@@ -57,7 +57,7 @@ public class DocumentType extends CommonData {
 		return name;
 	}
 
-	public TransactionType getTransactionType() {
+	public ETransactionType getTransactionType() {
 		return transactionType;
 	}
 
@@ -91,7 +91,7 @@ public class DocumentType extends CommonData {
 		private boolean archived;
 		private String code;
 		private String name;
-		private TransactionType transactionType;
+		private ETransactionType transactionType;
 		private Integer sequence;
 
 		private Builder() {
@@ -134,7 +134,7 @@ public class DocumentType extends CommonData {
 			return this;
 		}
 
-		public Builder transactionType(TransactionType transactionType) {
+		public Builder transactionType(ETransactionType transactionType) {
 			this.transactionType = transactionType;
 			return this;
 		}

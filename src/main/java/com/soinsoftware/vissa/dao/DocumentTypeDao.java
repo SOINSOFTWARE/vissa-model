@@ -11,7 +11,7 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 
 import com.soinsoftware.vissa.model.DocumentType;
-import com.soinsoftware.vissa.model.TransactionType;
+import com.soinsoftware.vissa.model.ETransactionType;
 
 /**
  * @author Carlos Rodriguez
@@ -28,7 +28,7 @@ public class DocumentTypeDao extends AbstractDataAccessibleObject<DocumentType, 
 		return getSession().bySimpleNaturalId(DocumentType.class).load(code);
 	}
 
-	public List<DocumentType> select(TransactionType transactionType) {
+	public List<DocumentType> select(ETransactionType transactionType) {
 		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
 		final List<Criterion> predicates = new ArrayList<>();
 		predicates.add(Restrictions.eq("transactionType", transactionType));
