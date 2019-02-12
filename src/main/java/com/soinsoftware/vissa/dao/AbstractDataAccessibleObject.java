@@ -67,9 +67,10 @@ public abstract class AbstractDataAccessibleObject<T, P> implements DataAccessib
 	public void persist(T record) {
 		try {
 			persist(getSession().getTransaction(), record);
-		} finally {
 			getSession().getTransaction().commit();
 			getSession().flush();
+		} finally {
+			
 		}
 	}
 
@@ -87,9 +88,10 @@ public abstract class AbstractDataAccessibleObject<T, P> implements DataAccessib
 	public void update(T record) {
 		try {
 			update(getSession().getTransaction(), record);
-		} finally {
 			getSession().getTransaction().commit();
 			getSession().flush();
+		} finally {
+			
 		}
 	}
 
@@ -116,6 +118,7 @@ public abstract class AbstractDataAccessibleObject<T, P> implements DataAccessib
 		Transaction transaction = getSession().getTransaction();
 		if (transaction != null) {
 			transaction.rollback();
+			getSession().clear();
 		}
 	}
 
