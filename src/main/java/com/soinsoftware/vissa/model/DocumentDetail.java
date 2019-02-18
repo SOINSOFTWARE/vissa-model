@@ -3,11 +3,13 @@ package com.soinsoftware.vissa.model;
 
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.OptimisticLockType;
@@ -37,6 +39,12 @@ public class DocumentDetail extends CommonData {
 	private Product product;
 	private String description;
 	private String quantity;
+	@Transient
+	private List<MeasurementUnit> measurementUnitList;
+	@Transient
+	private MeasurementUnit measurementUnit;
+	@Transient
+	private Double price;
 	@Column(name = "sub_total")
 	private Double subtotal;
 
@@ -88,6 +96,38 @@ public class DocumentDetail extends CommonData {
 	public void setQuantity(String quantity) {
 		this.quantity = quantity;
 		calculateSubtotal();
+	}
+
+	public MeasurementUnit getMeasurementUnit() {
+		return measurementUnit;
+	}
+
+	public Double getPrice() {
+		return price != null ? price : 0.0;
+	}
+
+	public String getPriceStr() {
+		return String.valueOf(getPrice());
+	}
+
+	public void setMeasurementUnit(MeasurementUnit measurementUnit) {
+		this.measurementUnit = measurementUnit;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
+	public void setPriceStr(String priceStr) {
+		setPrice(Double.valueOf(priceStr));
+	}
+
+	public List<MeasurementUnit> getMeasurementUnitList() {
+		return measurementUnitList;
+	}
+
+	public void setMeasurementUnitList(List<MeasurementUnit> measurementUnitList) {
+		this.measurementUnitList = measurementUnitList;
 	}
 
 	public void calculateSubtotal() {

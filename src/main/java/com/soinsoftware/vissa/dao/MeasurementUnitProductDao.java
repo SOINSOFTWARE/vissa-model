@@ -34,6 +34,20 @@ public class MeasurementUnitProductDao extends AbstractDataAccessibleObject<Meas
 		return criteria.list();
 	}
 
+	public List<MeasurementUnit> selectMuByProduct(Product product) {
+		List<MeasurementUnit> muList = new ArrayList<>();
+		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
+		final List<Criterion> predicates = new ArrayList<>();
+		predicates.add(Restrictions.eq("product", product));
+		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
+		criteria.add(criterion);
+		List<MeasurementUnitProduct> list = criteria.list();
+		for (MeasurementUnitProduct muProd : list) {
+			muList.add(muProd.getMeasurementUnit());
+		}
+		return muList;
+	}
+
 	public List<MeasurementUnitProduct> select(MeasurementUnit measurementUnit) {
 		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
 		final List<Criterion> predicates = new ArrayList<>();

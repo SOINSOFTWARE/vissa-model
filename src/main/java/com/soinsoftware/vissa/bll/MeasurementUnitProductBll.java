@@ -27,6 +27,11 @@ public class MeasurementUnitProductBll extends AbstractBll<MeasurementUnitProduc
 		return products;
 	}
 
+	public List<MeasurementUnit> selectMuByProduct(Product product) {
+		List<MeasurementUnit> muList = ((MeasurementUnitProductDao) dao).selectMuByProduct(product);
+		return muList;
+	}
+
 	public List<MeasurementUnitProduct> select(MeasurementUnit measurementUnit) {
 		List<MeasurementUnitProduct> products = ((MeasurementUnitProductDao) dao).select(measurementUnit);
 		return products;
