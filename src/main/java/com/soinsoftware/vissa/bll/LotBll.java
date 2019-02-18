@@ -30,16 +30,27 @@ public class LotBll extends AbstractBll<Lot, BigInteger> {
 
 	public List<Lot> select(Product product) {
 		List<Lot> lots = ((LotDao) dao).select(product);
-		return sortedByExpiration(lots);
+		return lots;
 	}
-	
+
 	public List<Lot> select(Warehouse warehouse) {
 		List<Lot> lots = ((LotDao) dao).select(warehouse);
-		return sortedByExpiration(lots);
+		return lots;
 	}
 
 	private List<Lot> sortedByExpiration(List<Lot> lots) {
 		return lots.stream().sorted(Comparator.comparing(Lot::getExpirationDate)).collect(Collectors.toList());
+	}
+
+	public Lot getLastLotByProduct(Product product) {
+		Lot lot = null;
+		List<Lot> lots = ((LotDao) dao).select(product);
+		List<Lot> lotsByCode = lots.stream().sorted(Comparator.comparing(Lot::getCode)).collect(Collectors.toList());
+		int size = lotsByCode.size();
+		if (size > 0) {
+			lot = lotsByCode.get(size - 1);
+		}
+		return lot;
 	}
 
 	public static LotBll getInstance() throws IOException {

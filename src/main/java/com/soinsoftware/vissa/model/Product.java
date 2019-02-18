@@ -118,12 +118,20 @@ public class Product extends CommonData {
 		return salePrice;
 	}
 
+	public void setSalePrice(Double salePrice) {
+		this.salePrice = salePrice;
+	}
+
 	public Double getPurchasePrice() {
 		return purchasePrice;
 	}
 
 	public Double getSaleTax() {
 		return saleTax != null ? saleTax : 0.0;
+	}
+
+	public void setSaleTax(Double saleTax) {
+		this.saleTax = saleTax;
 	}
 
 	public Double getPurchaseTax() {
@@ -133,22 +141,30 @@ public class Product extends CommonData {
 	public Double getSaleTaxValue() {
 		saleTaxValue = 0.0;
 		if ((saleTax != null && !saleTax.equals(0.0) && (salePrice != null && !salePrice.equals(0.0)))) {
-			saleTaxValue = salePrice * (saleTax/100);
+			saleTaxValue = salePrice * (saleTax / 100);
 		}
 		return saleTaxValue;
+	}
+
+	public String getSaleTaxValueStr() {
+		return String.valueOf(getSaleTaxValue());
 	}
 
 	public Double getPurchaseTaxValue() {
 		purchaseTaxValue = 0.0;
 		if ((purchaseTax != null && !purchaseTax.equals(0.0)
 				&& (purchasePrice != null && !purchasePrice.equals(0.0)))) {
-			purchaseTaxValue = purchasePrice * (purchaseTax/100);
+			purchaseTaxValue = purchasePrice * (purchaseTax / 100);
 		}
 		return purchaseTaxValue;
 	}
 
 	public void setSaleTaxValue(Double saleTaxValue) {
 		this.saleTaxValue = saleTaxValue;
+	}
+
+	public void setSaleTaxValueStr(String saleTaxValueStr) {
+		this.saleTaxValue = Double.valueOf(saleTaxValueStr);
 	}
 
 	public void setPurchaseTaxValue(Double purchaseTaxValue) {

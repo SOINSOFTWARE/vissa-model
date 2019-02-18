@@ -41,6 +41,12 @@ public class MeasurementUnit extends CommonData {
 	public String getName() {
 		return name;
 	}
+	
+	
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	@Override
 	public void validate() {
@@ -103,4 +109,11 @@ public class MeasurementUnit extends CommonData {
 			return new MeasurementUnit(this);
 		}
 	}
+
+	@Override
+	public String toString() {
+		return name;
+	}
+	
+	
 }

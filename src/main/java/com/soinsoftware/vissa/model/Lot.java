@@ -100,9 +100,6 @@ public class Lot extends CommonData {
 		if (code == null || code.trim().equals("")) {
 			throw new ModelValidationException("El código es obligatorio.");
 		}
-		if (name == null || name.trim().equals("")) {
-			throw new ModelValidationException("El código es obligatorio.");
-		}
 		if (warehouse == null) {
 			throw new ModelValidationException("La bodega es obligatoria.");
 		}
