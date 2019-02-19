@@ -37,6 +37,11 @@ public class MeasurementUnitProductBll extends AbstractBll<MeasurementUnitProduc
 		return products;
 	}
 
+	public List<MeasurementUnitProduct> select(MeasurementUnit measurementUnit, Product product) {
+		List<MeasurementUnitProduct> products = ((MeasurementUnitProductDao) dao).select(measurementUnit, product);
+		return products;
+	}
+
 	public static MeasurementUnitProductBll getInstance() throws IOException {
 		if (instance == null) {
 			instance = new MeasurementUnitProductBll();

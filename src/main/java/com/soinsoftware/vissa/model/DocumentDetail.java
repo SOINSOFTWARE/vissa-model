@@ -41,10 +41,11 @@ public class DocumentDetail extends CommonData {
 	private String quantity;
 	@Transient
 	private List<MeasurementUnit> measurementUnitList;
-	@Transient
+	@ManyToOne
+	@JoinColumn(name = "measurement_unit_id")
 	private MeasurementUnit measurementUnit;
-	@Transient
 	private Double price;
+	private Double discount;
 	@Column(name = "sub_total")
 	private Double subtotal;
 
@@ -59,6 +60,9 @@ public class DocumentDetail extends CommonData {
 		description = builder.description;
 		quantity = builder.quantity;
 		subtotal = builder.subtotal;
+		measurementUnit = builder.measurementUnit;
+		price = builder.price;
+		discount = builder.discount;
 	}
 
 	public static long getSerialversionuid() {
@@ -86,7 +90,7 @@ public class DocumentDetail extends CommonData {
 	}
 
 	public String getSubtotalStr() {
-		return String.valueOf(subtotal);
+		return String.valueOf(getSubtotal());
 	}
 
 	public void setDescription(String description) {
@@ -112,6 +116,7 @@ public class DocumentDetail extends CommonData {
 
 	public void setMeasurementUnit(MeasurementUnit measurementUnit) {
 		this.measurementUnit = measurementUnit;
+		CommonsUtil.CURRENT_DOCUMENT_DETAIL = this;
 	}
 
 	public void setPrice(Double price) {
@@ -131,25 +136,26 @@ public class DocumentDetail extends CommonData {
 	}
 
 	public void calculateSubtotal() {
+		if (quantity != null && !quantity.isEmpty()) {
+			Double priceWithTax = 0.0;
+			if (CommonsUtil.TRANSACTION_TYPE.equals(ETransactionType.ENTRADA.getName())) {
+				Double purchaseTax = product.getPurchaseTax();
+				priceWithTax = product.getPurchasePrice();
+				if (purchaseTax != null && !purchaseTax.equals(0.0)) {
+					purchaseTax = purchaseTax / 100;
+					priceWithTax = priceWithTax + (priceWithTax * purchaseTax);
+				}
+			} else if (CommonsUtil.TRANSACTION_TYPE.equals(ETransactionType.SALIDA.getName())) {
+				Double saleTax = product.getSaleTax();
+				priceWithTax = product.getSalePrice();
+				if (saleTax != null && !saleTax.equals(0.0)) {
+					saleTax = saleTax / 100;
+					priceWithTax = priceWithTax + priceWithTax * saleTax;
+				}
+			}
 
-		Double priceWithTax = 0.0;
-		if (CommonsUtil.TRANSACTION_TYPE.equals(ETransactionType.ENTRADA.getName())) {
-			Double purchaseTax = product.getPurchaseTax();
-			priceWithTax = product.getPurchasePrice();
-			if (purchaseTax != null && !purchaseTax.equals(0.0)) {
-				purchaseTax = purchaseTax / 100;
-				priceWithTax = priceWithTax + (priceWithTax * purchaseTax);
-			}
-		} else if (CommonsUtil.TRANSACTION_TYPE.equals(ETransactionType.SALIDA.getName())) {
-			Double saleTax = product.getSaleTax();
-			priceWithTax = product.getSalePrice();
-			if (saleTax != null && !saleTax.equals(0.0)) {
-				saleTax = saleTax / 100;
-				priceWithTax = priceWithTax + priceWithTax * saleTax;
-			}
+			setSubtotalStr(String.valueOf((priceWithTax - getDiscount()) * Double.parseDouble(quantity)));
 		}
-
-		setSubtotalStr(String.valueOf(priceWithTax * Double.parseDouble(quantity)));
 		CommonsUtil.CURRENT_DOCUMENT_DETAIL = this;
 	}
 
@@ -159,6 +165,23 @@ public class DocumentDetail extends CommonData {
 
 	public void setSubtotalStr(String subtotal) {
 		this.subtotal = Double.parseDouble(subtotal);
+	}
+
+	public Double getDiscount() {
+		return discount != null ? discount : 0.0;
+	}
+
+	public void setDiscount(Double discount) {
+		this.discount = discount;
+		calculateSubtotal();
+	}
+
+	public String getDiscountStr() {
+		return String.valueOf(getDiscount());
+	}
+
+	public void setDiscountStr(String discount) {
+		setDiscount(Double.valueOf(discount));
 	}
 
 	@Override
@@ -220,6 +243,9 @@ public class DocumentDetail extends CommonData {
 		private String description;
 		private String quantity;
 		private Double subtotal;
+		private MeasurementUnit measurementUnit;
+		private Double price;
+		private Double discount;
 
 		private Builder() {
 		}
@@ -229,7 +255,8 @@ public class DocumentDetail extends CommonData {
 					.modifyDate(documentDetail.getModifyDate()).archived(documentDetail.isArchived())
 					.document(documentDetail.document).product(documentDetail.product)
 					.description(documentDetail.description).quantity(documentDetail.quantity)
-					.subtotal(documentDetail.subtotal);
+					.subtotal(documentDetail.subtotal).measurementUnit(documentDetail.measurementUnit)
+					.price(documentDetail.price).discount(documentDetail.discount);
 		}
 
 		public Builder id(BigInteger id) {
@@ -277,6 +304,21 @@ public class DocumentDetail extends CommonData {
 			return this;
 		}
 
+		public Builder measurementUnit(MeasurementUnit measurementUnit) {
+			this.measurementUnit = measurementUnit;
+			return this;
+		}
+
+		public Builder price(Double price) {
+			this.price = price;
+			return this;
+		}
+
+		public Builder discount(Double discount) {
+			this.discount = discount;
+			return this;
+		}
+
 		public DocumentDetail build() {
 			return new DocumentDetail(this);
 		}
@@ -284,8 +326,9 @@ public class DocumentDetail extends CommonData {
 
 	@Override
 	public String toString() {
-		return "DocumentDetail [product=" + product + ", description=" + description + ", quantity=" + quantity
-				+ ", subtotal=" + subtotal + "]";
+		return "DocumentDetail [document=" + document + ", product=" + product + ", description=" + description
+				+ ", quantity=" + quantity + ", measurementUnitList=" + measurementUnitList + ", measurementUnit="
+				+ measurementUnit + ", price=" + price + ", discount=" + discount + ", subtotal=" + subtotal + "]";
 	}
 
 }
