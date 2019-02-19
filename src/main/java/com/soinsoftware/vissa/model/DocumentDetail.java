@@ -336,7 +336,4 @@ public class DocumentDetail extends CommonData {
 				+ measurementUnit + ", price=" + price + ", tax=" + tax + ", discount=" + discount + ", subtotal="
 				+ subtotal + "]";
 	}
-
-
-
 }
