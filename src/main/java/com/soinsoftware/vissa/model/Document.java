@@ -392,10 +392,11 @@ public class Document extends CommonData {
 	@Override
 	public String toString() {
 		return "Document [code=" + code + ", documentType=" + documentType + ", person=" + person + ", documentDate="
-				+ documentDate + ", paymentType=" + paymentType + ", paymentMethod=" + paymentMethod + ", paymentTerm="
-				+ paymentTerm + ", expirationDate=" + expirationDate + ", currency=" + currency + ", totalValueNoTax="
-				+ totalValueNoTax + ", totalValue=" + totalValue + ", reference=" + reference + ", status=" + status
-				+ ", salesman=" + salesman + ", cash=" + cash + ", details=" + details + "]";
+				+ documentDate + ", paymentType=" + paymentType + ", resolution=" + resolution + ", paymentMethod="
+				+ paymentMethod + ", paymentTerm=" + paymentTerm + ", expirationDate=" + expirationDate + ", currency="
+				+ currency + ", totalValueNoTax=" + totalValueNoTax + ", totalValue=" + totalValue + ", reference="
+				+ reference + ", status=" + status + ", salesman=" + salesman + ", cash=" + cash + "]";
 	}
 
+	
 }

@@ -144,11 +144,8 @@ public class MeasurementUnitProduct extends CommonData {
 	}
 
 	public Double getSaleTaxValue() {
-		saleTaxValue = 0.0;
-		if ((saleTax != null && !saleTax.equals(0.0) && (salePrice != null && !salePrice.equals(0.0)))) {
-			saleTaxValue = salePrice * (saleTax / 100);
-		}
-		return saleTaxValue;
+		setSaleTaxValue(getSalePrice() * (getSaleTax() / 100));
+		return getSaleTaxValue();
 	}
 
 	public String getSaleTaxValueStr() {
@@ -156,12 +153,8 @@ public class MeasurementUnitProduct extends CommonData {
 	}
 
 	public Double getPurchaseTaxValue() {
-		purchaseTaxValue = 0.0;
-		if ((purchaseTax != null && !purchaseTax.equals(0.0)
-				&& (purchasePrice != null && !purchasePrice.equals(0.0)))) {
-			purchaseTaxValue = purchasePrice * (purchaseTax / 100);
-		}
-		return purchaseTaxValue;
+		setPurchaseTaxValue(getPurchasePrice() * (getPurchaseTax() / 100));
+		return getPurchaseTaxValue();
 	}
 
 	public void setSaleTaxValue(Double saleTaxValue) {
@@ -331,7 +324,5 @@ public class MeasurementUnitProduct extends CommonData {
 				+ ", saleTax=" + saleTax + ", purchaseTax=" + purchaseTax + ", finalPrice=" + finalPrice
 				+ ", saleTaxValue=" + saleTaxValue + ", purchaseTaxValue=" + purchaseTaxValue + "]";
 	}
-	
-	
 
 }

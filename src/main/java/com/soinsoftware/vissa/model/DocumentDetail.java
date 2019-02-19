@@ -45,6 +45,8 @@ public class DocumentDetail extends CommonData {
 	@JoinColumn(name = "measurement_unit_id")
 	private MeasurementUnit measurementUnit;
 	private Double price;
+	@Transient
+	private Double tax;
 	private Double discount;
 	@Column(name = "sub_total")
 	private Double subtotal;
@@ -135,28 +137,20 @@ public class DocumentDetail extends CommonData {
 		this.measurementUnitList = measurementUnitList;
 	}
 
-	public void calculateSubtotal() {
-		if (quantity != null && !quantity.isEmpty()) {
-			Double priceWithTax = 0.0;
-			if (CommonsUtil.TRANSACTION_TYPE.equals(ETransactionType.ENTRADA.getName())) {
-				Double purchaseTax = product.getPurchaseTax();
-				priceWithTax = product.getPurchasePrice();
-				if (purchaseTax != null && !purchaseTax.equals(0.0)) {
-					purchaseTax = purchaseTax / 100;
-					priceWithTax = priceWithTax + (priceWithTax * purchaseTax);
-				}
-			} else if (CommonsUtil.TRANSACTION_TYPE.equals(ETransactionType.SALIDA.getName())) {
-				Double saleTax = product.getSaleTax();
-				priceWithTax = product.getSalePrice();
-				if (saleTax != null && !saleTax.equals(0.0)) {
-					saleTax = saleTax / 100;
-					priceWithTax = priceWithTax + priceWithTax * saleTax;
-				}
-			}
+	public Double getTax() {
+		return tax;
+	}
 
-			setSubtotalStr(String.valueOf((priceWithTax - getDiscount()) * Double.parseDouble(quantity)));
-		}
-		CommonsUtil.CURRENT_DOCUMENT_DETAIL = this;
+	public void setTax(Double tax) {
+		this.tax = tax;
+	}
+
+	public String getTaxStr() {
+		return String.valueOf(getTax());
+	}
+
+	public void setTaxStr(String taxStr) {
+		setTax(Double.valueOf(taxStr));
 	}
 
 	public void setSubtotal(Double subtotal) {
@@ -182,6 +176,17 @@ public class DocumentDetail extends CommonData {
 
 	public void setDiscountStr(String discount) {
 		setDiscount(Double.valueOf(discount));
+	}
+
+	public void calculateSubtotal() {
+		if (quantity != null && !quantity.isEmpty()) {
+			Double priceWithTax = 0.0;
+
+			priceWithTax = getPrice() + (getPrice() * getTax() / 100);
+
+			setSubtotalStr(String.valueOf((priceWithTax - getDiscount()) * Double.parseDouble(quantity)));
+		}
+		CommonsUtil.CURRENT_DOCUMENT_DETAIL = this;
 	}
 
 	@Override
@@ -328,7 +333,10 @@ public class DocumentDetail extends CommonData {
 	public String toString() {
 		return "DocumentDetail [document=" + document + ", product=" + product + ", description=" + description
 				+ ", quantity=" + quantity + ", measurementUnitList=" + measurementUnitList + ", measurementUnit="
-				+ measurementUnit + ", price=" + price + ", discount=" + discount + ", subtotal=" + subtotal + "]";
+				+ measurementUnit + ", price=" + price + ", tax=" + tax + ", discount=" + discount + ", subtotal="
+				+ subtotal + "]";
 	}
+
+
 
 }
