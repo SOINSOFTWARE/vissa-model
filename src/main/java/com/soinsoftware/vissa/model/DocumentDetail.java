@@ -47,7 +47,6 @@ public class DocumentDetail extends CommonData {
 	@JoinColumn(name = "measurement_unit_id")
 	private MeasurementUnit measurementUnit;
 	private Double price;
-	@Transient
 	private Double tax;
 	private Double discount;
 	@Column(name = "sub_total")
@@ -66,6 +65,7 @@ public class DocumentDetail extends CommonData {
 		subtotal = builder.subtotal;
 		measurementUnit = builder.measurementUnit;
 		price = builder.price;
+		tax = builder.tax;
 		discount = builder.discount;
 	}
 
@@ -265,6 +265,7 @@ public class DocumentDetail extends CommonData {
 		private Double subtotal;
 		private MeasurementUnit measurementUnit;
 		private Double price;
+		private Double tax;
 		private Double discount;
 
 		private Builder() {
@@ -276,7 +277,7 @@ public class DocumentDetail extends CommonData {
 					.document(documentDetail.document).product(documentDetail.product)
 					.description(documentDetail.description).quantity(documentDetail.quantity)
 					.subtotal(documentDetail.subtotal).measurementUnit(documentDetail.measurementUnit)
-					.price(documentDetail.price).discount(documentDetail.discount);
+					.price(documentDetail.price).tax(documentDetail.tax).discount(documentDetail.discount);
 		}
 
 		public Builder id(BigInteger id) {
@@ -331,6 +332,10 @@ public class DocumentDetail extends CommonData {
 
 		public Builder price(Double price) {
 			this.price = price;
+			return this;
+		}
+		public Builder tax(Double tax) {
+			this.tax = price;
 			return this;
 		}
 
