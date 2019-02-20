@@ -1,3 +1,4 @@
+
 // Soin Software, 2018
 package com.soinsoftware.vissa.model;
 

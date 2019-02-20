@@ -74,6 +74,8 @@ public class Document extends CommonData {
 	@JoinColumn(name = "salesman_id")
 	private Person salesman;
 	private String cash;
+	@Column(name = "pay_value")
+	private Double payValue;
 	@OneToMany(mappedBy = "document", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<DocumentDetail> details = new HashSet<>();
 
@@ -99,6 +101,7 @@ public class Document extends CommonData {
 		status = builder.status;
 		salesman = builder.salesman;
 		cash = builder.cash;
+		payValue = builder.payValue;
 		details = forHibernateDetails(builder.details);
 	}
 
@@ -263,6 +266,7 @@ public class Document extends CommonData {
 		private DocumentStatus status;
 		private Person salesman;
 		private String cash;
+		private Double payValue;
 		private Set<DocumentDetail> details = new HashSet<>();
 
 		private Builder() {
@@ -276,7 +280,8 @@ public class Document extends CommonData {
 					.paymentTerm(document.paymentTerm).expirationDate(document.expirationDate)
 					.currency(document.currency).totalValueNoTax(document.totalValueNoTax)
 					.totalValue(document.totalValue).reference(document.reference).status(document.status)
-					.salesman(document.salesman).cash(document.cash).details(document.details);
+					.salesman(document.salesman).cash(document.cash).payValue(document.payValue)
+					.details(document.details);
 		}
 
 		public Builder id(BigInteger id) {
@@ -315,7 +320,8 @@ public class Document extends CommonData {
 		}
 
 		public Builder documentDate(Date documentDate) {
-			this.documentDate = documentDate;//  DateUtil.addOrSubstractHoursToDate(documentDate, CommonsUtil.DIFF_HOURS);
+			this.documentDate = documentDate;// DateUtil.addOrSubstractHoursToDate(documentDate,
+												// CommonsUtil.DIFF_HOURS);
 			return this;
 		}
 
@@ -379,6 +385,11 @@ public class Document extends CommonData {
 			return this;
 		}
 
+		public Builder payValue(Double payValue) {
+			this.payValue = payValue;
+			return this;
+		}
+
 		public Builder details(Set<DocumentDetail> details) {
 			this.details = details;
 			return this;
@@ -395,8 +406,8 @@ public class Document extends CommonData {
 				+ documentDate + ", paymentType=" + paymentType + ", resolution=" + resolution + ", paymentMethod="
 				+ paymentMethod + ", paymentTerm=" + paymentTerm + ", expirationDate=" + expirationDate + ", currency="
 				+ currency + ", totalValueNoTax=" + totalValueNoTax + ", totalValue=" + totalValue + ", reference="
-				+ reference + ", status=" + status + ", salesman=" + salesman + ", cash=" + cash + "]";
+				+ reference + ", status=" + status + ", salesman=" + salesman + ", cash=" + cash + ", payValue="
+				+ payValue + "]";
 	}
 
-	
 }

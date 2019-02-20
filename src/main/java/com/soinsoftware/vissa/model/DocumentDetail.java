@@ -40,6 +40,8 @@ public class DocumentDetail extends CommonData {
 	private String description;
 	private String quantity;
 	@Transient
+	MeasurementUnitProduct measurementUnitProduct;
+	@Transient
 	private List<MeasurementUnit> measurementUnitList;
 	@ManyToOne
 	@JoinColumn(name = "measurement_unit_id")
@@ -123,6 +125,7 @@ public class DocumentDetail extends CommonData {
 
 	public void setPrice(Double price) {
 		this.price = price;
+		setMeasurementUnitProduct(CommonsUtil.MEASUREMENT_UNIT_PRODUCT);
 	}
 
 	public void setPriceStr(String priceStr) {
@@ -176,6 +179,18 @@ public class DocumentDetail extends CommonData {
 
 	public void setDiscountStr(String discount) {
 		setDiscount(Double.valueOf(discount));
+	}
+
+	public MeasurementUnitProduct getMeasurementUnitProduct() {
+		return measurementUnitProduct;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
+	public void setMeasurementUnitProduct(MeasurementUnitProduct measurementUnitProduct) {
+		this.measurementUnitProduct = measurementUnitProduct;
 	}
 
 	public void calculateSubtotal() {
