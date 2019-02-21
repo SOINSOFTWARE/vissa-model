@@ -181,6 +181,14 @@ public class Document extends CommonData {
 		this.totalValue = totalValue;
 	}
 
+	public Double getPayValue() {
+		return payValue;
+	}
+
+	public void setPayValue(Double payValue) {
+		this.payValue = payValue;
+	}
+
 	@Override
 	public void validate() {
 		if (code == null || code.trim().equals("")) {

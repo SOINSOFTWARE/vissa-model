@@ -37,7 +37,17 @@ public class LotDao extends AbstractDataAccessibleObject<Lot, BigInteger> {
 		criteria.add(criterion);
 		return criteria.list();
 	}
-	
+
+	public Lot select(String code, Product product) {
+		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
+		final List<Criterion> predicates = new ArrayList<>();
+		predicates.add(Restrictions.eq("code", code));
+		predicates.add(Restrictions.eq("product", product));
+		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
+		criteria.add(criterion);
+		return (Lot) criteria.uniqueResult();
+	}
+
 	@SuppressWarnings("unchecked")
 	public List<Lot> select(Warehouse warehouse) {
 		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);

@@ -33,14 +33,21 @@ public class LotBll extends AbstractBll<Lot, BigInteger> {
 		return lots;
 	}
 
+	public Lot select(String code, Product product) {
+		Lot lot = ((LotDao) dao).select(code, product);
+		return lot;
+	}
+
 	public List<Lot> select(Warehouse warehouse) {
 		List<Lot> lots = ((LotDao) dao).select(warehouse);
 		return lots;
 	}
 
-	private List<Lot> sortedByExpiration(List<Lot> lots) {
-		return lots.stream().sorted(Comparator.comparing(Lot::getExpirationDate)).collect(Collectors.toList());
-	}
+	/*
+	 * private List<Lot> sortedByExpiration(List<Lot> lots) { return
+	 * lots.stream().sorted(Comparator.comparing(Lot::getExpirationDate)).collect(
+	 * Collectors.toList()); }
+	 ****/
 
 	public Lot getLastLotByProduct(Product product) {
 		Lot lot = null;

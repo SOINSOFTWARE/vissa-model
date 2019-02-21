@@ -77,6 +77,24 @@ public class DocumentDetailLot extends CommonData {
 	public Double getFinalStockLot() {
 		return finalStockLot;
 	}
+	
+	
+
+	public void setLot(Lot lot) {
+		this.lot = lot;
+	}
+
+	public void setInitialStockLot(Double initialStockLot) {
+		this.initialStockLot = initialStockLot;
+	}
+
+	public void setQuantity(Double quantity) {
+		this.quantity = quantity;
+	}
+
+	public void setFinalStockLot(Double finalStockLot) {
+		this.finalStockLot = finalStockLot;
+	}
 
 	@Override
 	public void validate() {
