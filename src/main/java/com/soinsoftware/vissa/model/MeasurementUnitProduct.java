@@ -50,6 +50,8 @@ public class MeasurementUnitProduct extends CommonData {
 	private Double saleTaxValue;
 	@Transient
 	private Double purchaseTaxValue;
+	@Transient
+	private Double stock;
 
 	public MeasurementUnitProduct() {
 		super();

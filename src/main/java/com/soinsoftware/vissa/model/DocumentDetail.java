@@ -57,6 +57,8 @@ public class DocumentDetail extends CommonData {
 	private Double subtotal;
 	@Transient
 	private ETransactionType transactionType;
+	@Transient
+	private String code;
 
 	public DocumentDetail() {
 		super();
@@ -147,7 +149,7 @@ public class DocumentDetail extends CommonData {
 	}
 
 	public Double getTax() {
-		return tax;
+		return tax != null ? tax : 0.0;
 	}
 
 	public void setTax(Double tax) {
@@ -225,6 +227,14 @@ public class DocumentDetail extends CommonData {
 
 	public void setDiffQuantity(String diffQuantity) {
 		this.diffQuantity = diffQuantity;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public void calculateSubtotal() {
