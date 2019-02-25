@@ -24,7 +24,7 @@ import com.soinsoftware.vissa.exception.ModelValidationException;
 @OptimisticLocking(type = OptimisticLockType.DIRTY)
 @DynamicUpdate
 @SelectBeforeUpdate
-public class MuEquivalences extends CommonData {
+public class MuEquivalence extends CommonData {
 
 	private static final long serialVersionUID = -3934490987205731259L;
 
@@ -39,11 +39,11 @@ public class MuEquivalences extends CommonData {
 	@Column(name = "mu_target_factor")
 	private String muTargetFactor;
 
-	public MuEquivalences() {
+	public MuEquivalence() {
 		super();
 	}
 
-	public MuEquivalences(Builder builder) {
+	public MuEquivalence(Builder builder) {
 		super(builder.id, builder.creationDate, builder.modifyDate, builder.archived);
 		muSource = builder.muSource;
 		muTarget = builder.muTarget;
@@ -97,7 +97,7 @@ public class MuEquivalences extends CommonData {
 		return new Builder();
 	}
 
-	public static Builder builder(MuEquivalences measurementUnit) {
+	public static Builder builder(MuEquivalence measurementUnit) {
 		return new Builder(measurementUnit);
 	}
 
@@ -115,12 +115,12 @@ public class MuEquivalences extends CommonData {
 		private Builder() {
 		}
 
-		private Builder(MuEquivalences measurementUnit) {
-			id(measurementUnit.getId()).creationDate(measurementUnit.getCreationDate())
-					.modifyDate(measurementUnit.getModifyDate()).archived(measurementUnit.isArchived())
-					.muSource(measurementUnit.getMuSource()).muTarget(measurementUnit.getMuTarget())
-					.muSourceFactor(measurementUnit.getMuSourceFactor())
-					.muTargetFactor(measurementUnit.getMuTargetFactor());
+		private Builder(MuEquivalence muEquivalences) {
+			id(muEquivalences.getId()).creationDate(muEquivalences.getCreationDate())
+					.modifyDate(muEquivalences.getModifyDate()).archived(muEquivalences.isArchived())
+					.muSource(muEquivalences.getMuSource()).muTarget(muEquivalences.getMuTarget())
+					.muSourceFactor(muEquivalences.getMuSourceFactor())
+					.muTargetFactor(muEquivalences.getMuTargetFactor());
 		}
 
 		public Builder id(BigInteger id) {
@@ -163,8 +163,8 @@ public class MuEquivalences extends CommonData {
 			return this;
 		}
 
-		public MuEquivalences build() {
-			return new MuEquivalences(this);
+		public MuEquivalence build() {
+			return new MuEquivalence(this);
 		}
 	}
 

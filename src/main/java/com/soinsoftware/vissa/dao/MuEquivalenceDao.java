@@ -11,20 +11,20 @@ import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 
 import com.soinsoftware.vissa.model.MeasurementUnit;
-import com.soinsoftware.vissa.model.MuEquivalences;
+import com.soinsoftware.vissa.model.MuEquivalence;
 
 /**
  * @author Carlos Rodriguez
  * @since 04/12/2018
  */
 @SuppressWarnings("unchecked")
-public class MuEquivalencesDao extends AbstractDataAccessibleObject<MuEquivalencesDao, BigInteger> {
+public class MuEquivalenceDao extends AbstractDataAccessibleObject<MuEquivalenceDao, BigInteger> {
 
-	public MuEquivalencesDao() throws IOException {
-		super(MuEquivalencesDao.class);
+	public MuEquivalenceDao() throws IOException {
+		super(MuEquivalenceDao.class);
 	}
 
-	public List<MuEquivalences> selectByMuSource(MeasurementUnit muSource) {
+	public List<MuEquivalence> selectByMuSource(MeasurementUnit muSource) {
 		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
 		final List<Criterion> predicates = new ArrayList<>();
 		predicates.add(Restrictions.eq("muSource", muSource));
@@ -33,13 +33,23 @@ public class MuEquivalencesDao extends AbstractDataAccessibleObject<MuEquivalenc
 		return criteria.list();
 	}
 
-	public List<MuEquivalences> selectByMuTarget(MeasurementUnit muTarget) {
+	public List<MuEquivalence> selectByMuTarget(MeasurementUnit muTarget) {
 		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
 		final List<Criterion> predicates = new ArrayList<>();
 		predicates.add(Restrictions.eq("muTarget", muTarget));
 		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
 		criteria.add(criterion);
 		return criteria.list();
+	}
+
+	public MuEquivalence select(MeasurementUnit muSource, MeasurementUnit muTarget) {
+		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
+		final List<Criterion> predicates = new ArrayList<>();
+		predicates.add(Restrictions.eq("muSource", muSource));
+		predicates.add(Restrictions.eq("muTarget", muTarget));
+		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
+		criteria.add(criterion);
+		return (MuEquivalence) criteria.uniqueResult();
 	}
 
 }

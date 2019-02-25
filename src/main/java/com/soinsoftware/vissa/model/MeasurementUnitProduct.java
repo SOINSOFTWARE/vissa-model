@@ -16,6 +16,8 @@ import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
 import org.hibernate.annotations.SelectBeforeUpdate;
 
+import com.soinsoftware.vissa.exception.ModelValidationException;
+
 /**
  * @author Lina Florez
  * @since 04/12/2018
@@ -46,12 +48,11 @@ public class MeasurementUnitProduct extends CommonData {
 	private Double purchaseTax;
 	@Column(name = "final_price")
 	private Double finalPrice;
+	private Double stock;
 	@Transient
 	private Double saleTaxValue;
 	@Transient
 	private Double purchaseTaxValue;
-	@Transient
-	private Double stock;
 
 	public MeasurementUnitProduct() {
 		super();
@@ -68,6 +69,7 @@ public class MeasurementUnitProduct extends CommonData {
 		purchaseTax = builder.purchaseTax;
 		utility = builder.utility;
 		finalPrice = builder.finalPrice;
+		stock = builder.stock;
 	}
 
 	public Product getProduct() {
@@ -205,6 +207,18 @@ public class MeasurementUnitProduct extends CommonData {
 		this.measurementUnit.setName(measurementUnitName);
 	}
 
+	public Double getStock() {
+		return stock;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
+	public void setStock(Double stock) {
+		this.stock = stock;
+	}
+
 	public void calculateSalePrice() {
 		Double purchaseTaxTmp = getPurchasePrice() * getPurchaseTax() / 100;
 		Double salePriceTmp = getPurchasePrice() + purchaseTaxTmp + getUtility();
@@ -219,7 +233,12 @@ public class MeasurementUnitProduct extends CommonData {
 
 	@Override
 	public void validate() {
-
+		if (product == null) {
+			throw new ModelValidationException("El producto es obligatorio para la UM");
+		}
+		if (measurementUnit == null) {
+			throw new ModelValidationException("El unidad de medida es obligatoria");
+		}
 	}
 
 	public static Builder builder() {
@@ -228,6 +247,35 @@ public class MeasurementUnitProduct extends CommonData {
 
 	public static Builder builder(MeasurementUnitProduct product) {
 		return new Builder(product);
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((product == null) ? 0 : product.hashCode());
+
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass())
+			return false;
+		MeasurementUnitProduct other = (MeasurementUnitProduct) obj;
+
+		if (measurementUnit == null) {
+			if (other.measurementUnit != null)
+				return false;
+		} else if (!measurementUnit.equals(other.measurementUnit))
+			return false;
+
+		return true;
 	}
 
 	public static class Builder {
@@ -244,15 +292,18 @@ public class MeasurementUnitProduct extends CommonData {
 		private Double purchaseTax;
 		private Double utility;
 		private Double finalPrice;
+		private Double stock;
 
 		private Builder() {
 		}
 
-		private Builder(MeasurementUnitProduct product) {
-			id(product.getId()).creationDate(product.getCreationDate()).modifyDate(product.getModifyDate())
-					.archived(product.isArchived()).product(product.product).measurementUnit(product.measurementUnit)
-					.salePrice(product.salePrice).purchasePrice(product.purchasePrice).saleTax(product.saleTax)
-					.purchaseTax(product.purchaseTax).utility(product.utility).finalPrice(product.finalPrice);
+		private Builder(MeasurementUnitProduct muProduct) {
+			id(muProduct.getId()).creationDate(muProduct.getCreationDate()).modifyDate(muProduct.getModifyDate())
+					.archived(muProduct.isArchived()).product(muProduct.product)
+					.measurementUnit(muProduct.measurementUnit).salePrice(muProduct.salePrice)
+					.purchasePrice(muProduct.purchasePrice).saleTax(muProduct.saleTax)
+					.purchaseTax(muProduct.purchaseTax).utility(muProduct.utility).finalPrice(muProduct.finalPrice)
+					.stock(muProduct.stock);
 		}
 
 		public Builder id(BigInteger id) {
@@ -315,6 +366,11 @@ public class MeasurementUnitProduct extends CommonData {
 			return this;
 		}
 
+		public Builder stock(Double stock) {
+			this.stock = stock;
+			return this;
+		}
+
 		public MeasurementUnitProduct build() {
 			return new MeasurementUnitProduct(this);
 		}
@@ -325,7 +381,8 @@ public class MeasurementUnitProduct extends CommonData {
 		return "MeasurementUnitProduct [product=" + product + ", measurementUnit=" + measurementUnit
 				+ ", purchasePrice=" + purchasePrice + ", utility=" + utility + ", salePrice=" + salePrice
 				+ ", saleTax=" + saleTax + ", purchaseTax=" + purchaseTax + ", finalPrice=" + finalPrice
-				+ ", saleTaxValue=" + saleTaxValue + ", purchaseTaxValue=" + purchaseTaxValue + "]";
+				+ ", saleTaxValue=" + saleTaxValue + ", purchaseTaxValue=" + purchaseTaxValue + ", stock=" + stock
+				+ "]";
 	}
 
 }
