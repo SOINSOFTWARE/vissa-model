@@ -52,6 +52,8 @@ public class DocumentDetail extends CommonData {
 	private MeasurementUnit measurementUnit;
 	private Double price;
 	private Double tax;
+	@Transient
+	private Double taxValue;
 	private Double discount;
 	@Column(name = "sub_total")
 	private Double subtotal;
@@ -59,6 +61,8 @@ public class DocumentDetail extends CommonData {
 	private ETransactionType transactionType;
 	@Transient
 	private String code;
+	@Transient
+	private int index;
 
 	public DocumentDetail() {
 		super();
@@ -133,6 +137,7 @@ public class DocumentDetail extends CommonData {
 
 	public void setPrice(Double price) {
 		this.price = price;
+		calculateSubtotal();
 		setMeasurementUnitProduct(CommonsUtil.MEASUREMENT_UNIT_PRODUCT);
 	}
 
@@ -154,6 +159,7 @@ public class DocumentDetail extends CommonData {
 
 	public void setTax(Double tax) {
 		this.tax = tax;
+		calculateSubtotal();
 	}
 
 	public String getTaxStr() {
@@ -235,6 +241,25 @@ public class DocumentDetail extends CommonData {
 
 	public void setCode(String code) {
 		this.code = code;
+		CommonsUtil.CURRENT_DOCUMENT_DETAIL = this;
+
+	}
+
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
+	}
+
+	public Double getTaxValue() {
+		setTaxValue(getPrice() * (getTax() / 100));
+		return taxValue;
+	}
+
+	public void setTaxValue(Double taxValue) {
+		this.taxValue = taxValue;
 	}
 
 	public void calculateSubtotal() {

@@ -45,8 +45,13 @@ public class Lot extends CommonData {
 	private Product product;
 	private Double quantity;
 	@ManyToOne
+	@JoinColumn(name = "measurement_unit_id")
+	private MeasurementUnit measurementUnit;
+	@ManyToOne
 	@JoinColumn(name = "warehouse_id")
 	private Warehouse warehouse;
+	@Column(name = "new")
+	private boolean isNew;
 
 	public Lot() {
 		super();
@@ -61,6 +66,8 @@ public class Lot extends CommonData {
 		product = builder.product;
 		quantity = builder.quantity;
 		warehouse = builder.warehouse;
+		measurementUnit = builder.measurementUnit;
+		isNew = builder.isNew;
 	}
 
 	public String getCode() {
@@ -95,6 +102,22 @@ public class Lot extends CommonData {
 		this.quantity = quantity;
 	}
 
+	public MeasurementUnit getMeasurementUnit() {
+		return measurementUnit;
+	}
+
+	public void setMeasurementUnit(MeasurementUnit measurementUnit) {
+		this.measurementUnit = measurementUnit;
+	}
+
+	public boolean isNew() {
+		return isNew;
+	}
+
+	public void setNew(boolean isNew) {
+		this.isNew = isNew;
+	}
+
 	@Override
 	public void validate() {
 		if (code == null || code.trim().equals("")) {
@@ -102,6 +125,12 @@ public class Lot extends CommonData {
 		}
 		if (warehouse == null) {
 			throw new ModelValidationException("La bodega es obligatoria.");
+		}
+		if (quantity == null) {
+			throw new ModelValidationException("La cantidad es obligatoria");
+		}
+		if (measurementUnit == null) {
+			throw new ModelValidationException("La unidad de medida es obligatoria");
 		}
 		if (product == null) {
 			throw new ModelValidationException("El producto es obligatorio.");
@@ -130,7 +159,9 @@ public class Lot extends CommonData {
 		private Date expirationDate;
 		private Product product;
 		private Double quantity;
+		private MeasurementUnit measurementUnit;
 		private Warehouse warehouse;
+		private boolean isNew;
 
 		private Builder() {
 		}
@@ -139,7 +170,7 @@ public class Lot extends CommonData {
 			id(lot.getId()).creationDate(lot.getCreationDate()).modifyDate(lot.getModifyDate())
 					.archived(lot.isArchived()).code(lot.code).name(lot.name).lotDate(lot.lotDate)
 					.expirationDate(lot.expirationDate).product(lot.product).quantity(lot.quantity)
-					.warehouse(lot.warehouse);
+					.measurementUnit(lot.measurementUnit).warehouse(lot.warehouse).isNew(isNew);
 		}
 
 		public Builder id(BigInteger id) {
@@ -194,8 +225,18 @@ public class Lot extends CommonData {
 			return this;
 		}
 
+		public Builder measurementUnit(MeasurementUnit measurementUnit) {
+			this.measurementUnit = measurementUnit;
+			return this;
+		}
+
 		public Builder warehouse(Warehouse warehouse) {
 			this.warehouse = warehouse;
+			return this;
+		}
+
+		public Builder isNew(boolean isNew) {
+			this.isNew = isNew;
 			return this;
 		}
 
