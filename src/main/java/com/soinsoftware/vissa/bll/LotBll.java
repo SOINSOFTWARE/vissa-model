@@ -51,8 +51,10 @@ public class LotBll extends AbstractBll<Lot, BigInteger> {
 
 	public Lot getLastLotByProduct(Product product) {
 		Lot lot = null;
-		List<Lot> lots = ((LotDao) dao).select(product);
-		List<Lot> lotsByCode = lots.stream().sorted(Comparator.comparing(Lot::getCode)).collect(Collectors.toList());
+		List<Lot> lots = ((LotDao) dao).select(product, true);
+		List<Lot> lotsByCode = lots.stream().sorted(Comparator.comparing(lotTmp -> {
+			return Integer.parseInt(lotTmp.getCode());
+		})).collect(Collectors.toList());
 		int size = lotsByCode.size();
 		if (size > 0) {
 			lot = lotsByCode.get(size - 1);

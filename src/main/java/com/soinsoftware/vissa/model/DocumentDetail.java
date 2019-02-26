@@ -43,7 +43,8 @@ public class DocumentDetail extends CommonData {
 	private String oldQuantity;
 	@Transient
 	private String diffQuantity;
-	@Transient
+	@ManyToOne
+	@JoinColumn(name = "mu_product_id")
 	MeasurementUnitProduct measurementUnitProduct;
 	@Transient
 	private List<MeasurementUnit> measurementUnitList;
@@ -76,6 +77,7 @@ public class DocumentDetail extends CommonData {
 		quantity = builder.quantity;
 		subtotal = builder.subtotal;
 		measurementUnit = builder.measurementUnit;
+		measurementUnitProduct = builder.measurementUnitProduct;
 		price = builder.price;
 		tax = builder.tax;
 		discount = builder.discount;
@@ -333,6 +335,7 @@ public class DocumentDetail extends CommonData {
 		private String quantity;
 		private Double subtotal;
 		private MeasurementUnit measurementUnit;
+		private MeasurementUnitProduct measurementUnitProduct;
 		private Double price;
 		private Double tax;
 		private Double discount;
@@ -346,7 +349,8 @@ public class DocumentDetail extends CommonData {
 					.document(documentDetail.document).product(documentDetail.product)
 					.description(documentDetail.description).quantity(documentDetail.quantity)
 					.subtotal(documentDetail.subtotal).measurementUnit(documentDetail.measurementUnit)
-					.price(documentDetail.price).tax(documentDetail.tax).discount(documentDetail.discount);
+					.measurementUnitProduct(documentDetail.measurementUnitProduct).price(documentDetail.price)
+					.tax(documentDetail.tax).discount(documentDetail.discount);
 		}
 
 		public Builder id(BigInteger id) {
@@ -396,6 +400,11 @@ public class DocumentDetail extends CommonData {
 
 		public Builder measurementUnit(MeasurementUnit measurementUnit) {
 			this.measurementUnit = measurementUnit;
+			return this;
+		}
+
+		public Builder measurementUnitProduct(MeasurementUnitProduct measurementUnitProduct) {
+			this.measurementUnitProduct = measurementUnitProduct;
 			return this;
 		}
 
