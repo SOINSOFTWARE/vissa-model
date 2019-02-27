@@ -43,15 +43,22 @@ public class LotBll extends AbstractBll<Lot, BigInteger> {
 		return lots;
 	}
 
-	/*
-	 * private List<Lot> sortedByExpiration(List<Lot> lots) { return
-	 * lots.stream().sorted(Comparator.comparing(Lot::getExpirationDate)).collect(
-	 * Collectors.toList()); }
-	 ****/
-
 	public Lot getLastLotByProduct(Product product) {
 		Lot lot = null;
-		List<Lot> lots = ((LotDao) dao).select(product, true);
+		List<Lot> lots = ((LotDao) dao).selectAll(product);
+		List<Lot> lotsByCode = lots.stream().sorted(Comparator.comparing(lotTmp -> {
+			return Integer.parseInt(lotTmp.getCode());
+		})).collect(Collectors.toList());
+		int size = lotsByCode.size();
+		if (size > 0) {
+			lot = lotsByCode.get(size - 1);
+		}
+		return lot;
+	}
+	
+	public Lot getLastLotWithStockByProduct(Product product) {
+		Lot lot = null;
+		List<Lot> lots = ((LotDao) dao).selectWithStock(product);
 		List<Lot> lotsByCode = lots.stream().sorted(Comparator.comparing(lotTmp -> {
 			return Integer.parseInt(lotTmp.getCode());
 		})).collect(Collectors.toList());

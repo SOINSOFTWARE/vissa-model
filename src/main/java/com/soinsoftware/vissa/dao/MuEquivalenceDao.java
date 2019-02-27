@@ -18,10 +18,10 @@ import com.soinsoftware.vissa.model.MuEquivalence;
  * @since 04/12/2018
  */
 @SuppressWarnings("unchecked")
-public class MuEquivalenceDao extends AbstractDataAccessibleObject<MuEquivalenceDao, BigInteger> {
+public class MuEquivalenceDao extends AbstractDataAccessibleObject<MuEquivalence, BigInteger> {
 
 	public MuEquivalenceDao() throws IOException {
-		super(MuEquivalenceDao.class);
+		super(MuEquivalence.class);
 	}
 
 	public List<MuEquivalence> selectByMuSource(MeasurementUnit muSource) {
@@ -48,7 +48,7 @@ public class MuEquivalenceDao extends AbstractDataAccessibleObject<MuEquivalence
 		predicates.add(Restrictions.eq("muSource", muSource));
 		predicates.add(Restrictions.eq("muTarget", muTarget));
 		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
-		criteria.add(criterion);
+		criteria.add(criterion);	
 		return (MuEquivalence) criteria.uniqueResult();
 	}
 

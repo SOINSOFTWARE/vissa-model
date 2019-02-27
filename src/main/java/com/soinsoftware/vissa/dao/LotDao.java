@@ -37,10 +37,20 @@ public class LotDao extends AbstractDataAccessibleObject<Lot, BigInteger> {
 		criteria.add(criterion);
 		return criteria.list();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<Lot> select(Product product, boolean archived) {
 		final Criteria criteria = buildCriteriaWithArchivedRestriction(archived);
+		final List<Criterion> predicates = new ArrayList<>();
+		predicates.add(Restrictions.eq("product", product));
+		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
+		criteria.add(criterion);
+		return criteria.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Lot> selectAll(Product product) {
+		final Criteria criteria = buildCriteria();
 		final List<Criterion> predicates = new ArrayList<>();
 		predicates.add(Restrictions.eq("product", product));
 		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
@@ -56,6 +66,16 @@ public class LotDao extends AbstractDataAccessibleObject<Lot, BigInteger> {
 		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
 		criteria.add(criterion);
 		return (Lot) criteria.uniqueResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	public  List<Lot>  selectWithStock(Product product) {
+		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
+		final List<Criterion> predicates = new ArrayList<>();
+		predicates.add(Restrictions.gt("quantity", 0.0));
+		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
+		criteria.add(criterion);
+		return criteria.list();
 	}
 
 	@SuppressWarnings("unchecked")

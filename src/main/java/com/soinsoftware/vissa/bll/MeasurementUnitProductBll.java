@@ -23,8 +23,8 @@ public class MeasurementUnitProductBll extends AbstractBll<MeasurementUnitProduc
 	}
 
 	public List<MeasurementUnitProduct> select(Product product) {
-		List<MeasurementUnitProduct> products = ((MeasurementUnitProductDao) dao).select(product);
-		return products;
+		List<MeasurementUnitProduct> muProducts = ((MeasurementUnitProductDao) dao).select(product);
+		return muProducts;
 	}
 
 	public List<MeasurementUnit> selectMuByProduct(Product product) {
@@ -33,13 +33,13 @@ public class MeasurementUnitProductBll extends AbstractBll<MeasurementUnitProduc
 	}
 
 	public List<MeasurementUnitProduct> select(MeasurementUnit measurementUnit) {
-		List<MeasurementUnitProduct> products = ((MeasurementUnitProductDao) dao).select(measurementUnit);
-		return products;
+		List<MeasurementUnitProduct> muProducts = ((MeasurementUnitProductDao) dao).select(measurementUnit);
+		return muProducts;
 	}
 
 	public List<MeasurementUnitProduct> select(MeasurementUnit measurementUnit, Product product) {
-		List<MeasurementUnitProduct> products = ((MeasurementUnitProductDao) dao).select(measurementUnit, product);
-		return products;
+		List<MeasurementUnitProduct> muProducts = ((MeasurementUnitProductDao) dao).select(measurementUnit, product);
+		return muProducts;
 	}
 
 	public static MeasurementUnitProductBll getInstance() throws IOException {

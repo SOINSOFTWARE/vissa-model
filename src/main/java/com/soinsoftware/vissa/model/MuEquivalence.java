@@ -20,7 +20,7 @@ import com.soinsoftware.vissa.exception.ModelValidationException;
  * @author Carlos Rodriguez
  * @since 04/12/2018
  */
-@Entity(name = "mu_equivalences")
+@Entity(name = "mu_equivalence")
 @OptimisticLocking(type = OptimisticLockType.DIRTY)
 @DynamicUpdate
 @SelectBeforeUpdate

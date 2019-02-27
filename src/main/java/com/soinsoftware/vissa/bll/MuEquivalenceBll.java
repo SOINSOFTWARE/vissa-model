@@ -13,7 +13,7 @@ import com.soinsoftware.vissa.model.MuEquivalence;
  * @author Carlos Rodriguez
  * @since 04/12/2018
  */
-public class MuEquivalenceBll extends AbstractBll<MuEquivalenceDao, BigInteger> {
+public class MuEquivalenceBll extends AbstractBll<MuEquivalence, BigInteger> {
 
 	private static MuEquivalenceBll instance;
 
