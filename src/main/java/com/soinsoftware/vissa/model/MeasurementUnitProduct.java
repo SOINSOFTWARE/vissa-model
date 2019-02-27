@@ -39,6 +39,8 @@ public class MeasurementUnitProduct extends CommonData {
 	private MeasurementUnit measurementUnit;
 	@Column(name = "purchase_price")
 	private Double purchasePrice;
+	@Column(name = "utility_prc")
+	private Double utilityPrc;
 	private Double utility;
 	@Column(name = "sale_price")
 	private Double salePrice;
@@ -67,6 +69,7 @@ public class MeasurementUnitProduct extends CommonData {
 		purchasePrice = builder.purchasePrice;
 		saleTax = builder.saleTax;
 		purchaseTax = builder.purchaseTax;
+		utilityPrc = builder.utilityPrc;
 		utility = builder.utility;
 		finalPrice = builder.finalPrice;
 		stock = builder.stock;
@@ -182,6 +185,23 @@ public class MeasurementUnitProduct extends CommonData {
 		this.finalPrice = finalPrice;
 	}
 
+	public Double getUtilityPrc() {
+		return utilityPrc != null ? utilityPrc : 0.0;
+	}
+
+	public String getUtilityPrcStr() {
+		return String.valueOf(getUtilityPrc());
+	}
+
+	public void setUtilityPrc(Double utilityPrc) {
+		this.utilityPrc = utilityPrc;
+		calculateSalePrice();
+	}
+
+	public void setUtilityPrcStr(String utilityPrcStr) {
+		setUtilityPrc(Double.parseDouble(utilityPrcStr));
+	}
+
 	public Double getUtility() {
 		return utility != null ? utility : 0.0;
 	}
@@ -221,7 +241,8 @@ public class MeasurementUnitProduct extends CommonData {
 
 	public void calculateSalePrice() {
 		Double purchaseTaxTmp = getPurchasePrice() * getPurchaseTax() / 100;
-		Double salePriceTmp = getPurchasePrice() + purchaseTaxTmp + getUtility();
+		Double salePriceTmp = getPurchasePrice() + purchaseTaxTmp;
+		salePriceTmp = salePriceTmp + (salePriceTmp * getUtilityPrc());
 		setSalePrice(salePriceTmp);
 	}
 
@@ -290,6 +311,7 @@ public class MeasurementUnitProduct extends CommonData {
 		private Double purchasePrice;
 		private Double saleTax;
 		private Double purchaseTax;
+		private Double utilityPrc;
 		private Double utility;
 		private Double finalPrice;
 		private Double stock;
@@ -302,8 +324,8 @@ public class MeasurementUnitProduct extends CommonData {
 					.archived(muProduct.isArchived()).product(muProduct.product)
 					.measurementUnit(muProduct.measurementUnit).salePrice(muProduct.salePrice)
 					.purchasePrice(muProduct.purchasePrice).saleTax(muProduct.saleTax)
-					.purchaseTax(muProduct.purchaseTax).utility(muProduct.utility).finalPrice(muProduct.finalPrice)
-					.stock(muProduct.stock);
+					.purchaseTax(muProduct.purchaseTax).utilityPrc(muProduct.utilityPrc).utility(muProduct.utility)
+					.finalPrice(muProduct.finalPrice).stock(muProduct.stock);
 		}
 
 		public Builder id(BigInteger id) {
@@ -353,6 +375,11 @@ public class MeasurementUnitProduct extends CommonData {
 
 		public Builder purchaseTax(Double purchaseTax) {
 			this.purchaseTax = purchaseTax;
+			return this;
+		}
+
+		public Builder utilityPrc(Double utilityPrc) {
+			this.utilityPrc = utilityPrc;
 			return this;
 		}
 
