@@ -117,6 +117,7 @@ public class DocumentDetail extends CommonData {
 
 	public void setQuantity(String quantity) {
 		this.quantity = quantity;
+		CommonsUtil.CURRENT_DOCUMENT_DETAIL = this;
 		calculateSubtotal();
 	}
 

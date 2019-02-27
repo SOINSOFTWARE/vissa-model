@@ -242,7 +242,7 @@ public class MeasurementUnitProduct extends CommonData {
 	public void calculateSalePrice() {
 		Double purchaseTaxTmp = getPurchasePrice() * getPurchaseTax() / 100;
 		Double salePriceTmp = getPurchasePrice() + purchaseTaxTmp;
-		salePriceTmp = salePriceTmp + (salePriceTmp * getUtilityPrc());
+		salePriceTmp = salePriceTmp + (salePriceTmp * getUtilityPrc()/100);
 		setSalePrice(salePriceTmp);
 	}
 
