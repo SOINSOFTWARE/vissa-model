@@ -63,6 +63,8 @@ public class DocumentDetail extends CommonData {
 	@Transient
 	private String code;
 	@Transient
+	private String name;
+	@Transient
 	private int index;
 
 	public DocumentDetail() {
@@ -246,6 +248,14 @@ public class DocumentDetail extends CommonData {
 		this.code = code;
 		CommonsUtil.CURRENT_DOCUMENT_DETAIL = this;
 
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public int getIndex() {
