@@ -43,6 +43,11 @@ public class ProductBll extends AbstractBll<Product, BigInteger> {
 		List<Product> products = ((ProductDao) dao).select(measurementUnit);
 		return sortedByName(products);
 	}
+	
+	public List<Product> selectByName(String name) {
+		List<Product> products = ((ProductDao) dao).selectByName(name);
+		return sortedByName(products);
+	}
 
 	public List<Product> select(ProductCategory productCategory, ProductType productType,
 			MeasurementUnit measurementUnit) {

@@ -74,5 +74,14 @@ public class ProductDao extends AbstractDataAccessibleObject<Product, BigInteger
 		criteria.add(criterion);
 		return criteria.list();
 	}
-	
+
+	public List<Product> selectByName(String name) {
+		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
+		final List<Criterion> predicates = new ArrayList<>();
+		predicates.add(Restrictions.like("name", name));
+		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
+		criteria.add(criterion);
+		return criteria.list();
+	}
+
 }
