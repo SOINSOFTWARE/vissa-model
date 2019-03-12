@@ -3,10 +3,12 @@ package com.soinsoftware.vissa.bll;
 
 import java.io.IOException;
 import java.math.BigInteger;
+import java.util.List;
 
 import com.soinsoftware.vissa.dao.DocumentDetailLotDao;
 import com.soinsoftware.vissa.model.DocumentDetail;
 import com.soinsoftware.vissa.model.DocumentDetailLot;
+import com.soinsoftware.vissa.model.Lot;
 
 /**
  * @author Carlos Rodriguez
@@ -19,9 +21,13 @@ public class DocumentDetailLotBll extends AbstractBll<DocumentDetailLot, BigInte
 	private DocumentDetailLotBll() throws IOException {
 		super(new DocumentDetailLotDao());
 	}
-	
+
 	public DocumentDetailLot select(DocumentDetail documentDetail) {
 		return ((DocumentDetailLotDao) dao).select(documentDetail);
+	}
+
+	public List<DocumentDetailLot> select(Lot lot) {
+		return ((DocumentDetailLotDao) dao).select(lot);
 	}
 
 	public static DocumentDetailLotBll getInstance() throws IOException {

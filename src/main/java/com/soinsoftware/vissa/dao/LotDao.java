@@ -4,6 +4,7 @@ package com.soinsoftware.vissa.dao;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -87,4 +88,16 @@ public class LotDao extends AbstractDataAccessibleObject<Lot, BigInteger> {
 		criteria.add(criterion);
 		return criteria.list();
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Lot> select(Date expirationDate) {
+		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
+		final List<Criterion> predicates = new ArrayList<>();
+		predicates.add(Restrictions.eq("expirationDate", expirationDate));
+		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
+		criteria.add(criterion);
+		return criteria.list();
+	}
+	
+	
 }

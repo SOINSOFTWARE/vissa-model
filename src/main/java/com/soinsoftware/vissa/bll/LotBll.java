@@ -4,6 +4,7 @@ package com.soinsoftware.vissa.bll;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,6 +44,11 @@ public class LotBll extends AbstractBll<Lot, BigInteger> {
 		return lots;
 	}
 
+	public List<Lot> select(Date expirationDate) {
+		List<Lot> lots = ((LotDao) dao).select(expirationDate);
+		return lots;
+	}
+
 	public Lot getLastLotByProduct(Product product) {
 		Lot lot = null;
 		List<Lot> lots = ((LotDao) dao).selectAll(product);
@@ -55,7 +61,7 @@ public class LotBll extends AbstractBll<Lot, BigInteger> {
 		}
 		return lot;
 	}
-	
+
 	public Lot getLastLotWithStockByProduct(Product product) {
 		Lot lot = null;
 		List<Lot> lots = ((LotDao) dao).selectWithStock(product);
