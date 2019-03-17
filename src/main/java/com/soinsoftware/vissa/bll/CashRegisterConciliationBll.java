@@ -4,6 +4,7 @@ package com.soinsoftware.vissa.bll;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,6 +28,10 @@ public class CashRegisterConciliationBll extends AbstractBll<CashConciliation, B
 		List<CashConciliation> balances = ((CashRegisterConciliationDao) dao).select(person);
 		return balances.stream().sorted(Comparator.comparing(CashConciliation::getConciliationDate))
 				.collect(Collectors.toList());
+	}
+
+	public CashConciliation select(Person person, Date conciliationDate) {
+		return ((CashRegisterConciliationDao) dao).select(person, conciliationDate);
 	}
 
 	public static CashRegisterConciliationBll getInstance() throws IOException {

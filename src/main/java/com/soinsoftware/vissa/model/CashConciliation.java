@@ -59,7 +59,7 @@ public class CashConciliation extends CommonData {
 	private BigDecimal cashRegisterBorrow;
 	@Column(name = "balance")
 	private BigDecimal balance;
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	@Column(name = "conciliation_date")
 	private Date conciliationDate;
 	@ManyToOne

@@ -3,7 +3,9 @@ package com.soinsoftware.vissa.bll;
 
 import java.io.IOException;
 import java.math.BigInteger;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.soinsoftware.vissa.dao.CollectionDao;
 import com.soinsoftware.vissa.model.Collection;
@@ -23,7 +25,9 @@ public class CollectionBll extends AbstractBll<Collection, BigInteger> {
 	}
 
 	public List<Collection> select(Document document) {
-		return ((CollectionDao) dao).select(document);
+		List<Collection> collections = ((CollectionDao) dao).select(document);
+		return collections.stream().sorted(Comparator.comparing(Collection::getCollectionDate))
+				.collect(Collectors.toList());
 	}
 
 	public List<Collection> select(Person person) {

@@ -4,6 +4,7 @@ package com.soinsoftware.vissa.dao;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -32,6 +33,15 @@ public class CashRegisterConciliationDao extends AbstractDataAccessibleObject<Ca
 		criteria.add(criterion);
 		return criteria.list();
 	}
-	
-	
+
+	public CashConciliation select(final Person person, Date conciliationDate) {
+		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
+		final List<Criterion> predicates = new ArrayList<>();
+		predicates.add(Restrictions.eq("person", person));
+		predicates.add(Restrictions.eq("conciliationDate", conciliationDate));
+		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
+		criteria.add(criterion);
+		return (CashConciliation) criteria.uniqueResult();
+	}
+
 }
