@@ -25,9 +25,7 @@ public class CashRegisterConciliationBll extends AbstractBll<CashConciliation, B
 	}
 
 	public List<CashConciliation> select(Person person) {
-		List<CashConciliation> balances = ((CashRegisterConciliationDao) dao).select(person);
-		return balances.stream().sorted(Comparator.comparing(CashConciliation::getConciliationDate))
-				.collect(Collectors.toList());
+		return ((CashRegisterConciliationDao) dao).select(person);		
 	}
 
 	public CashConciliation select(Person person, Date conciliationDate) {

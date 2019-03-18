@@ -3,8 +3,10 @@ package com.soinsoftware.vissa.bll;
 
 import java.io.IOException;
 import java.math.BigInteger;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.soinsoftware.vissa.dao.EgressDao;
 import com.soinsoftware.vissa.model.Egress;
@@ -24,7 +26,9 @@ public class EgressBll extends AbstractBll<Egress, BigInteger> {
 	}
 
 	public List<Egress> select(Date egressDate) {
-		return ((EgressDao) dao).select(egressDate);
+		List<Egress> egresses =  ((EgressDao) dao).select(egressDate);
+		return egresses.stream().sorted(Comparator.comparing(Egress::getEgressDate).reversed())
+				.collect(Collectors.toList());
 	}
 
 	public List<Egress> select(Person person) {

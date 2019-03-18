@@ -104,6 +104,65 @@ public class Collection extends CommonData {
 	public static Builder builder(Collection lot) {
 		return new Builder(lot);
 	}
+	
+	
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((collectionDate == null) ? 0 : collectionDate.hashCode());
+		result = prime * result + ((document == null) ? 0 : document.hashCode());
+		result = prime * result + ((fee == null) ? 0 : fee.hashCode());
+		result = prime * result + ((finalBalance == null) ? 0 : finalBalance.hashCode());
+		result = prime * result + ((initialBalance == null) ? 0 : initialBalance.hashCode());
+		result = prime * result + ((paymentMethod == null) ? 0 : paymentMethod.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Collection other = (Collection) obj;
+		if (collectionDate == null) {
+			if (other.collectionDate != null)
+				return false;
+		} else if (!collectionDate.equals(other.collectionDate))
+			return false;
+		if (document == null) {
+			if (other.document != null)
+				return false;
+		} else if (!document.equals(other.document))
+			return false;
+		if (fee == null) {
+			if (other.fee != null)
+				return false;
+		} else if (!fee.equals(other.fee))
+			return false;
+		if (finalBalance == null) {
+			if (other.finalBalance != null)
+				return false;
+		} else if (!finalBalance.equals(other.finalBalance))
+			return false;
+		if (initialBalance == null) {
+			if (other.initialBalance != null)
+				return false;
+		} else if (!initialBalance.equals(other.initialBalance))
+			return false;
+		if (paymentMethod == null) {
+			if (other.paymentMethod != null)
+				return false;
+		} else if (!paymentMethod.equals(other.paymentMethod))
+			return false;
+		return true;
+	}
+
+
 
 	public static class Builder {
 

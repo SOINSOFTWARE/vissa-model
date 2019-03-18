@@ -140,20 +140,24 @@ public class Person extends CommonData {
 
 	@Override
 	public void validate() {
-		if (documentType == null) {
-			throw new ModelValidationException("El tipo de documento es obligatorio.");
-		}
-		if (documentNumber == null) {
-			throw new ModelValidationException("El número de documento es obligatorio.");
-		}
+		/*
+		 * if (documentType == null) { throw new
+		 * ModelValidationException("El tipo de documento es obligatorio."); } if
+		 * (documentNumber == null) { throw new
+		 * ModelValidationException("El número de documento es obligatorio."); }
+		 */
 		if (name == null || name.trim().equals("")) {
 			throw new ModelValidationException("El nombre de la persona (natural o jurídica) es obligatorio.");
 		}
 		if (type == null) {
 			throw new ModelValidationException("El tipo de la persona es obligatorio.");
-		} else if (type.equals(PersonType.CUSTOMER) && (lastName == null || lastName.trim().equals(""))) {
-			throw new ModelValidationException("El apellido de la persona natural es obligatorio.");
 		}
+		/*
+		 * else if (type.equals(PersonType.CUSTOMER) && (lastName == null ||
+		 * lastName.trim().equals(""))) { throw new
+		 * ModelValidationException("El apellido de la persona natural es obligatorio."
+		 * ); }
+		 */
 	}
 
 	public static Builder builder() {
@@ -315,22 +319,22 @@ public class Person extends CommonData {
 
 	@Override
 	public boolean equals(Object obj) {
-		System.out.println("this:"+this);
-		System.out.println("obj:"+obj);
+		System.out.println("this:" + this);
+		System.out.println("obj:" + obj);
 		if (this == obj) {
-			 System.out.println("1");
+			System.out.println("1");
 			return true;
 		}
 		if (!super.equals(obj)) {
-			 System.out.println("2");
+			System.out.println("2");
 			return false;
 		}
 		if (getClass() != obj.getClass()) {
-			 System.out.println("3");
+			System.out.println("3");
 			return false;
 		}
 		Person other = (Person) obj;
-		System.out.println("documentNumber:"+documentNumber + ", other documentNumber" + other.documentNumber);
+		System.out.println("documentNumber:" + documentNumber + ", other documentNumber" + other.documentNumber);
 		if (documentNumber == null) {
 			if (other.documentNumber != null)
 				return false;

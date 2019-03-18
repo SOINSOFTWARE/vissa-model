@@ -228,7 +228,7 @@ public class MeasurementUnitProduct extends CommonData {
 	}
 
 	public Double getStock() {
-		return stock;
+		return stock != null ? stock : 0.0;
 	}
 
 	public void setProduct(Product product) {
@@ -242,7 +242,7 @@ public class MeasurementUnitProduct extends CommonData {
 	public void calculateSalePrice() {
 		Double purchaseTaxTmp = getPurchasePrice() * getPurchaseTax() / 100;
 		Double salePriceTmp = getPurchasePrice() + purchaseTaxTmp;
-		salePriceTmp = salePriceTmp + (salePriceTmp * getUtilityPrc()/100);
+		salePriceTmp = salePriceTmp + (salePriceTmp * getUtilityPrc() / 100);
 		setSalePrice(salePriceTmp);
 	}
 

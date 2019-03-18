@@ -26,7 +26,7 @@ public class CollectionBll extends AbstractBll<Collection, BigInteger> {
 
 	public List<Collection> select(Document document) {
 		List<Collection> collections = ((CollectionDao) dao).select(document);
-		return collections.stream().sorted(Comparator.comparing(Collection::getCollectionDate))
+		return collections.stream().sorted(Comparator.comparing(Collection::getCollectionDate).reversed())
 				.collect(Collectors.toList());
 	}
 
