@@ -3,10 +3,8 @@ package com.soinsoftware.vissa.bll;
 
 import java.io.IOException;
 import java.math.BigInteger;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.soinsoftware.vissa.dao.CashRegisterConciliationDao;
 import com.soinsoftware.vissa.model.CashConciliation;
@@ -26,6 +24,10 @@ public class CashRegisterConciliationBll extends AbstractBll<CashConciliation, B
 
 	public List<CashConciliation> select(Person person) {
 		return ((CashRegisterConciliationDao) dao).select(person);		
+	}
+	
+	public List<CashConciliation> select(Date conciliationDate) {
+		return ((CashRegisterConciliationDao) dao).select(conciliationDate);		
 	}
 
 	public CashConciliation select(Person person, Date conciliationDate) {
