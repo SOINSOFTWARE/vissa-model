@@ -100,7 +100,7 @@ public class CashConciliation extends CommonData {
 	}
 
 	public BigDecimal getCashBase() {
-		return cashBase;
+		return cashBase != null ? cashBase : new BigDecimal(0.0);
 	}
 
 	public String getCashRegisterNumber() {
@@ -108,7 +108,7 @@ public class CashConciliation extends CommonData {
 	}
 
 	public BigDecimal getSales() {
-		return sales;
+		return sales != null ? sales : new BigDecimal(0.0);
 	}
 
 	public BigDecimal getCreditCollection() {
@@ -116,47 +116,47 @@ public class CashConciliation extends CommonData {
 	}
 
 	public BigDecimal getRemnantSale() {
-		return remnantSale;
+		return remnantSale != null ? remnantSale : new BigDecimal(0.0);
 	}
 
 	public BigDecimal getGeneralExpense() {
-		return generalExpense;
+		return generalExpense != null ? generalExpense : new BigDecimal(0.0);
 	}
 
 	public BigDecimal getSupplierPaymentsLoan() {
-		return supplierPaymentsLoan;
+		return supplierPaymentsLoan != null ? supplierPaymentsLoan : new BigDecimal(0.0);
 	}
 
 	public BigDecimal getRemnantEgress() {
-		return remnantEgress;
+		return remnantEgress != null ? remnantEgress : new BigDecimal(0.0);
 	}
 
 	public BigDecimal getTotalIngress() {
-		return totalIngress;
+		return totalIngress != null ? totalIngress : new BigDecimal(0.0);
 	}
 
 	public BigDecimal getTotalCash() {
-		return totalCash;
+		return totalCash != null ? totalCash : new BigDecimal(0.0);
 	}
 
 	public BigDecimal getTotalEgress() {
-		return totalEgress;
+		return totalEgress != null ? totalEgress : new BigDecimal(0.0);
 	}
 
 	public BigDecimal getTotalCredit() {
-		return totalCredit;
+		return totalCredit != null ? totalCredit : new BigDecimal(0.0);
 	}
 
 	public BigDecimal getSupplierPayments() {
-		return supplierPayments;
+		return supplierPayments != null ? supplierPayments : new BigDecimal(0.0);
 	}
 
 	public BigDecimal getCashRegisterBorrow() {
-		return cashRegisterBorrow;
+		return cashRegisterBorrow != null ? cashRegisterBorrow : new BigDecimal(0.0);
 	}
 
 	public BigDecimal getBalance() {
-		return balance;
+		return balance != null ? balance : new BigDecimal(0.0);
 	}
 
 	public Date getConciliationDate() {
