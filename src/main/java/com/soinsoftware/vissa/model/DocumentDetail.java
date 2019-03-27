@@ -425,7 +425,7 @@ public class DocumentDetail extends CommonData {
 		}
 
 		public Builder tax(Double tax) {
-			this.tax = price;
+			this.tax = tax;
 			return this;
 		}
 
