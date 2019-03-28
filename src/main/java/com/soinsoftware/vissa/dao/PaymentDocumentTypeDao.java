@@ -44,4 +44,14 @@ public class PaymentDocumentTypeDao extends AbstractDataAccessibleObject<Payment
 		criteria.add(criterion);
 		return criteria.list();
 	}
+	
+	public PaymentDocumentType select(DocumentType documentType, PaymentType paymentType) {
+		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
+		final List<Criterion> predicates = new ArrayList<>();
+		predicates.add(Restrictions.eq("documentType", documentType));
+		predicates.add(Restrictions.eq("paymentType", paymentType));
+		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
+		criteria.add(criterion);
+		return (PaymentDocumentType)criteria.uniqueResult();
+	}
 }

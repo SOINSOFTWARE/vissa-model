@@ -258,7 +258,7 @@ public class MeasurementUnitProduct extends CommonData {
 			throw new ModelValidationException("El producto es obligatorio para la UM");
 		}
 		if (measurementUnit == null) {
-			throw new ModelValidationException("El unidad de medida es obligatoria");
+			throw new ModelValidationException("La unidad de medida es obligatoria");
 		}
 	}
 

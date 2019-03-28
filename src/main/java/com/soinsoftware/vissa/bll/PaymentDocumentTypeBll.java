@@ -32,6 +32,10 @@ public class PaymentDocumentTypeBll extends AbstractBll<PaymentDocumentType, Big
 		return documentTypes;
 	}
 
+	public PaymentDocumentType select(DocumentType documentType, PaymentType paymentType) {
+		return ((PaymentDocumentTypeDao) dao).select(documentType , paymentType);		
+	}
+
 
 	public static PaymentDocumentTypeBll getInstance() throws IOException {
 		if (instance == null) {

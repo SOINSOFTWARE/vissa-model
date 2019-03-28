@@ -307,7 +307,7 @@ public class Product extends CommonData {
 		}
 
 		public Builder name(String name) {
-			this.name = name;
+			this.name = name.toUpperCase();
 			return this;
 		}
 
