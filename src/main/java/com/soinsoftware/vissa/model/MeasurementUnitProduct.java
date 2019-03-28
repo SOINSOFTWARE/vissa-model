@@ -16,6 +16,7 @@ import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
 import org.hibernate.annotations.SelectBeforeUpdate;
 
+import com.soinsoftware.vissa.common.CommonsUtil;
 import com.soinsoftware.vissa.exception.ModelValidationException;
 
 /**
@@ -221,10 +222,15 @@ public class MeasurementUnitProduct extends CommonData {
 
 	public void setMeasurementUnit(MeasurementUnit measurementUnit) {
 		this.measurementUnit = measurementUnit;
+		CommonsUtil.MEASUREMENT_UNIT_PRODUCT = this;
 	}
 
 	public void setMeasurementUnitName(String measurementUnitName) {
 		this.measurementUnit.setName(measurementUnitName);
+	}
+
+	public String getStockStr() {
+		return String.valueOf(getStock());
 	}
 
 	public Double getStock() {
@@ -237,6 +243,10 @@ public class MeasurementUnitProduct extends CommonData {
 
 	public void setStock(Double stock) {
 		this.stock = stock;
+	}
+
+	public void setStockStr(String stock) {
+		setStock(Double.parseDouble(stock));
 	}
 
 	public void calculateSalePrice() {
