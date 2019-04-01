@@ -267,7 +267,7 @@ public class DocumentDetail extends CommonData {
 	}
 
 	public Double getTaxValue() {
-		setTaxValue(getPrice() * (getTax() / 100));
+		setTaxValue((getPrice()) * (getTax() / 100));
 		return taxValue;
 	}
 

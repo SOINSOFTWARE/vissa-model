@@ -203,6 +203,11 @@ public class Product extends CommonData {
 		this.utility = utility;
 	}
 
+	
+	public void setMeasurementUnit(MeasurementUnit measurementUnit) {
+		this.measurementUnit = measurementUnit;
+	}
+
 	@Override
 	public void validate() {
 		if (code == null || code.trim().equals("")) {

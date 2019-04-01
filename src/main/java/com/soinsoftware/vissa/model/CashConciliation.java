@@ -112,7 +112,7 @@ public class CashConciliation extends CommonData {
 	}
 
 	public BigDecimal getCreditCollection() {
-		return creditCollection;
+		return creditCollection != null ? creditCollection : new BigDecimal(0.0);	
 	}
 
 	public BigDecimal getRemnantSale() {

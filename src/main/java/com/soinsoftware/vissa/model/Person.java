@@ -319,22 +319,17 @@ public class Person extends CommonData {
 
 	@Override
 	public boolean equals(Object obj) {
-		System.out.println("this:" + this);
-		System.out.println("obj:" + obj);
+
 		if (this == obj) {
-			System.out.println("1");
 			return true;
 		}
 		if (!super.equals(obj)) {
-			System.out.println("2");
 			return false;
 		}
 		if (getClass() != obj.getClass()) {
-			System.out.println("3");
 			return false;
 		}
 		Person other = (Person) obj;
-		System.out.println("documentNumber:" + documentNumber + ", other documentNumber" + other.documentNumber);
 		if (documentNumber == null) {
 			if (other.documentNumber != null)
 				return false;
