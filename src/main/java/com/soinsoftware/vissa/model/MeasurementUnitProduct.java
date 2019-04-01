@@ -250,9 +250,15 @@ public class MeasurementUnitProduct extends CommonData {
 	}
 
 	public void calculateSalePrice() {
-		Double purchaseTaxTmp = getPurchasePrice() * getPurchaseTax() / 100;
-		Double salePriceTmp = getPurchasePrice() + purchaseTaxTmp;
-		salePriceTmp = salePriceTmp + (salePriceTmp * getUtilityPrc() / 100);
+		/*
+		 * Double purchaseTaxTmp = getPurchasePrice() * getPurchaseTax() / 100; Double
+		 * salePriceTmp = getPurchasePrice() + purchaseTaxTmp; salePriceTmp =
+		 * salePriceTmp + (salePriceTmp * getUtilityPrc() / 100);
+		 */
+		// Precio de compra + utilidad
+		Double purchaseWithUtility = getPurchasePrice() + (getPurchasePrice() * getUtilityPrc() / 100);
+		// Precio de compra con utilidad + % Iva
+		Double salePriceTmp = purchaseWithUtility + (purchaseWithUtility * getPurchaseTax() / 100);
 		setSalePrice(salePriceTmp);
 	}
 
