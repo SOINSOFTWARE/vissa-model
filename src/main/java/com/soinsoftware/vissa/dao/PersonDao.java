@@ -27,12 +27,23 @@ public class PersonDao extends AbstractDataAccessibleObject<Person, BigInteger> 
 	public Person select(final String documentNumber) {
 		return getSession().bySimpleNaturalId(Person.class).load(documentNumber);
 	}
-	
+
 	public List<Person> select(final PersonType personType) {
 		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
 		final List<Criterion> predicates = new ArrayList<>();
 		predicates.add(Restrictions.eq("type", personType));
 		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
+		criteria.add(criterion);
+		return criteria.list();
+	}
+
+	public List<Person> selectByName(String name) {
+		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
+		final List<Criterion> predicates = new ArrayList<>();
+		predicates.add(Restrictions.like("name", "%" + name + "%"));
+		predicates.add(Restrictions.like("documentNumber", "%" + name + "%"));
+		predicates.add(Restrictions.like("lastName", "%" + name + "%"));
+		final Criterion criterion = Restrictions.or(buildPredicates(predicates));
 		criteria.add(criterion);
 		return criteria.list();
 	}

@@ -14,7 +14,7 @@ import com.soinsoftware.vissa.model.PersonType;
  * @since 27/11/2018
  */
 public class PersonBll extends AbstractBll<Person, BigInteger> {
-	
+
 	private static PersonBll instance;
 
 	private PersonBll() throws IOException {
@@ -24,11 +24,15 @@ public class PersonBll extends AbstractBll<Person, BigInteger> {
 	public Person select(final String document) {
 		return ((PersonDao) dao).select(document);
 	}
-	
+
+	public List<Person> selectByName(String name) {
+		return ((PersonDao) dao).selectByName(name);
+	}
+
 	public List<Person> select(final PersonType personType) {
 		return ((PersonDao) dao).select(personType);
 	}
-	
+
 	public static PersonBll getInstance() throws IOException {
 		if (instance == null) {
 			instance = new PersonBll();

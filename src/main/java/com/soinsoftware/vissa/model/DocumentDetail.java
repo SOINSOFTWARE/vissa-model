@@ -280,6 +280,7 @@ public class DocumentDetail extends CommonData {
 			Double priceWithTax = 0.0;
 
 			priceWithTax = getPrice() + (getPrice() * getTax() / 100);
+			priceWithTax = (double) Math.round(priceWithTax);
 
 			setSubtotalStr(String.valueOf((priceWithTax - getDiscount()) * Double.parseDouble(quantity)));
 		}
