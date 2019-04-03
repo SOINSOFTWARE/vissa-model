@@ -259,15 +259,16 @@ public class MeasurementUnitProduct extends CommonData {
 		Double tax = (getPurchaseTax() / 100 + 1);
 		Double priceWhithoutIVA = getPurchasePrice();
 		priceWhithoutIVA = (double) Math.round(priceWhithoutIVA);
-		//Precio de compra con utilidad + % Iva
-		Double salePriceTmp = priceWhithoutIVA + (priceWhithoutIVA * getUtilityPrc() / 100);	
+		// Precio de compra con utilidad + % Iva
+		Double utility = (double) Math.round(priceWhithoutIVA * getUtilityPrc() / 100);
+		Double salePriceTmp = priceWhithoutIVA + utility;
 		salePriceTmp = (double) Math.round(salePriceTmp);
 		setSalePrice(salePriceTmp);
 	}
 
 	public void calculateFinalPrice() {
-		Double saleTaxTmp = getSalePrice() * getSaleTax() / 100;
-		saleTaxTmp = (double)Math.round(saleTaxTmp);
+		Double saleTaxTmp = (double) Math.round(getSalePrice() * getSaleTax() / 100);
+		saleTaxTmp = (double) Math.round(saleTaxTmp);
 		Double finalPriceTmp = getSalePrice() + saleTaxTmp;
 		finalPriceTmp = (double) Math.round(finalPriceTmp);
 		setFinalPrice(finalPriceTmp);
