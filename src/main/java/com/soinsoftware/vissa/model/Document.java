@@ -76,6 +76,8 @@ public class Document extends CommonData {
 	private String cash;
 	@Column(name = "pay_value")
 	private Double payValue;
+	@Column(name = "payment_status")
+	private String paymentStatus;
 	@OneToMany(mappedBy = "document", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<DocumentDetail> details = new HashSet<>();
 
@@ -102,6 +104,7 @@ public class Document extends CommonData {
 		salesman = builder.salesman;
 		cash = builder.cash;
 		payValue = builder.payValue;
+		paymentStatus = builder.paymentStatus;
 		details = forHibernateDetails(builder.details);
 	}
 
@@ -187,6 +190,14 @@ public class Document extends CommonData {
 
 	public void setPayValue(Double payValue) {
 		this.payValue = payValue;
+	}
+
+	public String getPaymentStatus() {
+		return paymentStatus;
+	}
+
+	public void setPaymentStatus(String paymentStatus) {
+		this.paymentStatus = paymentStatus;
 	}
 
 	@Override
@@ -275,6 +286,7 @@ public class Document extends CommonData {
 		private Person salesman;
 		private String cash;
 		private Double payValue;
+		private String paymentStatus;
 		private Set<DocumentDetail> details = new HashSet<>();
 
 		private Builder() {
@@ -289,7 +301,7 @@ public class Document extends CommonData {
 					.currency(document.currency).totalValueNoTax(document.totalValueNoTax)
 					.totalValue(document.totalValue).reference(document.reference).status(document.status)
 					.salesman(document.salesman).cash(document.cash).payValue(document.payValue)
-					.details(document.details);
+					.paymentStatus(document.paymentStatus).details(document.details);
 		}
 
 		public Builder id(BigInteger id) {
@@ -398,6 +410,11 @@ public class Document extends CommonData {
 			return this;
 		}
 
+		public Builder paymentStatus(String paymentStatus) {
+			this.paymentStatus = paymentStatus;
+			return this;
+		}
+
 		public Builder details(Set<DocumentDetail> details) {
 			this.details = details;
 			return this;
@@ -415,7 +432,7 @@ public class Document extends CommonData {
 				+ paymentMethod + ", paymentTerm=" + paymentTerm + ", expirationDate=" + expirationDate + ", currency="
 				+ currency + ", totalValueNoTax=" + totalValueNoTax + ", totalValue=" + totalValue + ", reference="
 				+ reference + ", status=" + status + ", salesman=" + salesman + ", cash=" + cash + ", payValue="
-				+ payValue + "]";
+				+ payValue + ", paymentStatus=" + paymentStatus + "]";
 	}
 
 }
