@@ -73,6 +73,7 @@ public class LotDao extends AbstractDataAccessibleObject<Lot, BigInteger> {
 	public  List<Lot>  selectWithStock(Product product) {
 		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
 		final List<Criterion> predicates = new ArrayList<>();
+		predicates.add(Restrictions.eq("product", product));
 		predicates.add(Restrictions.gt("quantity", 0.0));
 		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
 		criteria.add(criterion);

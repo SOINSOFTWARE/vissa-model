@@ -62,6 +62,10 @@ public class DocumentDetailLot extends CommonData {
 		return documentDetail;
 	}
 
+	public void setDocumentDetail(DocumentDetail documentDetail) {
+		this.documentDetail = documentDetail;
+	}
+
 	public Lot getLot() {
 		return lot;
 	}

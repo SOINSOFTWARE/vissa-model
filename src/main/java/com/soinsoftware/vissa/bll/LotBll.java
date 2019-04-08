@@ -70,8 +70,8 @@ public class LotBll extends AbstractBll<Lot, BigInteger> {
 	public Lot getOlderLotWithStockByProduct(Product product) {
 		Lot lot = null;
 		List<Lot> lots = ((LotDao) dao).selectWithStock(product);
-		lots = lots.stream().sorted(Comparator.comparing(Lot::getCreationDate).reversed()).collect(Collectors.toList());
-		lot = lots.get(lots.size() - 1);
+		lots = lots.stream().sorted(Comparator.comparing(Lot::getCreationDate)).collect(Collectors.toList());
+		lot = lots.get(0);
 
 		return lot;
 	}
