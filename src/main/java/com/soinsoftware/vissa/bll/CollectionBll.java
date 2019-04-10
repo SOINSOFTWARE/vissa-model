@@ -33,6 +33,11 @@ public class CollectionBll extends AbstractBll<Collection, BigInteger> {
 	public List<Collection> select(Person person) {
 		return ((CollectionDao) dao).select(person);
 	}
+	
+	public List<Collection> select(String type) {
+		return ((CollectionDao) dao).select(type);
+	}
+
 
 	public static CollectionBll getInstance() throws IOException {
 		if (instance == null) {

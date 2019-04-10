@@ -42,6 +42,7 @@ public class Collection extends CommonData {
 	private BigDecimal fee;
 	@Column(name = "final_balance")
 	private BigDecimal finalBalance;
+	private String type;
 	@Column(name = "payment_method_id")
 	private PaymentMethod paymentMethod;
 
@@ -56,6 +57,7 @@ public class Collection extends CommonData {
 		initialBalance = builder.initialBalance;
 		fee = builder.fee;
 		finalBalance = builder.finalBalance;
+		type = builder.type;
 		paymentMethod = builder.paymentMethod;
 	}
 
@@ -72,7 +74,6 @@ public class Collection extends CommonData {
 		}
 	}
 
-	
 	public Date getCollectionDate() {
 		return collectionDate;
 	}
@@ -93,6 +94,10 @@ public class Collection extends CommonData {
 		return finalBalance;
 	}
 
+	public String getType() {
+		return type;
+	}
+
 	public PaymentMethod getPaymentMethod() {
 		return paymentMethod;
 	}
@@ -104,8 +109,6 @@ public class Collection extends CommonData {
 	public static Builder builder(Collection lot) {
 		return new Builder(lot);
 	}
-	
-	
 
 	@Override
 	public int hashCode() {
@@ -117,6 +120,7 @@ public class Collection extends CommonData {
 		result = prime * result + ((finalBalance == null) ? 0 : finalBalance.hashCode());
 		result = prime * result + ((initialBalance == null) ? 0 : initialBalance.hashCode());
 		result = prime * result + ((paymentMethod == null) ? 0 : paymentMethod.hashCode());
+		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
 
@@ -162,8 +166,6 @@ public class Collection extends CommonData {
 		return true;
 	}
 
-
-
 	public static class Builder {
 
 		private BigInteger id;
@@ -175,16 +177,17 @@ public class Collection extends CommonData {
 		private BigDecimal initialBalance;
 		private BigDecimal fee;
 		private BigDecimal finalBalance;
+		private String type;
 		private PaymentMethod paymentMethod;
 
 		private Builder() {
 		}
 
-		private Builder(Collection expense) {
-			id(expense.getId()).creationDate(expense.getCreationDate()).modifyDate(expense.getModifyDate())
-					.archived(expense.isArchived()).collectionDate(expense.collectionDate).document(expense.document)
-					.initialBalance(expense.initialBalance).fee(expense.fee).finalBalance(expense.finalBalance)
-					.paymentMethod(expense.paymentMethod);
+		private Builder(Collection collection) {
+			id(collection.getId()).creationDate(collection.getCreationDate()).modifyDate(collection.getModifyDate())
+					.archived(collection.isArchived()).collectionDate(collection.collectionDate).document(collection.document)
+					.initialBalance(collection.initialBalance).fee(collection.fee).finalBalance(collection.finalBalance)
+					.type(collection.type).paymentMethod(collection.paymentMethod);
 		}
 
 		public Builder id(BigInteger id) {
@@ -226,7 +229,7 @@ public class Collection extends CommonData {
 			this.initialBalance = initialBalance;
 			return this;
 		}
-		
+
 		public Builder fee(BigDecimal fee) {
 			this.fee = fee;
 			return this;
@@ -234,6 +237,11 @@ public class Collection extends CommonData {
 
 		public Builder finalBalance(BigDecimal finalBalance) {
 			this.finalBalance = finalBalance;
+			return this;
+		}
+
+		public Builder type(String type) {
+			this.type = type;
 			return this;
 		}
 
@@ -245,6 +253,13 @@ public class Collection extends CommonData {
 		public Collection build() {
 			return new Collection(this);
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "Collection [collectionDate=" + collectionDate + ", document=" + document + ", initialBalance="
+				+ initialBalance + ", fee=" + fee + ", finalBalance=" + finalBalance + ", type=" + type
+				+ ", paymentMethod=" + paymentMethod + "]";
 	}
 
 }

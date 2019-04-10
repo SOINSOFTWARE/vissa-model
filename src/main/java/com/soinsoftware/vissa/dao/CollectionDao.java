@@ -53,4 +53,13 @@ public class CollectionDao extends AbstractDataAccessibleObject<Collection, BigI
 		criteria.add(criterion);
 		return criteria.list();
 	}
+	
+	public List<Collection> select(final String type) {
+		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);		
+		final List<Criterion> predicates = new ArrayList<>();
+		predicates.add(Restrictions.eq("type", type));
+		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
+		criteria.add(criterion);
+		return criteria.list();
+	}
 }
