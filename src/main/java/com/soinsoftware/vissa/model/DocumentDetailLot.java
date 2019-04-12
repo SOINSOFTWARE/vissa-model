@@ -127,6 +127,37 @@ public class DocumentDetailLot extends CommonData {
 		return new Builder(documentDetail);
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((documentDetail == null) ? 0 : documentDetail.hashCode());
+		result = prime * result + ((lot == null) ? 0 : lot.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DocumentDetailLot other = (DocumentDetailLot) obj;
+		if (documentDetail == null) {
+			if (other.documentDetail != null)
+				return false;
+		} else if (!documentDetail.equals(other.documentDetail))
+			return false;
+		if (lot == null) {
+			if (other.lot != null)
+				return false;
+		} else if (!lot.equals(other.lot))
+			return false;
+		return true;
+	}
+
 	public static class Builder {
 
 		private BigInteger id;
