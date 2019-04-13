@@ -256,7 +256,7 @@ public class MeasurementUnitProduct extends CommonData {
 		 * salePriceTmp + (salePriceTmp * getUtilityPrc() / 100);
 		 */
 		// Precio de compra + utilidad
-		Double tax = (getPurchaseTax() / 100 + 1);
+		// Double tax = (getPurchaseTax() / 100 + 1);
 		Double priceWhithoutIVA = getPurchasePrice();
 		priceWhithoutIVA = (double) Math.round(priceWhithoutIVA);
 		// Precio de compra con utilidad + % Iva
