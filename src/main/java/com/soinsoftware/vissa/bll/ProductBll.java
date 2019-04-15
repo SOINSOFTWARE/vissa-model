@@ -7,6 +7,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.soinsoftware.vissa.common.EComparatorType;
 import com.soinsoftware.vissa.dao.ProductDao;
 import com.soinsoftware.vissa.model.MeasurementUnit;
 import com.soinsoftware.vissa.model.Product;
@@ -43,7 +44,7 @@ public class ProductBll extends AbstractBll<Product, BigInteger> {
 		List<Product> products = ((ProductDao) dao).select(measurementUnit);
 		return sortedByName(products);
 	}
-	
+
 	public List<Product> selectByName(String name) {
 		List<Product> products = ((ProductDao) dao).selectByName(name);
 		return sortedByName(products);
@@ -57,6 +58,11 @@ public class ProductBll extends AbstractBll<Product, BigInteger> {
 
 	private List<Product> sortedByName(List<Product> products) {
 		return products.stream().sorted(Comparator.comparing(Product::getName)).collect(Collectors.toList());
+	}
+
+	public List<Product> selectByStock(Double stock, EComparatorType comparator) {
+		List<Product> products = ((ProductDao) dao).selectByStock(stock, comparator);
+		return sortedByName(products);
 	}
 
 	public static ProductBll getInstance() throws IOException {

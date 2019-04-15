@@ -22,7 +22,7 @@ public class DocumentDetailLotBll extends AbstractBll<DocumentDetailLot, BigInte
 		super(new DocumentDetailLotDao());
 	}
 
-	public DocumentDetailLot select(DocumentDetail documentDetail) {
+	public List<DocumentDetailLot> select(DocumentDetail documentDetail) {
 		return ((DocumentDetailLotDao) dao).select(documentDetail);
 	}
 

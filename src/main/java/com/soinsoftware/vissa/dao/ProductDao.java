@@ -10,6 +10,7 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 
+import com.soinsoftware.vissa.common.EComparatorType;
 import com.soinsoftware.vissa.model.MeasurementUnit;
 import com.soinsoftware.vissa.model.Product;
 import com.soinsoftware.vissa.model.ProductCategory;
@@ -79,6 +80,25 @@ public class ProductDao extends AbstractDataAccessibleObject<Product, BigInteger
 		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
 		final List<Criterion> predicates = new ArrayList<>();
 		predicates.add(Restrictions.like("name", "%" + name + "%"));
+		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
+		criteria.add(criterion);
+		return criteria.list();
+	}
+
+	public List<Product> selectByStock(Double stock, EComparatorType comparator) {
+		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
+		final List<Criterion> predicates = new ArrayList<>();
+		
+		if (comparator.equals(EComparatorType.EQ)) {
+			predicates.add(Restrictions.eq("stock", stock));
+		}
+		if (comparator.equals(EComparatorType.LE)) {
+			predicates.add(Restrictions.le("stock", stock));
+		}
+		if (comparator.equals(EComparatorType.GE)) {
+			predicates.add(Restrictions.ge("stock", stock));
+		}
+
 		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
 		criteria.add(criterion);
 		return criteria.list();

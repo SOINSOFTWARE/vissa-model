@@ -17,6 +17,7 @@ import org.hibernate.annotations.OptimisticLocking;
 import org.hibernate.annotations.SelectBeforeUpdate;
 
 import com.soinsoftware.vissa.common.CommonsUtil;
+import com.soinsoftware.vissa.common.StringUtil;
 import com.soinsoftware.vissa.exception.ModelValidationException;
 
 /**
@@ -40,9 +41,9 @@ public class DocumentDetail extends CommonData {
 	private String description;
 	private String quantity;
 	@Transient
-	private String oldQuantity;
+	private Double oldQuantity;
 	@Transient
-	private String diffQuantity;
+	private Double diffQuantity;
 	@ManyToOne
 	@JoinColumn(name = "mu_product_id")
 	MeasurementUnitProduct measurementUnitProduct;
@@ -66,6 +67,8 @@ public class DocumentDetail extends CommonData {
 	private String name;
 	@Transient
 	private int index;
+	@Transient
+	private Double totalTaxValue;
 
 	public DocumentDetail() {
 		super();
@@ -83,6 +86,7 @@ public class DocumentDetail extends CommonData {
 		price = builder.price;
 		tax = builder.tax;
 		discount = builder.discount;
+
 	}
 
 	public static long getSerialversionuid() {
@@ -212,11 +216,11 @@ public class DocumentDetail extends CommonData {
 		this.measurementUnitProduct = measurementUnitProduct;
 	}
 
-	public String getOldQuantity() {
+	public Double getOldQuantity() {
 		return oldQuantity;
 	}
 
-	public void setOldQuantity(String oldQuantity) {
+	public void setOldQuantity(Double oldQuantity) {
 		this.oldQuantity = oldQuantity;
 	}
 
@@ -228,7 +232,7 @@ public class DocumentDetail extends CommonData {
 		this.transactionType = transactionType;
 	}
 
-	public String getDiffQuantity() {
+	public Double getDiffQuantity() {
 		return diffQuantity;
 	}
 
@@ -236,7 +240,7 @@ public class DocumentDetail extends CommonData {
 		this.document = document;
 	}
 
-	public void setDiffQuantity(String diffQuantity) {
+	public void setDiffQuantity(Double diffQuantity) {
 		this.diffQuantity = diffQuantity;
 	}
 
@@ -268,7 +272,7 @@ public class DocumentDetail extends CommonData {
 
 	public Double getTaxValue() {
 		setTaxValue((getPrice()) * (getTax() / 100));
-		return taxValue;
+		return taxValue != null ? taxValue : 0.0;
 	}
 
 	public void setTaxValue(Double taxValue) {
@@ -285,6 +289,24 @@ public class DocumentDetail extends CommonData {
 			setSubtotalStr(String.valueOf((priceWithTax - getDiscount()) * Double.parseDouble(quantity)));
 		}
 		CommonsUtil.CURRENT_DOCUMENT_DETAIL = this;
+		calculateTotalTax();
+	}
+
+	private void calculateTotalTax() {
+		Double qty = 0.0;
+		if (!StringUtil.isNull(getQuantity())) {
+			qty = Double.valueOf(getQuantity());
+		}
+		Double totalTax = Double.valueOf(Math.round(getTaxValue() * qty));
+		setTotalTaxValue(totalTax);
+	}
+
+	public Double getTotalTaxValue() {
+		return totalTaxValue;
+	}
+
+	public void setTotalTaxValue(Double totalTaxValue) {
+		this.totalTaxValue = totalTaxValue;
 	}
 
 	@Override

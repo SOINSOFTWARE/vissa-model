@@ -23,17 +23,17 @@ public class DocumentDetailLotDao extends AbstractDataAccessibleObject<DocumentD
 	public DocumentDetailLotDao() throws IOException {
 		super(DocumentDetailLot.class);
 	}
-	
-	
-	public DocumentDetailLot select(final DocumentDetail documentDetail) {
+
+	@SuppressWarnings("unchecked")
+	public List<DocumentDetailLot> select(final DocumentDetail documentDetail) {
 		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
 		final List<Criterion> predicates = new ArrayList<>();
 		predicates.add(Restrictions.eq("documentDetail", documentDetail));
 		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
 		criteria.add(criterion);
-		return (DocumentDetailLot) criteria.uniqueResult();
+		return criteria.list();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public List<DocumentDetailLot> select(final Lot lot) {
 		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
