@@ -6,6 +6,7 @@ import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 
+import com.soinsoftware.vissa.common.EComparatorType;
 import com.soinsoftware.vissa.dao.DocumentDao;
 import com.soinsoftware.vissa.model.Document;
 import com.soinsoftware.vissa.model.DocumentType;
@@ -46,7 +47,7 @@ public class DocumentBll extends AbstractBll<Document, BigInteger> {
 	public List<Document> select(List<DocumentType> documentTypes) {
 		return ((DocumentDao) dao).select(documentTypes);
 	}
-	
+
 	public List<Document> select(List<DocumentType> documentTypes, List<PaymentType> paymentTypes) {
 		return ((DocumentDao) dao).select(documentTypes, paymentTypes);
 	}
@@ -57,6 +58,15 @@ public class DocumentBll extends AbstractBll<Document, BigInteger> {
 
 	public List<Document> select(Date documentDate, Date iniDate, Date finalDate) {
 		return ((DocumentDao) dao).select(documentDate, iniDate, finalDate);
+	}
+
+	public List<Document> selectByExpirationDate(final List<DocumentType> documentTypes, Date expirationDate,
+			String paymentStatus, EComparatorType comparator) {
+		return ((DocumentDao) dao).selectToExpire(documentTypes, expirationDate, paymentStatus, comparator);
+	}
+
+	public List<Document> selectExpired(final List<DocumentType> documentTypes, String paymentStatus) {
+		return ((DocumentDao) dao).selectExpired(documentTypes, paymentStatus);
 	}
 
 	public static DocumentBll getInstance() throws IOException {

@@ -16,7 +16,7 @@ import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
 import org.hibernate.annotations.SelectBeforeUpdate;
 
-import com.soinsoftware.vissa.common.CommonsUtil;
+import com.soinsoftware.vissa.common.CommonsConstants;
 import com.soinsoftware.vissa.exception.ModelValidationException;
 
 /**
@@ -222,7 +222,7 @@ public class MeasurementUnitProduct extends CommonData {
 
 	public void setMeasurementUnit(MeasurementUnit measurementUnit) {
 		this.measurementUnit = measurementUnit;
-		CommonsUtil.MEASUREMENT_UNIT_PRODUCT = this;
+		CommonsConstants.MEASUREMENT_UNIT_PRODUCT = this;
 	}
 
 	public void setMeasurementUnitName(String measurementUnitName) {

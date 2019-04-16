@@ -16,7 +16,7 @@ import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
 import org.hibernate.annotations.SelectBeforeUpdate;
 
-import com.soinsoftware.vissa.common.CommonsUtil;
+import com.soinsoftware.vissa.common.CommonsConstants;
 import com.soinsoftware.vissa.common.StringUtil;
 import com.soinsoftware.vissa.exception.ModelValidationException;
 
@@ -123,7 +123,7 @@ public class DocumentDetail extends CommonData {
 
 	public void setQuantity(String quantity) {
 		this.quantity = quantity;
-		CommonsUtil.CURRENT_DOCUMENT_DETAIL = this;
+		CommonsConstants.CURRENT_DOCUMENT_DETAIL = this;
 		calculateSubtotal();
 	}
 
@@ -141,13 +141,13 @@ public class DocumentDetail extends CommonData {
 
 	public void setMeasurementUnit(MeasurementUnit measurementUnit) {
 		this.measurementUnit = measurementUnit;
-		CommonsUtil.CURRENT_DOCUMENT_DETAIL = this;
+		CommonsConstants.CURRENT_DOCUMENT_DETAIL = this;
 	}
 
 	public void setPrice(Double price) {
 		this.price = price;
 		calculateSubtotal();
-		setMeasurementUnitProduct(CommonsUtil.MEASUREMENT_UNIT_PRODUCT);
+		setMeasurementUnitProduct(CommonsConstants.MEASUREMENT_UNIT_PRODUCT);
 	}
 
 	public void setPriceStr(String priceStr) {
@@ -250,7 +250,7 @@ public class DocumentDetail extends CommonData {
 
 	public void setCode(String code) {
 		this.code = code;
-		CommonsUtil.CURRENT_DOCUMENT_DETAIL = this;
+		CommonsConstants.CURRENT_DOCUMENT_DETAIL = this;
 
 	}
 
@@ -289,7 +289,7 @@ public class DocumentDetail extends CommonData {
 			setSubtotalStr(String.valueOf((priceWithTax - getDiscount()) * Double.parseDouble(getQuantity())));
 			calculateTotalTax();
 		}
-		CommonsUtil.CURRENT_DOCUMENT_DETAIL = this;
+		CommonsConstants.CURRENT_DOCUMENT_DETAIL = this;
 		
 	}
 

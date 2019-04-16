@@ -11,6 +11,7 @@ import org.hibernate.Criteria;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Restrictions;
 
+import com.soinsoftware.vissa.common.EComparatorType;
 import com.soinsoftware.vissa.model.Document;
 import com.soinsoftware.vissa.model.DocumentType;
 import com.soinsoftware.vissa.model.PaymentType;
@@ -85,7 +86,7 @@ public class DocumentDao extends AbstractDataAccessibleObject<Document, BigInteg
 		criteria.add(criterion);
 		return criteria.list();
 	}
-	
+
 	public List<Document> selectByPaymentTypes(final List<PaymentType> paymentTypes) {
 		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
 		final List<Criterion> predicates = new ArrayList<>();
@@ -94,12 +95,43 @@ public class DocumentDao extends AbstractDataAccessibleObject<Document, BigInteg
 		criteria.add(criterion);
 		return criteria.list();
 	}
-	
+
 	public List<Document> select(final List<DocumentType> documentTypes, List<PaymentType> paymentTypes) {
 		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
 		final List<Criterion> predicates = new ArrayList<>();
 		predicates.add(Restrictions.in("documentType", documentTypes));
 		predicates.add(Restrictions.in("paymentType", paymentTypes));
+		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
+		criteria.add(criterion);
+		return criteria.list();
+	}
+
+	public List<Document> selectToExpire(final List<DocumentType> documentTypes,
+			Date expirationDate, String paymentStatus, EComparatorType comparator) {
+		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
+		final List<Criterion> predicates = new ArrayList<>();
+		predicates.add(Restrictions.in("documentType", documentTypes));
+		predicates.add(Restrictions.eq("paymentStatus", paymentStatus));
+		if (comparator.equals(EComparatorType.EQ)) {
+			predicates.add(Restrictions.eq("expirationDate", expirationDate));
+		}
+		if (comparator.equals(EComparatorType.LE)) {
+			predicates.add(Restrictions.le("expirationDate", expirationDate));
+		}
+		if (comparator.equals(EComparatorType.GE)) {
+			predicates.add(Restrictions.ge("expirationDate", expirationDate));
+		}
+
+		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
+		criteria.add(criterion);
+		return criteria.list();
+	}
+
+	public List<Document> selectExpired(final List<DocumentType> documentTypes, String paymentStatus) {
+		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
+		final List<Criterion> predicates = new ArrayList<>();
+		predicates.add(Restrictions.in("documentType", documentTypes));
+		predicates.add(Restrictions.eq("paymentStatus", paymentStatus));
 		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
 		criteria.add(criterion);
 		return criteria.list();

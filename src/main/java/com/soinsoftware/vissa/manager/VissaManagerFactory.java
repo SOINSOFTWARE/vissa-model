@@ -19,10 +19,10 @@ public class VissaManagerFactory extends AbstractManagerFactory {
 
 	private static final String PERSISTENCE_UNIT_NAME = "Vissa";
 
-	private static final String PROPERTY_FILE = "/connection.properties";
+	private static final String CONNECTION_PROPERTY_FILE = "/connection.properties";
 
 	private VissaManagerFactory() throws IOException {
-		super(PACKAGE_INFO, PERSISTENCE_UNIT_NAME, PROPERTY_FILE, true);
+		super(PACKAGE_INFO, PERSISTENCE_UNIT_NAME, CONNECTION_PROPERTY_FILE, true);
 	}
 
 	private VissaManagerFactory(final String propertyFilePath) throws IOException {
