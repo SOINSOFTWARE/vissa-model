@@ -71,7 +71,7 @@ public class LotBll extends AbstractBll<Lot, BigInteger> {
 		Lot lot = null;
 		List<Lot> lots = ((LotDao) dao).selectWithStock(product);
 		if (lots != null && !lots.isEmpty()) {
-			lots = lots.stream().sorted(Comparator.comparing(Lot::getCreationDate)).collect(Collectors.toList());
+			lots = lots.stream().sorted(Comparator.comparing(Lot::getCode)).collect(Collectors.toList());
 			lot = lots.get(0);
 		}
 		return lot;

@@ -30,7 +30,7 @@ public class CashRegisterConciliationBll extends AbstractBll<CashConciliation, B
 		return ((CashRegisterConciliationDao) dao).select(conciliationDate);		
 	}
 
-	public CashConciliation select(Person person, Date conciliationDate) {
+	public List<CashConciliation> select(Person person, Date conciliationDate) {
 		return ((CashRegisterConciliationDao) dao).select(person, conciliationDate);
 	}
 

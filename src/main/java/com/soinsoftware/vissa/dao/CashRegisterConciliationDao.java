@@ -44,14 +44,15 @@ public class CashRegisterConciliationDao extends AbstractDataAccessibleObject<Ca
 		return criteria.list();
 	}
 
-	public CashConciliation select(final Person person, Date conciliationDate) {
+	@SuppressWarnings("unchecked")
+	public List<CashConciliation> select(final Person person, Date conciliationDate) {
 		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
 		final List<Criterion> predicates = new ArrayList<>();
 		predicates.add(Restrictions.eq("person", person));
 		predicates.add(Restrictions.eq("conciliationDate", conciliationDate));
 		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
 		criteria.add(criterion);
-		return (CashConciliation) criteria.uniqueResult();
+		return criteria.list();
 	}
 
 }

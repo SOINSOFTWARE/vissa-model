@@ -280,16 +280,17 @@ public class DocumentDetail extends CommonData {
 	}
 
 	public void calculateSubtotal() {
-		if (quantity != null && !quantity.isEmpty()) {
+		if (!StringUtil.isNull(getQuantity())) {
 			Double priceWithTax = 0.0;
 
 			priceWithTax = getPrice() + (getPrice() * getTax() / 100);
 			priceWithTax = (double) Math.round(priceWithTax);
 
-			setSubtotalStr(String.valueOf((priceWithTax - getDiscount()) * Double.parseDouble(quantity)));
+			setSubtotalStr(String.valueOf((priceWithTax - getDiscount()) * Double.parseDouble(getQuantity())));
+			calculateTotalTax();
 		}
 		CommonsUtil.CURRENT_DOCUMENT_DETAIL = this;
-		calculateTotalTax();
+		
 	}
 
 	private void calculateTotalTax() {
