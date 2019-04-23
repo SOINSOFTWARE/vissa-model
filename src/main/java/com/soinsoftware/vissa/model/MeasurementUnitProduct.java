@@ -52,6 +52,11 @@ public class MeasurementUnitProduct extends CommonData {
 	@Column(name = "final_price")
 	private Double finalPrice;
 	private Double stock;
+	@Column(name = "qty_equivalence")
+	private Double qtyEquivalence;
+	@ManyToOne
+	@JoinColumn(name = "mu_equivalence_id")
+	private MeasurementUnit muEquivalence;
 	@Transient
 	private Double saleTaxValue;
 	@Transient
@@ -74,6 +79,8 @@ public class MeasurementUnitProduct extends CommonData {
 		utility = builder.utility;
 		finalPrice = builder.finalPrice;
 		stock = builder.stock;
+		qtyEquivalence = builder.qtyEquivalence;
+		muEquivalence = builder.muEquivalence;
 	}
 
 	public Product getProduct() {
@@ -249,6 +256,30 @@ public class MeasurementUnitProduct extends CommonData {
 		setStock(Double.parseDouble(stock));
 	}
 
+	public Double getQtyEquivalence() {
+		return qtyEquivalence;
+	}
+
+	public String getQtyEquivalenceStr() {
+		return String.valueOf(getQtyEquivalence());
+	}
+
+	public MeasurementUnit getMuEquivalence() {
+		return muEquivalence;
+	}
+
+	public void setQtyEquivalence(Double qtyEquivalence) {
+		this.qtyEquivalence = qtyEquivalence;
+	}
+
+	public void setQtyEquivalenceStr(String qtyEquivalenceStr) {
+		setQtyEquivalence(Double.parseDouble(qtyEquivalenceStr));
+	}
+
+	public void setMuEquivalence(MeasurementUnit muEquivalence) {
+		this.muEquivalence = muEquivalence;
+	}
+
 	public void calculateSalePrice() {
 		/*
 		 * Double purchaseTaxTmp = getPurchasePrice() * getPurchaseTax() / 100; Double
@@ -337,6 +368,8 @@ public class MeasurementUnitProduct extends CommonData {
 		private Double utility;
 		private Double finalPrice;
 		private Double stock;
+		private Double qtyEquivalence;
+		private MeasurementUnit muEquivalence;
 
 		private Builder() {
 		}
@@ -347,7 +380,8 @@ public class MeasurementUnitProduct extends CommonData {
 					.measurementUnit(muProduct.measurementUnit).salePrice(muProduct.salePrice)
 					.purchasePrice(muProduct.purchasePrice).saleTax(muProduct.saleTax)
 					.purchaseTax(muProduct.purchaseTax).utilityPrc(muProduct.utilityPrc).utility(muProduct.utility)
-					.finalPrice(muProduct.finalPrice).stock(muProduct.stock);
+					.finalPrice(muProduct.finalPrice).stock(muProduct.stock).qtyEquivalence(muProduct.qtyEquivalence)
+					.muEquivalence(muProduct.muEquivalence);
 		}
 
 		public Builder id(BigInteger id) {
@@ -417,6 +451,16 @@ public class MeasurementUnitProduct extends CommonData {
 
 		public Builder stock(Double stock) {
 			this.stock = stock;
+			return this;
+		}
+
+		public Builder qtyEquivalence(Double qtyEquivalence) {
+			this.qtyEquivalence = qtyEquivalence;
+			return this;
+		}
+
+		public Builder muEquivalence(MeasurementUnit muEquivalence) {
+			this.muEquivalence = muEquivalence;
 			return this;
 		}
 
