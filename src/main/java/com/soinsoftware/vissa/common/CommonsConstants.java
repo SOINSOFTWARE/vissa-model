@@ -2,8 +2,8 @@ package com.soinsoftware.vissa.common;
 
 import org.apache.log4j.Logger;
 
-import com.soinsoftware.vissa.common.PropertiesReader;
 import com.soinsoftware.vissa.model.DocumentDetail;
+import com.soinsoftware.vissa.model.MeasurementUnitLot;
 import com.soinsoftware.vissa.model.MeasurementUnitProduct;
 
 public class CommonsConstants {
@@ -12,6 +12,7 @@ public class CommonsConstants {
 
 	public static DocumentDetail CURRENT_DOCUMENT_DETAIL;
 	public static MeasurementUnitProduct MEASUREMENT_UNIT_PRODUCT;
+	public static MeasurementUnitLot MEASUREMENT_UNIT_LOT;
 	public static String TRANSACTION_TYPE;
 	public static int DIFF_HOURS = -5;
 	public static Integer PAYMENT_PENDING_DAYS;

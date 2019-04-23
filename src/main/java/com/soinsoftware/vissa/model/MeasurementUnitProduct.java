@@ -257,7 +257,7 @@ public class MeasurementUnitProduct extends CommonData {
 	}
 
 	public Double getQtyEquivalence() {
-		return qtyEquivalence;
+		return qtyEquivalence == null ? 0.0 : qtyEquivalence;
 	}
 
 	public String getQtyEquivalenceStr() {
