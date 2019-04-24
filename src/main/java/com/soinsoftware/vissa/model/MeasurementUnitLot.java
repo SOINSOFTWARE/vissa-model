@@ -8,12 +8,14 @@ import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
 import org.hibernate.annotations.SelectBeforeUpdate;
 
+import com.soinsoftware.vissa.common.CommonsConstants;
 import com.soinsoftware.vissa.exception.ModelValidationException;
 
 /**
@@ -36,6 +38,8 @@ public class MeasurementUnitLot extends CommonData {
 	@JoinColumn(name = "measure_unit_product_id")
 	private MeasurementUnitProduct muProduct;
 	private Double stock;
+	@Transient
+	private MeasurementUnit measureUnit;
 
 	public MeasurementUnitLot() {
 		super();
@@ -66,7 +70,7 @@ public class MeasurementUnitLot extends CommonData {
 	}
 
 	public Double getStock() {
-		return stock;
+		return stock == null ? 0.0 : stock;
 	}
 
 	public String getStockStr() {
@@ -79,6 +83,15 @@ public class MeasurementUnitLot extends CommonData {
 
 	public void setStockStr(String stockStr) {
 		setStock(Double.valueOf(stockStr));
+	}
+
+	public MeasurementUnit getMeasureUnit() {
+		return measureUnit;
+	}
+
+	public void setMeasureUnit(MeasurementUnit measureUnit) {
+		CommonsConstants.MEASUREMENT_UNIT_LOT = this;
+		this.measureUnit = measureUnit;
 	}
 
 	@Override
