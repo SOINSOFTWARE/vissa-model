@@ -86,6 +86,11 @@ public class MeasurementUnitLot extends CommonData {
 	}
 
 	public MeasurementUnit getMeasureUnit() {
+		if (measureUnit == null) {
+			if (muProduct != null) {
+				measureUnit = muProduct.getMeasurementUnit();
+			}
+		}
 		return measureUnit;
 	}
 
