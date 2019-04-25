@@ -61,6 +61,8 @@ public class MeasurementUnitProduct extends CommonData {
 	private Double saleTaxValue;
 	@Transient
 	private Double purchaseTaxValue;
+	@Column(name = "is_principal")
+	private Boolean isPrincipal;
 
 	public MeasurementUnitProduct() {
 		super();
@@ -81,6 +83,7 @@ public class MeasurementUnitProduct extends CommonData {
 		stock = builder.stock;
 		qtyEquivalence = builder.qtyEquivalence;
 		muEquivalence = builder.muEquivalence;
+		isPrincipal = builder.isPrincipal;
 	}
 
 	public Product getProduct() {
@@ -280,6 +283,14 @@ public class MeasurementUnitProduct extends CommonData {
 		this.muEquivalence = muEquivalence;
 	}
 
+	public Boolean isPrincipal() {
+		return isPrincipal;
+	}
+
+	public void setPrincipal(Boolean isPrincipal) {
+		this.isPrincipal = isPrincipal;
+	}
+
 	public void calculateSalePrice() {
 		/*
 		 * Double purchaseTaxTmp = getPurchasePrice() * getPurchaseTax() / 100; Double
@@ -370,6 +381,7 @@ public class MeasurementUnitProduct extends CommonData {
 		private Double stock;
 		private Double qtyEquivalence;
 		private MeasurementUnit muEquivalence;
+		private Boolean isPrincipal;
 
 		private Builder() {
 		}
@@ -381,7 +393,7 @@ public class MeasurementUnitProduct extends CommonData {
 					.purchasePrice(muProduct.purchasePrice).saleTax(muProduct.saleTax)
 					.purchaseTax(muProduct.purchaseTax).utilityPrc(muProduct.utilityPrc).utility(muProduct.utility)
 					.finalPrice(muProduct.finalPrice).stock(muProduct.stock).qtyEquivalence(muProduct.qtyEquivalence)
-					.muEquivalence(muProduct.muEquivalence);
+					.muEquivalence(muProduct.muEquivalence).isPrincipal(muProduct.isPrincipal);
 		}
 
 		public Builder id(BigInteger id) {
@@ -464,9 +476,15 @@ public class MeasurementUnitProduct extends CommonData {
 			return this;
 		}
 
+		public Builder isPrincipal(Boolean isPrincipal) {
+			this.isPrincipal = isPrincipal;
+			return this;
+		}
+
 		public MeasurementUnitProduct build() {
 			return new MeasurementUnitProduct(this);
 		}
+
 	}
 
 	@Override
