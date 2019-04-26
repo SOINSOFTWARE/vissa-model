@@ -57,7 +57,6 @@ public class DocumentDetailLot extends CommonData {
 		return serialVersionUID;
 	}
 
-	
 	public DocumentDetail getDocumentDetail() {
 		return documentDetail;
 	}
@@ -71,18 +70,16 @@ public class DocumentDetailLot extends CommonData {
 	}
 
 	public Double getInitialStockLot() {
-		return initialStockLot;
+		return initialStockLot == null ? 0 : initialStockLot;
 	}
 
 	public Double getQuantity() {
-		return quantity;
+		return quantity == null ? 0 : quantity;
 	}
 
 	public Double getFinalStockLot() {
-		return finalStockLot;
+		return finalStockLot == null ? 0 : finalStockLot;
 	}
-	
-	
 
 	public void setLot(Lot lot) {
 		this.lot = lot;
