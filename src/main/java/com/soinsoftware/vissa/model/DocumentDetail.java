@@ -16,8 +16,10 @@ import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
 import org.hibernate.annotations.SelectBeforeUpdate;
 
+import com.mysql.cj.util.StringUtils;
 import com.soinsoftware.vissa.common.CommonsConstants;
 import com.soinsoftware.vissa.common.StringUtil;
+import com.soinsoftware.vissa.common.StringUtility;
 import com.soinsoftware.vissa.exception.ModelValidationException;
 
 /**
@@ -39,7 +41,7 @@ public class DocumentDetail extends CommonData {
 	@JoinColumn(name = "product_id")
 	private Product product;
 	private String description;
-	private String quantity;
+	private Double quantity;
 	@Transient
 	private Double oldQuantity;
 	@Transient
@@ -105,12 +107,16 @@ public class DocumentDetail extends CommonData {
 		return description;
 	}
 
-	public String getQuantity() {
-		return quantity;
+	public Double getQuantity() {
+		return quantity == null ? 0.0 : quantity;
+	}
+
+	public String getQuantityStr() {
+		return String.valueOf(getQuantity());
 	}
 
 	public Double getSubtotal() {
-		return subtotal;
+		return subtotal == null ? 0.0 : subtotal;
 	}
 
 	public String getSubtotalStr() {
@@ -121,13 +127,21 @@ public class DocumentDetail extends CommonData {
 		this.description = description;
 	}
 
-	public void setQuantity(String quantity) {
+	public void setQuantity(Double quantity) {
 		this.quantity = quantity;
 		CommonsConstants.CURRENT_DOCUMENT_DETAIL = this;
 		calculateSubtotal();
 	}
 
+	public void setQuantityStr(String quantity) {
+		setQuantity(Double
+				.parseDouble(StringUtility.isNull(quantity) ? "0.0" : quantity.equals("null") ? "0.0" : quantity));
+	}
+
 	public MeasurementUnit getMeasurementUnit() {
+		if (measurementUnit == null && getMeasurementUnitProduct() != null) {
+			measurementUnit = getMeasurementUnitProduct().getMeasurementUnit();
+		}
 		return measurementUnit;
 	}
 
@@ -280,25 +294,21 @@ public class DocumentDetail extends CommonData {
 	}
 
 	public void calculateSubtotal() {
-		if (!StringUtil.isNull(getQuantity())) {
-			Double priceWithTax = 0.0;
 
-			priceWithTax = getPrice() + (getPrice() * getTax() / 100);
-			priceWithTax = (double) Math.round(priceWithTax);
+		Double priceWithTax = 0.0;
 
-			setSubtotalStr(String.valueOf((priceWithTax - getDiscount()) * Double.parseDouble(getQuantity())));
-			calculateTotalTax();
-		}
+		priceWithTax = getPrice() + (getPrice() * getTax() / 100);
+		priceWithTax = (double) Math.round(priceWithTax);
+
+		setSubtotalStr(String.valueOf((priceWithTax - getDiscount()) * getQuantity()));
+		calculateTotalTax();
+
 		CommonsConstants.CURRENT_DOCUMENT_DETAIL = this;
-		
+
 	}
 
 	private void calculateTotalTax() {
-		Double qty = 0.0;
-		if (!StringUtil.isNull(getQuantity())) {
-			qty = Double.valueOf(getQuantity());
-		}
-		Double totalTax = Double.valueOf(Math.round(getTaxValue() * qty));
+		Double totalTax = Double.valueOf(Math.round(getTaxValue() * getQuantity()));
 		setTotalTaxValue(totalTax);
 	}
 
@@ -367,7 +377,7 @@ public class DocumentDetail extends CommonData {
 		private Document document;
 		private Product product;
 		private String description;
-		private String quantity;
+		private Double quantity;
 		private Double subtotal;
 		private MeasurementUnit measurementUnit;
 		private MeasurementUnitProduct measurementUnitProduct;
@@ -423,7 +433,7 @@ public class DocumentDetail extends CommonData {
 			return this;
 		}
 
-		public Builder quantity(String quantity) {
+		public Builder quantity(Double quantity) {
 			this.quantity = quantity;
 			return this;
 		}

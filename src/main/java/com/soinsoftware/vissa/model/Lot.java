@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.NaturalId;
@@ -47,6 +48,8 @@ public class Lot extends CommonData {
 	@ManyToOne
 	@JoinColumn(name = "measurement_unit_id")
 	private MeasurementUnit measurementUnit;
+	@Transient
+	private MeasurementUnitProduct muProduct;
 	@ManyToOne
 	@JoinColumn(name = "warehouse_id")
 	private Warehouse warehouse;
@@ -116,6 +119,14 @@ public class Lot extends CommonData {
 
 	public void setNew(boolean isNew) {
 		this.isNew = isNew;
+	}
+
+	public MeasurementUnitProduct getMuProduct() {
+		return muProduct;
+	}
+
+	public void setMuProduct(MeasurementUnitProduct muProduct) {
+		this.muProduct = muProduct;
 	}
 
 	@Override

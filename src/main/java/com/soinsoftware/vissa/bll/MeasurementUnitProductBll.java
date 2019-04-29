@@ -42,6 +42,24 @@ public class MeasurementUnitProductBll extends AbstractBll<MeasurementUnitProduc
 		return muProducts;
 	}
 
+	public List<MeasurementUnitProduct> selectPrincipal(Product product) {
+		List<MeasurementUnitProduct> muProducts = ((MeasurementUnitProductDao) dao).selectPrincipal(product);
+		return muProducts;
+	}
+
+	public List<MeasurementUnitProduct> selectMuEquivalence(MeasurementUnit measurementUnit, Product product) {
+		List<MeasurementUnitProduct> muProducts = ((MeasurementUnitProductDao) dao).selectMuEquivalence(measurementUnit,
+				product);
+		return muProducts;
+	}
+
+	public List<MeasurementUnitProduct> selectMuEquivalence(MeasurementUnit measurementUnitSource,
+			MeasurementUnit measurementUnitTarget, Product product) {
+		List<MeasurementUnitProduct> muProducts = ((MeasurementUnitProductDao) dao)
+				.selectMuEquivalence(measurementUnitSource, measurementUnitTarget, product);
+		return muProducts;
+	}
+
 	public static MeasurementUnitProductBll getInstance() throws IOException {
 		if (instance == null) {
 			instance = new MeasurementUnitProductBll();

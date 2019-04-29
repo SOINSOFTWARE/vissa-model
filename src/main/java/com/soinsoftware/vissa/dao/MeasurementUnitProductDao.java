@@ -67,4 +67,36 @@ public class MeasurementUnitProductDao extends AbstractDataAccessibleObject<Meas
 		return criteria.list();
 	}
 
+	public List<MeasurementUnitProduct> selectPrincipal(Product product) {
+		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
+		final List<Criterion> predicates = new ArrayList<>();
+		predicates.add(Restrictions.eq("product", product));
+		predicates.add(Restrictions.eq("isPrincipal", true));
+		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
+		criteria.add(criterion);
+		return criteria.list();
+	}
+
+	public List<MeasurementUnitProduct> selectMuEquivalence(MeasurementUnit measurementUnit, Product product) {
+		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
+		final List<Criterion> predicates = new ArrayList<>();
+		predicates.add(Restrictions.eq("muEquivalence", measurementUnit));
+		predicates.add(Restrictions.eq("product", product));
+		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
+		criteria.add(criterion);
+		return criteria.list();
+	}
+
+	public List<MeasurementUnitProduct> selectMuEquivalence(MeasurementUnit measurementUnitSource,
+			MeasurementUnit measurementUnitTarget, Product product) {
+		final Criteria criteria = buildCriteriaWithArchivedRestriction(false);
+		final List<Criterion> predicates = new ArrayList<>();
+		predicates.add(Restrictions.eq("measurementUnit", measurementUnitSource));
+		predicates.add(Restrictions.eq("muEquivalence", measurementUnitTarget));
+		predicates.add(Restrictions.eq("product", product));
+		final Criterion criterion = Restrictions.and(buildPredicates(predicates));
+		criteria.add(criterion);
+		return criteria.list();
+	}
+
 }
