@@ -16,9 +16,7 @@ import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
 import org.hibernate.annotations.SelectBeforeUpdate;
 
-import com.mysql.cj.util.StringUtils;
 import com.soinsoftware.vissa.common.CommonsConstants;
-import com.soinsoftware.vissa.common.StringUtil;
 import com.soinsoftware.vissa.common.StringUtility;
 import com.soinsoftware.vissa.exception.ModelValidationException;
 
@@ -228,7 +226,9 @@ public class DocumentDetail extends CommonData {
 
 	public void setMeasurementUnitProduct(MeasurementUnitProduct measurementUnitProduct) {
 		this.measurementUnitProduct = measurementUnitProduct;
-		setMeasurementUnit(measurementUnitProduct.getMeasurementUnit());
+		MeasurementUnit muProduct = measurementUnitProduct != null ? measurementUnitProduct.getMeasurementUnit()
+				: getMeasurementUnit();
+		setMeasurementUnit(muProduct);
 	}
 
 	public Double getOldQuantity() {
