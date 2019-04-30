@@ -228,6 +228,7 @@ public class DocumentDetail extends CommonData {
 
 	public void setMeasurementUnitProduct(MeasurementUnitProduct measurementUnitProduct) {
 		this.measurementUnitProduct = measurementUnitProduct;
+		setMeasurementUnit(measurementUnitProduct.getMeasurementUnit());
 	}
 
 	public Double getOldQuantity() {
