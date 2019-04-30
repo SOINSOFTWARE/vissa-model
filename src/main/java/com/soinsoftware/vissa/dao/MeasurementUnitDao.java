@@ -15,8 +15,4 @@ public class MeasurementUnitDao extends AbstractDataAccessibleObject<Measurement
 	public MeasurementUnitDao() throws IOException {
 		super(MeasurementUnit.class);
 	}
-	
-	public MeasurementUnit select(final String name) {
-		return getSession().bySimpleNaturalId(MeasurementUnit.class).load(name);
-	}
 }

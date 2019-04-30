@@ -7,7 +7,6 @@ import java.util.Date;
 import javax.persistence.Entity;
 
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
 import org.hibernate.annotations.SelectBeforeUpdate;
@@ -26,7 +25,6 @@ public class MeasurementUnit extends CommonData {
 
 	private static final long serialVersionUID = -3934490987205731259L;
 
-	@NaturalId
 	private String name;
 
 	public MeasurementUnit() {

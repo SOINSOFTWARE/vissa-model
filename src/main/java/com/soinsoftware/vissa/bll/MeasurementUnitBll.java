@@ -3,6 +3,9 @@ package com.soinsoftware.vissa.bll;
 
 import java.io.IOException;
 import java.math.BigInteger;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import com.soinsoftware.vissa.dao.MeasurementUnitDao;
 import com.soinsoftware.vissa.model.MeasurementUnit;
@@ -19,8 +22,10 @@ public class MeasurementUnitBll extends AbstractBll<MeasurementUnit, BigInteger>
 		super(new MeasurementUnitDao());
 	}
 	
-	public MeasurementUnit select(final String name) {
-		return ((MeasurementUnitDao) dao).select(name);
+	@Override
+	public List<MeasurementUnit> selectAll(boolean enabled) {
+		List<MeasurementUnit> measurementUnits = super.selectAll(enabled);
+		return measurementUnits.stream().sorted(Comparator.comparing(MeasurementUnit::getName)).collect(Collectors.toList());
 	}
 
 	public static MeasurementUnitBll getInstance() throws IOException {
