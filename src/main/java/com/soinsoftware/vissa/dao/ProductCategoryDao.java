@@ -15,8 +15,4 @@ public class ProductCategoryDao extends AbstractDataAccessibleObject<ProductCate
 	public ProductCategoryDao() throws IOException {
 		super(ProductCategory.class);
 	}
-	
-	public ProductCategory select(final String name) {
-		return getSession().bySimpleNaturalId(ProductCategory.class).load(name);
-	}
 }

@@ -3,6 +3,9 @@ package com.soinsoftware.vissa.bll;
 
 import java.io.IOException;
 import java.math.BigInteger;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import com.soinsoftware.vissa.dao.ProductCategoryDao;
 import com.soinsoftware.vissa.model.ProductCategory;
@@ -18,9 +21,11 @@ public class ProductCategoryBll extends AbstractBll<ProductCategory, BigInteger>
 	private ProductCategoryBll() throws IOException {
 		super(new ProductCategoryDao());
 	}
-
-	public ProductCategory select(final String name) {
-		return ((ProductCategoryDao) dao).select(name);
+	
+	@Override
+	public List<ProductCategory> selectAll(boolean enabled) {
+		List<ProductCategory> productCategory = super.selectAll(enabled);
+		return productCategory.stream().sorted(Comparator.comparing(ProductCategory::getName)).collect(Collectors.toList());
 	}
 
 	public static ProductCategoryBll getInstance() throws IOException {
