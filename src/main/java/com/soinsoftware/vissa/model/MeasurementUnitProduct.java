@@ -17,6 +17,7 @@ import org.hibernate.annotations.OptimisticLocking;
 import org.hibernate.annotations.SelectBeforeUpdate;
 
 import com.soinsoftware.vissa.common.CommonsConstants;
+import com.soinsoftware.vissa.common.StringUtility;
 import com.soinsoftware.vissa.exception.ModelValidationException;
 
 /**
@@ -125,7 +126,7 @@ public class MeasurementUnitProduct extends CommonData {
 	}
 
 	public void setPurchasePriceStr(String purchasePriceStr) {
-		setPurchasePrice(Double.parseDouble(purchasePriceStr));
+		setPurchasePrice(Double.parseDouble(StringUtility.isNull(purchasePriceStr) ? "0.0" : purchasePriceStr));
 	}
 
 	public Double getSaleTax() {
@@ -142,7 +143,7 @@ public class MeasurementUnitProduct extends CommonData {
 	}
 
 	public void setSaleTaxStr(String saleTaxStr) {
-		setSaleTax(Double.valueOf(saleTaxStr));
+		setSaleTax(Double.valueOf(StringUtility.isNull(saleTaxStr) ? "0.0" : saleTaxStr));
 	}
 
 	public Double getPurchaseTax() {
@@ -159,7 +160,7 @@ public class MeasurementUnitProduct extends CommonData {
 	}
 
 	public void setPurchaseTaxStr(String purchaseTaxStr) {
-		setPurchaseTax(Double.valueOf(purchaseTaxStr));
+		setPurchaseTax(Double.valueOf(StringUtility.isNull(purchaseTaxStr) ? "0.0" : purchaseTaxStr));
 	}
 
 	public Double getSaleTaxValue() {
@@ -181,7 +182,7 @@ public class MeasurementUnitProduct extends CommonData {
 	}
 
 	public void setSaleTaxValueStr(String saleTaxValueStr) {
-		this.saleTaxValue = Double.valueOf(saleTaxValueStr);
+		setSaleTaxValue(Double.valueOf(StringUtility.isNull(saleTaxValueStr) ? "0.0" : saleTaxValueStr));
 	}
 
 	public void setPurchaseTaxValue(Double purchaseTaxValue) {
@@ -210,7 +211,7 @@ public class MeasurementUnitProduct extends CommonData {
 	}
 
 	public void setUtilityPrcStr(String utilityPrcStr) {
-		setUtilityPrc(Double.parseDouble(utilityPrcStr));
+		setUtilityPrc(Double.parseDouble(StringUtility.isNull(utilityPrcStr) ? "0.0" : utilityPrcStr));
 	}
 
 	public Double getUtility() {
@@ -227,7 +228,7 @@ public class MeasurementUnitProduct extends CommonData {
 	}
 
 	public void setUtilityStr(String utilityStr) {
-		setUtility(Double.valueOf(utilityStr));
+		setUtility(Double.valueOf(StringUtility.isNull(utilityStr) ? "0.0" : utilityStr));
 	}
 
 	public void setMeasurementUnit(MeasurementUnit measurementUnit) {
@@ -255,8 +256,8 @@ public class MeasurementUnitProduct extends CommonData {
 		this.stock = stock;
 	}
 
-	public void setStockStr(String stock) {
-		setStock(Double.parseDouble(stock));
+	public void setStockStr(String stockStr) {
+		setStock(Double.parseDouble(StringUtility.isNull(stockStr) ? "0.0" : stockStr));
 	}
 
 	public Double getQtyEquivalence() {
@@ -276,7 +277,7 @@ public class MeasurementUnitProduct extends CommonData {
 	}
 
 	public void setQtyEquivalenceStr(String qtyEquivalenceStr) {
-		setQtyEquivalence(Double.parseDouble(qtyEquivalenceStr));
+		setQtyEquivalence(Double.parseDouble(StringUtility.isNull(qtyEquivalenceStr) ? "0.0" : qtyEquivalenceStr));
 	}
 
 	public void setMuEquivalence(MeasurementUnit muEquivalence) {
