@@ -7,7 +7,6 @@ import java.util.Date;
 import javax.persistence.Entity;
 
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.NaturalId;
 import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
 import org.hibernate.annotations.SelectBeforeUpdate;
@@ -26,7 +25,6 @@ public class EgressType extends CommonData {
 
 	private static final long serialVersionUID = -6855449101935095974L;
 
-	@NaturalId
 	private String code;
 	private String name;
 
@@ -117,4 +115,10 @@ public class EgressType extends CommonData {
 			return new EgressType(this);
 		}
 	}
+
+	@Override
+	public String toString() {
+		return "EgressType [code=" + code + ", name=" + name + "]";
+	}
+
 }
