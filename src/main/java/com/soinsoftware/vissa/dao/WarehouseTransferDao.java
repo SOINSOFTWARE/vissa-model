@@ -4,6 +4,7 @@ package com.soinsoftware.vissa.dao;
 import java.io.IOException;
 import java.math.BigInteger;
 
+import com.soinsoftware.vissa.model.Warehouse;
 import com.soinsoftware.vissa.model.WarehouseTransfer;
 
 /**
@@ -16,4 +17,7 @@ public class WarehouseTransferDao extends AbstractDataAccessibleObject<Warehouse
 		super(WarehouseTransfer.class);
 	}
 
+	public Warehouse select(final String code) {
+		return getSession().bySimpleNaturalId(Warehouse.class).load(code);
+	}
 }
